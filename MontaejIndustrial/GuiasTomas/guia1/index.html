@@ -1,1 +1,399 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía visual - Circuito resistivo en serie</title>
+  <script>
+    window.MathJax = { tex: { inlineMath: [['\\(','\\)'], ['$', '$']] }, svg: { fontCache: 'global' } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root{
+      --azul:#174ea6;
+      --azul-2:#dbeafe;
+      --celeste:#e0f2fe;
+      --verde:#15803d;
+      --verde-2:#dcfce7;
+      --amarillo:#facc15;
+      --amarillo-2:#fef9c3;
+      --naranjo:#f97316;
+      --naranjo-2:#ffedd5;
+      --rojo:#b91c1c;
+      --rojo-2:#fee2e2;
+      --gris:#334155;
+      --gris-2:#f1f5f9;
+      --borde:#cbd5e1;
+      --blanco:#ffffff;
+      --sombra:0 10px 24px rgba(15,23,42,.12);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Roboto,Arial,sans-serif;
+      color:#1e293b;
+      background:linear-gradient(180deg,#eef6ff 0%,#f8fafc 48%,#fff7ed 100%);
+      line-height:1.55;
+    }
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--borde);
+      box-shadow:0 2px 10px rgba(15,23,42,.05);
+    }
+    .topbar-inner{
+      max-width:1180px;
+      margin:auto;
+      padding:10px 18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{font-weight:800;color:var(--azul);letter-spacing:.2px}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{
+      text-decoration:none;
+      color:#334155;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:.88rem;
+      font-weight:700;
+    }
+    .nav a:hover{background:var(--azul-2);color:var(--azul)}
+    header{
+      max-width:1180px;
+      margin:26px auto 18px;
+      padding:0 18px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#174ea6 0%,#0f766e 52%,#f97316 100%);
+      color:white;
+      border-radius:28px;
+      padding:34px;
+      box-shadow:var(--sombra);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-80px;top:-90px;
+      width:260px;height:260px;
+      border-radius:50%;
+      background:rgba(255,255,255,.16);
+    }
+    .hero h1{margin:0 0 8px;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05}
+    .hero p{font-size:1.15rem;margin:0;max-width:880px}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .chip{
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.36);
+      padding:8px 12px;border-radius:999px;font-weight:800
+    }
+    main{max-width:1180px;margin:auto;padding:0 18px 60px}
+    section{margin:24px 0}
+    .card{
+      background:white;
+      border:1px solid #e2e8f0;
+      border-radius:24px;
+      padding:24px;
+      box-shadow:var(--sombra);
+    }
+    .section-title{
+      display:flex;align-items:center;gap:12px;margin:0 0 16px;
+      color:#0f172a;font-size:1.65rem;line-height:1.15
+    }
+    .badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-width:38px;height:38px;border-radius:14px;
+      background:var(--azul);color:white;font-weight:900
+    }
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .objetivo{
+      background:var(--azul-2);
+      border-left:10px solid var(--azul);
+      border-radius:18px;
+      padding:18px;
+      font-size:1.08rem;
+    }
+    .producto{
+      background:var(--verde-2);
+      border-left:10px solid var(--verde);
+      border-radius:18px;
+      padding:18px;
+      font-size:1.08rem;
+    }
+    .alerta{
+      background:var(--rojo-2);
+      border:2px solid #fecaca;
+      border-left:10px solid var(--rojo);
+      border-radius:18px;
+      padding:16px;
+      font-weight:750;
+    }
+    .nota{
+      background:var(--amarillo-2);
+      border-left:10px solid var(--amarillo);
+      border-radius:18px;
+      padding:16px;
+      font-weight:750;
+    }
+    .paso{
+      display:grid;grid-template-columns:74px 1fr;gap:16px;
+      align-items:start;
+      padding:18px;
+      border:1px solid #e2e8f0;
+      border-radius:20px;
+      background:#fff;
+      margin:12px 0;
+    }
+    .num{
+      width:58px;height:58px;border-radius:18px;
+      background:linear-gradient(135deg,var(--azul),#0f766e);
+      color:white;font-size:1.5rem;font-weight:900;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 18px rgba(23,78,166,.22);
+    }
+    .paso h3{margin:0 0 6px;color:#0f172a;font-size:1.18rem}
+    .paso p{margin:0}
+    table{
+      width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 4px;
+      overflow:hidden;border-radius:16px;border:1px solid #cbd5e1;background:white
+    }
+    th{
+      background:var(--azul);
+      color:white;text-align:left;padding:12px;font-size:.98rem
+    }
+    td{padding:11px 12px;border-top:1px solid #e2e8f0;vertical-align:top}
+    tr:nth-child(even) td{background:#f8fafc}
+    .center{text-align:center}.right{text-align:right}.strong{font-weight:900;color:#0f172a}
+    .formula{
+      background:#f8fafc;
+      border:2px dashed #93c5fd;
+      border-radius:18px;
+      padding:16px;
+      margin:12px 0;
+      text-align:center;
+      font-size:1.12rem;
+    }
+    .mini-label{display:inline-block;background:#e2e8f0;color:#334155;padding:4px 8px;border-radius:999px;font-size:.83rem;font-weight:800;margin-bottom:8px}
+    .circuit-wrap{
+      display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:stretch
+    }
+    .diagram{
+      background:linear-gradient(180deg,#fff,#f8fafc);
+      border:2px solid #dbeafe;
+      border-radius:22px;
+      padding:18px;
+    }
+    svg text{font-family:"Segoe UI",Arial,sans-serif;fill:#0f172a}
+    .placeholder{
+      border:3px dashed #fb923c;
+      background:#fff7ed;
+      border-radius:22px;
+      min-height:300px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      text-align:center;
+      color:#9a3412;
+      font-weight:850;
+      font-size:1.05rem;
+    }
+    .checklist li{margin:8px 0;padding:8px 10px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;list-style:none}
+    .checklist{padding:0;margin:0}
+    .check{font-weight:900;color:var(--verde);margin-right:8px}
+    .no{font-weight:900;color:var(--rojo);margin-right:8px}
+    .timeline{display:grid;gap:10px}
+    .time-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:stretch}
+    .time-row div{padding:12px;border-radius:14px;border:1px solid #e2e8f0;background:#fff}
+    .time-row .time{background:#e0f2fe;font-weight:900;color:#075985;text-align:center}
+    .print-note{font-size:.92rem;color:#475569;margin-top:8px}
+    .image-frame{border:2px solid #dbeafe;border-radius:18px;background:linear-gradient(180deg,#fff,#f8fafc);padding:10px;display:flex;align-items:center;justify-content:center;min-height:320px}
+    .guide-image{display:block;max-width:100%;max-height:420px;width:auto;height:auto;border-radius:12px}
+    footer{max-width:1180px;margin:0 auto 40px;padding:0 18px;color:#475569;text-align:center}
+    @media (max-width:900px){.grid-2,.grid-3,.circuit-wrap{grid-template-columns:1fr}.time-row{grid-template-columns:1fr}.topbar-inner{align-items:flex-start;flex-direction:column}.nav{justify-content:flex-start}.hero{padding:24px}.card{padding:18px}}
+    @media print{.topbar{display:none}body{background:white}.card,.hero{box-shadow:none}a{color:inherit}.placeholder{min-height:220px}}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Guía visual - Circuitos resistivos</div>
+      <nav class="nav">
+        <a href="#objetivo">Objetivo</a><a href="#circuito">Circuito</a><a href="#pasos">Pasos</a><a href="#mediciones">Mediciones</a><a href="#seguridad">Seguridad</a><a href="#cierre">Cierre</a>
+      </nav>
+    </div>
+  </div>
+
+  <header>
+    <div class="hero">
+      <h1>Circuito resistivo en serie</h1>
+      <p>Actividad práctica de una clase para comprobar voltaje, corriente y resistencia equivalente usando multitester y una fuente de 12 V DC.</p>
+      <div class="chips"><span class="chip">180 minutos</span><span class="chip">3 resistencias</span><span class="chip">Producto: tabla de mediciones</span><span class="chip">Trabajo concreto y visible</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="objetivo" class="grid-2">
+      <div class="card objetivo">
+        <h2 class="section-title"><span class="badge">1</span>Objetivo</h2>
+        <p><strong>Comprobar valores relevantes en circuitos resistivos en régimen continuo</strong>, midiendo voltaje, corriente y resistencia con multitester.</p>
+      </div>
+      <div class="card producto">
+        <h2 class="section-title"><span class="badge">✓</span>Producto observable</h2>
+        <p>Al final de la clase, se entrega una <strong>hoja de respuestas</strong> con mediciones tabuladas y comparación simple con los valores teóricos.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="badge">2</span>Qué se hará y qué no se hará</h2>
+      <div class="grid-2">
+        <div class="producto">
+          <span class="mini-label">Se realiza</span>
+          <ul class="checklist">
+            <li><span class="check">✓</span>Arma el circuito desde una imagen de Tinkercad.</li>
+            <li><span class="check">✓</span>Conecta la fuente de 12 V DC.</li>
+            <li><span class="check">✓</span>Mide voltaje, corriente y resistencia.</li>
+            <li><span class="check">✓</span>Registra resultados en la hoja impresa.</li>
+          </ul>
+        </div>
+        <div class="nota">
+          <span class="mini-label">Ya viene preparado</span>
+          <ul class="checklist">
+            <li><span class="no">•</span>Los cálculos teóricos no se desarrollan desde cero.</li>
+            <li><span class="no">•</span>Los valores esperados ya están dados.</li>
+            <li><span class="no">•</span>La fórmula de diferencia porcentual aparece escrita para completar.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="circuito" class="card">
+      <h2 class="section-title"><span class="badge">3</span>Circuito de trabajo</h2>
+      <div class="circuit-wrap">
+        <div class="diagram">
+          <span class="mini-label">Esquemático del circuito</span>
+          <div class="image-frame">
+            <img src="1.png" alt="Esquemático del circuito en serie" class="guide-image">
+          </div>
+          <p class="print-note">Guarda la imagen del esquemático en la misma carpeta del archivo HTML con el nombre <strong>1.png</strong>.</p>
+        </div>
+        <div class="diagram">
+          <span class="mini-label">Imagen de referencia en Tinkercad</span>
+          <div class="image-frame">
+            <img src="2.png" alt="Montaje del circuito en Tinkercad" class="guide-image">
+          </div>
+          <p class="print-note">Guarda la imagen de Tinkercad en la misma carpeta del archivo HTML con el nombre <strong>2.png</strong>.</p>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Componente</th><th>Valor</th><th>Función en el circuito</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">R1</td><td>1 kΩ</td><td>Primera resistencia en serie</td></tr>
+          <tr><td class="strong">R2</td><td>2.2 kΩ</td><td>Segunda resistencia en serie</td></tr>
+          <tr><td class="strong">R3</td><td>3.3 kΩ</td><td>Tercera resistencia en serie</td></tr>
+          <tr><td class="strong">Fuente</td><td>12 V DC</td><td>Entrega energía al circuito</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="badge">4</span>Valores teóricos ya calculados</h2>
+      <div class="grid-2">
+        <div>
+          <div class="formula">\[R_{eq}=R_1+R_2+R_3\]</div>
+          <div class="formula">\[R_{eq}=1000\Omega+2200\Omega+3300\Omega=6500\Omega\]</div>
+          <div class="formula">\[R_{eq}=6.5k\Omega\]</div>
+        </div>
+        <div>
+          <div class="formula">\[I=\frac{V}{R}=\frac{12V}{6500\Omega}\]</div>
+          <div class="formula">\[I=0.001846A\]</div>
+          <div class="formula">\[I\approx1.85mA\]</div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Medición</th><th>Valor teórico esperado</th></tr></thead>
+        <tbody>
+          <tr><td>Voltaje en R1</td><td class="strong">1.85 V</td></tr>
+          <tr><td>Voltaje en R2</td><td class="strong">4.06 V</td></tr>
+          <tr><td>Voltaje en R3</td><td class="strong">6.09 V</td></tr>
+          <tr><td>Corriente total</td><td class="strong">1.85 mA</td></tr>
+          <tr><td>Resistencia equivalente</td><td class="strong">6.5 kΩ</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="pasos" class="card">
+      <h2 class="section-title"><span class="badge">5</span>Pasos de trabajo</h2>
+      <div class="paso"><div class="num">1</div><div><h3>Revisar materiales</h3><p>Antes de comenzar, confirma que tienes protoboard, resistencias, cables, fuente y multitester.</p></div></div>
+      <div class="paso"><div class="num">2</div><div><h3>Mirar la imagen de Tinkercad</h3><p>Identifica dónde está la fuente, dónde empieza R1 y dónde termina R3.</p></div></div>
+      <div class="paso"><div class="num">3</div><div><h3>Armar el circuito</h3><p>Conecta R1, R2 y R3 una después de la otra. Eso se llama conexión en serie.</p></div></div>
+      <div class="paso"><div class="num">4</div><div><h3>Pedir revisión</h3><p>Antes de energizar, el profesor revisa polaridad, orden de resistencias y ausencia de cables sueltos.</p></div></div>
+      <div class="paso"><div class="num">5</div><div><h3>Medir y registrar</h3><p>Mide voltajes, corriente total y resistencia equivalente. Luego completa la hoja de respuestas.</p></div></div>
+    </section>
+
+    <section id="mediciones" class="card">
+      <h2 class="section-title"><span class="badge">6</span>Cómo se mide cada valor</h2>
+      <div class="grid-3">
+        <div class="objetivo">
+          <span class="mini-label">Voltaje DC</span>
+          <p>El multitester se conecta <strong>en paralelo</strong> con cada resistencia.</p>
+          <p class="strong">Selector: V⎓</p>
+        </div>
+        <div class="nota">
+          <span class="mini-label">Corriente DC</span>
+          <p>El multitester se conecta <strong>en serie</strong>. Hay que abrir el circuito.</p>
+          <p class="strong">Selector: mA⎓</p>
+        </div>
+        <div class="producto">
+          <span class="mini-label">Resistencia</span>
+          <p>La fuente debe estar <strong>apagada y desconectada</strong>.</p>
+          <p class="strong">Selector: Ω</p>
+        </div>
+      </div>
+      <div class="formula">\[\%D=\frac{|Valor\ medido-Valor\ teórico|}{Valor\ teórico}\times100\]</div>
+      <p class="print-note">No necesitas memorizar esta fórmula: aparece escrita en la hoja de respuestas para completar los datos.</p>
+    </section>
+
+    <section id="seguridad" class="card">
+      <h2 class="section-title"><span class="badge">!</span>Reglas de seguridad</h2>
+      <div class="grid-2">
+        <div class="alerta"><strong>No medir resistencia con la fuente conectada.</strong><br>La medición de resistencia se hace solo con el circuito apagado.</div>
+        <div class="alerta"><strong>No medir corriente en paralelo.</strong><br>La corriente se mide abriendo el circuito y conectando el multitester en serie.</div>
+      </div>
+      <div class="nota" style="margin-top:16px"><strong>Regla de trabajo:</strong> Primero conecta, luego el profesor revisa, y después se energiza.</div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="badge">7</span>Organización de los 180 minutos</h2>
+      <div class="timeline">
+        <div class="time-row"><div class="time">0-15 min</div><div>Presentación del objetivo</div><div>Materiales revisados</div></div>
+        <div class="time-row"><div class="time">15-35 min</div><div>Lectura visual del circuito</div><div>Elementos identificados</div></div>
+        <div class="time-row"><div class="time">35-65 min</div><div>Armado en protoboard</div><div>Circuito construido</div></div>
+        <div class="time-row"><div class="time">65-80 min</div><div>Revisión antes de energizar</div><div>Conexión validada</div></div>
+        <div class="time-row"><div class="time">80-120 min</div><div>Medición de voltajes y corriente</div><div>Datos registrados</div></div>
+        <div class="time-row"><div class="time">120-155 min</div><div>Medición de resistencia y diferencia porcentual</div><div>Tabla completada</div></div>
+        <div class="time-row"><div class="time">155-180 min</div><div>Preguntas, autoevaluación y cierre</div><div>Hoja entregada</div></div>
+      </div>
+    </section>
+
+    <section id="cierre" class="card">
+      <h2 class="section-title"><span class="badge">8</span>Cierre de la actividad</h2>
+      <p>La actividad termina cuando la hoja de respuestas tiene los valores medidos de voltaje, corriente y resistencia equivalente, junto con las preguntas breves y la autoevaluación.</p>
+      <div class="producto"><strong>Meta concreta:</strong> Debes poder decir: “Armé el circuito, medí sus valores y comprobé que se parecen a los valores esperados”.</div>
+    </section>
+  </main>
+  <footer>Material de apoyo visual - Circuitos resistivos en régimen continuo - Uso en navegador.</footer>
+</body>
+</html>
