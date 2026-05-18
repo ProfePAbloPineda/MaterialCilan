@@ -1,1 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía visual - Amplificador no inversor</title>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root{
+      --azul:#174ea6;
+      --azul-2:#dbeafe;
+      --celeste:#e0f2fe;
+      --verde:#15803d;
+      --verde-2:#dcfce7;
+      --amarillo:#facc15;
+      --amarillo-2:#fef9c3;
+      --naranjo:#f97316;
+      --naranjo-2:#ffedd5;
+      --rojo:#b91c1c;
+      --rojo-2:#fee2e2;
+      --violeta:#7c3aed;
+      --violeta-2:#ede9fe;
+      --gris:#334155;
+      --gris-2:#f1f5f9;
+      --borde:#cbd5e1;
+      --blanco:#ffffff;
+      --sombra:0 10px 24px rgba(15,23,42,.12);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Segoe UI",Roboto,Arial,sans-serif;
+      color:#1e293b;
+      background:linear-gradient(180deg,#eef6ff 0%,#f8fafc 48%,#f5f3ff 100%);
+      line-height:1.55;
+    }
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--borde);
+      box-shadow:0 2px 10px rgba(15,23,42,.05);
+    }
+    .topbar-inner{
+      max-width:1180px;
+      margin:auto;
+      padding:10px 18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{font-weight:800;color:var(--azul);letter-spacing:.2px}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{
+      text-decoration:none;
+      color:#334155;
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:.88rem;
+      font-weight:700;
+    }
+    .nav a:hover{background:var(--azul-2);color:var(--azul)}
+    header{max-width:1180px;margin:26px auto 18px;padding:0 18px}
+    .hero{
+      background:linear-gradient(135deg,#174ea6 0%,#7c3aed 50%,#f97316 100%);
+      color:white;
+      border-radius:28px;
+      padding:34px;
+      box-shadow:var(--sombra);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-80px;top:-90px;
+      width:260px;height:260px;
+      border-radius:50%;
+      background:rgba(255,255,255,.16);
+    }
+    .hero h1{margin:0 0 8px;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05}
+    .hero p{font-size:1.15rem;margin:0;max-width:900px}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.36);padding:8px 12px;border-radius:999px;font-weight:800}
+    main{max-width:1180px;margin:auto;padding:0 18px 60px}
+    section{margin:24px 0}
+    .card{background:white;border:1px solid #e2e8f0;border-radius:24px;padding:24px;box-shadow:var(--sombra)}
+    .section-title{display:flex;align-items:center;gap:12px;margin:0 0 16px;color:#0f172a;font-size:1.65rem;line-height:1.15}
+    .badge{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;border-radius:14px;background:var(--azul);color:white;font-weight:900}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .objetivo{background:var(--azul-2);border-left:10px solid var(--azul);border-radius:18px;padding:18px;font-size:1.08rem}
+    .producto{background:var(--verde-2);border-left:10px solid var(--verde);border-radius:18px;padding:18px;font-size:1.08rem}
+    .alerta{background:var(--rojo-2);border:2px solid #fecaca;border-left:10px solid var(--rojo);border-radius:18px;padding:16px;font-weight:750}
+    .nota{background:var(--amarillo-2);border-left:10px solid var(--amarillo);border-radius:18px;padding:16px;font-weight:750}
+    .concepto{background:var(--violeta-2);border-left:10px solid var(--violeta);border-radius:18px;padding:16px;font-weight:750}
+    .paso{display:grid;grid-template-columns:74px 1fr;gap:16px;align-items:start;padding:18px;border:1px solid #e2e8f0;border-radius:20px;background:#fff;margin:12px 0}
+    .num{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,var(--azul),var(--violeta));color:white;font-size:1.5rem;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(23,78,166,.22)}
+    .paso h3{margin:0 0 6px;color:#0f172a;font-size:1.18rem}
+    .paso p{margin:0}
+    table{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 4px;overflow:hidden;border-radius:16px;border:1px solid #cbd5e1;background:white}
+    th{background:var(--azul);color:white;text-align:left;padding:12px;font-size:.98rem}
+    td{padding:11px 12px;border-top:1px solid #e2e8f0;vertical-align:top}
+    tr:nth-child(even) td{background:#f8fafc}
+    .center{text-align:center}.right{text-align:right}.strong{font-weight:900;color:#0f172a}
+    .formula{background:#f8fafc;border:2px dashed #93c5fd;border-radius:18px;padding:16px;margin:12px 0;text-align:center;font-size:1.12rem}
+    .mini-label{display:inline-block;background:#e2e8f0;color:#334155;padding:4px 8px;border-radius:999px;font-size:.83rem;font-weight:800;margin-bottom:8px}
+    .circuit-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+    .diagram{background:linear-gradient(180deg,#fff,#f8fafc);border:2px solid #dbeafe;border-radius:22px;padding:18px}
+    .image-frame{border:2px solid #dbeafe;border-radius:18px;background:linear-gradient(180deg,#fff,#f8fafc);padding:10px;display:flex;align-items:center;justify-content:center;min-height:320px}
+    .guide-image{display:block;max-width:100%;max-height:420px;width:auto;height:auto;border-radius:12px}
+    .checklist{padding:0;margin:0}
+    .checklist li{margin:8px 0;padding:8px 10px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;list-style:none}
+    .check{font-weight:900;color:var(--verde);margin-right:8px}
+    .no{font-weight:900;color:var(--rojo);margin-right:8px}
+    .timeline{display:grid;gap:10px}
+    .time-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:stretch}
+    .time-row div{padding:12px;border-radius:14px;border:1px solid #e2e8f0;background:#fff}
+    .time-row .time{background:#e0f2fe;font-weight:900;color:#075985;text-align:center}
+    .medicion-box{border:2px solid #e2e8f0;border-radius:18px;padding:16px;background:#ffffff}
+    .medicion-box h3{margin:0 0 8px;color:#0f172a}
+    .pin{display:inline-block;background:#f1f5f9;border:1px solid #cbd5e1;padding:2px 8px;border-radius:999px;font-weight:900;color:#0f172a}
+    .print-note{font-size:.92rem;color:#475569;margin-top:8px}
+    footer{max-width:1180px;margin:0 auto 40px;padding:0 18px;color:#475569;text-align:center}
+    @media (max-width:900px){.grid-2,.grid-3,.circuit-wrap{grid-template-columns:1fr}.time-row{grid-template-columns:1fr}.topbar-inner{align-items:flex-start;flex-direction:column}.nav{justify-content:flex-start}.hero{padding:24px}.card{padding:18px}}
+    @media print{.topbar{display:none}body{background:white}.card,.hero{box-shadow:none}a{color:inherit}.image-frame{min-height:220px}}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Guía visual - Amplificador no inversor</div>
+      <nav class="nav">
+        <a href="#objetivo">Objetivo</a>
+        <a href="#circuito">Circuito</a>
+        <a href="#calculos">Cálculos</a>
+        <a href="#pasos">Pasos</a>
+        <a href="#mediciones">Mediciones</a>
+        <a href="#seguridad">Seguridad</a>
+      </nav>
+    </div>
+  </div>
+
+  <header>
+    <div class="hero">
+      <h1>Amplificador no inversor</h1>
+      <p>Actividad práctica de una clase para armar un amplificador operacional alimentado con 0 V y 12 V, medir entrada, salida y alimentación, y comprobar una ganancia cercana a 5.7.</p>
+      <div class="chips">
+        
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="objetivo" class="grid-2">
+      <div class="card objetivo">
+        <h2 class="section-title"><span class="badge">1</span>Objetivo</h2>
+        <p><strong>Comprobar el funcionamiento de un amplificador operacional no inversor</strong>, identificando sus componentes, armando el circuito y midiendo los voltajes principales.</p>
+      </div>
+      <div class="card producto">
+        <h2 class="section-title"><span class="badge">✓</span>Producto observable</h2>
+        <p>Al final de la clase, se entrega una <strong>hoja de respuestas</strong> con la identificación de componentes y las mediciones de <strong>Vin</strong>, <strong>Vout</strong> y <strong>Vcc</strong>.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="badge">2</span>Idea principal</h2>
+      <div class="grid-2">
+        <div class="concepto">
+          <span class="mini-label">Amplificador no inversor</span>
+          <p>La señal entra por el terminal positivo <span class="pin">+</span> del amplificador operacional. La salida mantiene la misma polaridad que la entrada, pero con mayor voltaje.</p>
+        </div>
+        <div class="nota">
+          <span class="mini-label">En esta práctica</span>
+          <p>La entrada será de <strong>1 V</strong>. Con una ganancia de <strong>5.7</strong>, la salida esperada será cercana a <strong>5.7 V</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="circuito" class="card">
+      <h2 class="section-title"><span class="badge">3</span>Circuito de trabajo</h2>
+      <div class="circuit-wrap">
+        <div class="diagram">
+          <span class="mini-label">Esquemático del circuito</span>
+          <div class="image-frame">
+            <img src="1.png" alt="Esquemático del amplificador no inversor" class="guide-image">
+          </div>
+          <p class="print-note">Guarda la imagen del esquemático en la misma carpeta del archivo HTML con el nombre <strong>1.png</strong>.</p>
+        </div>
+        <div class="diagram">
+          <span class="mini-label">Imagen de referencia en Tinkercad</span>
+          <div class="image-frame">
+            <img src="2.png" alt="Montaje del amplificador no inversor en Tinkercad" class="guide-image">
+          </div>
+          <p class="print-note">Guarda la imagen de Tinkercad en la misma carpeta del archivo HTML con el nombre <strong>2.png</strong>.</p>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Elemento</th><th>Valor / conexión</th><th>Función</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="strong">Amplificador operacional</td><td>Alimentado con 0 V y 12 V</td><td>Amplifica la señal de entrada</td></tr>
+          <tr><td class="strong">Rf</td><td>47 kΩ</td><td>Resistencia de realimentación desde salida al terminal inversor</td></tr>
+          <tr><td class="strong">R1</td><td>10 kΩ</td><td>Resistencia desde terminal inversor a 0 V</td></tr>
+          <tr><td class="strong">Vin</td><td>1 V DC</td><td>Señal de entrada conectada al terminal no inversor</td></tr>
+          <tr><td class="strong">Vcc</td><td>12 V DC</td><td>Alimentación positiva del amplificador operacional</td></tr>
+          <tr><td class="strong">GND</td><td>0 V</td><td>Referencia común del circuito</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="calculos" class="card">
+      <h2 class="section-title"><span class="badge">4</span>Valores teóricos ya calculados</h2>
+      <div class="grid-2">
+        <div>
+          <div class="formula">\[A_v=1+\frac{R_f}{R_1}\]</div>
+          <div class="formula">\[A_v=1+\frac{47k\Omega}{10k\Omega}\]</div>
+          <div class="formula">\[A_v=1+4.7=5.7\]</div>
+        </div>
+        <div>
+          <div class="formula">\[V_{out}=A_v \cdot V_{in}\]</div>
+          <div class="formula">\[V_{out}=5.7 \cdot 1V\]</div>
+          <div class="formula">\[V_{out}=5.7V\]</div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Variable</th><th>Valor teórico esperado</th><th>Qué se debe medir</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Vin</td><td>1.00 V</td><td>Voltaje de entrada respecto a GND</td></tr>
+          <tr><td class="strong">Vout</td><td>5.70 V</td><td>Voltaje de salida respecto a GND</td></tr>
+          <tr><td class="strong">Vcc</td><td>12.00 V</td><td>Alimentación positiva respecto a GND</td></tr>
+          <tr><td class="strong">GND</td><td>0.00 V</td><td>Referencia del circuito</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="badge">5</span>Lista de materiales</h2>
+      <table>
+        <thead><tr><th>N.º</th><th>Material</th><th>Cantidad</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Protoboard</td><td>1</td><td>Montaje del circuito</td></tr>
+          <tr><td>2</td><td>Amplificador operacional</td><td>1</td><td>Etapa amplificadora</td></tr>
+          <tr><td>3</td><td>Resistencia de 47 kΩ</td><td>1</td><td>Rf</td></tr>
+          <tr><td>4</td><td>Resistencia de 10 kΩ</td><td>1</td><td>R1</td></tr>
+          <tr><td>5</td><td>Fuente DC de 12 V</td><td>1</td><td>Alimentación Vcc</td></tr>
+          <tr><td>6</td><td>Fuente o señal DC de 1 V</td><td>1</td><td>Entrada Vin</td></tr>
+          <tr><td>7</td><td>Multitester digital</td><td>1</td><td>Medición de voltajes</td></tr>
+          <tr><td>8</td><td>Cables jumper</td><td>Varios</td><td>Conexiones</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="pasos" class="card">
+      <h2 class="section-title"><span class="badge">6</span>Pasos de trabajo</h2>
+      <div class="paso"><div class="num">1</div><div><h3>Reconocer componentes</h3><p>Identifica el amplificador operacional, Rf de 47 kΩ, R1 de 10 kΩ, Vin, Vcc y GND.</p></div></div>
+      <div class="paso"><div class="num">2</div><div><h3>Mirar la imagen de Tinkercad</h3><p>Observa el montaje antes de conectar cables. Ubica entrada, salida y alimentación.</p></div></div>
+      <div class="paso"><div class="num">3</div><div><h3>Armar el circuito</h3><p>Conecta Rf entre salida y entrada inversora. Conecta R1 entre entrada inversora y GND. Conecta Vin al terminal no inversor.</p></div></div>
+      <div class="paso"><div class="num">4</div><div><h3>Revisar alimentación</h3><p>Conecta el amplificador operacional con 12 V en Vcc y 0 V en GND. Pide revisión antes de energizar.</p></div></div>
+      <div class="paso"><div class="num">5</div><div><h3>Medir voltajes</h3><p>Con el multitester en voltaje DC, mide Vin, Vout y Vcc respecto a GND.</p></div></div>
+      <div class="paso"><div class="num">6</div><div><h3>Registrar resultados</h3><p>Anota las mediciones en la hoja de respuestas y compara con los valores esperados.</p></div></div>
+    </section>
+
+    <section id="mediciones" class="card">
+      <h2 class="section-title"><span class="badge">7</span>Cómo medir</h2>
+      <div class="grid-3">
+        <div class="medicion-box">
+          <h3>Medir Vin</h3>
+          <p>Punta roja al punto <span class="pin">Vin</span>.</p>
+          <p>Punta negra a <span class="pin">GND</span>.</p>
+          <p class="strong">Valor esperado: 1.00 V</p>
+        </div>
+        <div class="medicion-box">
+          <h3>Medir Vout</h3>
+          <p>Punta roja al punto <span class="pin">Vout</span>.</p>
+          <p>Punta negra a <span class="pin">GND</span>.</p>
+          <p class="strong">Valor esperado: 5.70 V</p>
+        </div>
+        <div class="medicion-box">
+          <h3>Medir Vcc</h3>
+          <p>Punta roja al punto <span class="pin">Vcc</span>.</p>
+          <p>Punta negra a <span class="pin">GND</span>.</p>
+          <p class="strong">Valor esperado: 12.00 V</p>
+        </div>
+      </div>
+      <div class="formula">\[%D=\frac{|Valor\ medido-Valor\ teórico|}{Valor\ teórico}\times100\]</div>
+      <p class="print-note">La diferencia porcentual permite comparar el valor medido con el valor esperado.</p>
+    </section>
+
+    <section id="seguridad" class="card">
+      <h2 class="section-title"><span class="badge">!</span>Reglas de seguridad</h2>
+      <div class="grid-2">
+        <div class="alerta"><strong>No energizar sin revisión.</strong><br>Antes de conectar 12 V, revisa Vcc, GND, Rf, R1, Vin y Vout.</div>
+        <div class="alerta"><strong>No invertir Vcc y GND.</strong><br>Una conexión incorrecta puede dañar el amplificador operacional.</div>
+      </div>
+      <div class="nota" style="margin-top:16px"><strong>Regla de medición:</strong> Todos los voltajes de esta actividad se miden respecto a GND.</div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title"><span class="badge">8</span>Organización de los 180 minutos</h2>
+      <div class="timeline">
+        <div class="time-row"><div class="time">0-15 min</div><div>Presentación del objetivo</div><div>Materiales revisados</div></div>
+        <div class="time-row"><div class="time">15-35 min</div><div>Lectura visual del circuito</div><div>Entrada, salida y alimentación identificadas</div></div>
+        <div class="time-row"><div class="time">35-75 min</div><div>Armado en protoboard</div><div>Circuito construido</div></div>
+        <div class="time-row"><div class="time">75-90 min</div><div>Revisión antes de energizar</div><div>Conexión validada</div></div>
+        <div class="time-row"><div class="time">90-130 min</div><div>Medición de Vin, Vout y Vcc</div><div>Datos registrados</div></div>
+        <div class="time-row"><div class="time">130-160 min</div><div>Comparación con valores teóricos</div><div>Tabla completada</div></div>
+        <div class="time-row"><div class="time">160-180 min</div><div>Preguntas, autoevaluación y cierre</div><div>Hoja entregada</div></div>
+      </div>
+    </section>
+
+    <section id="cierre" class="card">
+      <h2 class="section-title"><span class="badge">9</span>Cierre de la actividad</h2>
+      <p>La actividad termina cuando la hoja de respuestas tiene la identificación de componentes y las mediciones de Vin, Vout y Vcc.</p>
+      <div class="producto"><strong>Meta concreta:</strong> Debes poder decir: “Armé el amplificador no inversor, medí la entrada, medí la salida y comprobé que la salida es mayor que la entrada”.</div>
+    </section>
+  </main>
+
+  <footer>Material de apoyo visual - Amplificador operacional no inversor - Uso en navegador.</footer>
+</body>
+</html>
+
 
