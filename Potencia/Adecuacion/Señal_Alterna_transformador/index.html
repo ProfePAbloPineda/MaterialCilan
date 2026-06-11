@@ -27,7 +27,6 @@
       --violeta:#7c3aed;
       --violeta-2:#ede9fe;
       --gris:#334155;
-      --gris-2:#f1f5f9;
       --borde:#cbd5e1;
       --blanco:#ffffff;
       --sombra:0 10px 24px rgba(15,23,42,.12);
@@ -192,8 +191,9 @@
 
     .circuit-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
     .diagram{background:linear-gradient(180deg,#fff,#f8fafc);border:2px solid #dbeafe;border-radius:22px;padding:18px}
-    .image-frame{border:2px solid #dbeafe;border-radius:18px;background:#ffffff;padding:10px;display:flex;align-items:center;justify-content:center;min-height:310px;text-align:center;color:#334155;font-weight:850}
-    .guide-image{display:block;max-width:100%;max-height:420px;width:auto;height:auto;border-radius:12px;background:white}
+    .image-frame{border:3px dashed #fb923c;border-radius:18px;background:#fff7ed;padding:12px;display:flex;align-items:center;justify-content:center;min-height:310px;text-align:center;color:#9a3412;font-weight:850}
+    .image-frame.clean{border:2px solid #dbeafe;background:#ffffff}
+    .guide-image{display:block;max-width:100%;max-height:520px;width:auto;height:auto;border-radius:12px;background:white;margin:auto}
     .image-note{font-size:.93rem;color:#475569;margin-top:8px}
 
     .paso{display:grid;grid-template-columns:74px 1fr;gap:16px;align-items:start;padding:18px;border:1px solid #e2e8f0;border-radius:20px;background:#fff;margin:12px 0}
@@ -269,11 +269,12 @@
     <div class="topbar-inner">
       <div class="brand">Guía visual - Transformador con punto medio</div>
       <nav class="nav">
+        <a href="#materiales">Materiales</a>
         <a href="#tarea">Tu tarea</a>
         <a href="#seguridad">Seguridad</a>
         <a href="#resistencias">Resistencias</a>
         <a href="#senal">Señal AC</a>
-        <a href="#osciloscopio">Osciloscopio</a>
+        <a href="#osciloscopio">Cuadros</a>
         <a href="#hoja">Hoja</a>
       </nav>
     </div>
@@ -287,6 +288,31 @@
   </header>
 
   <main>
+    <section id="materiales" class="card">
+      <h2 class="section-title"><span class="badge">0</span>Lista de materiales</h2>
+      <div class="grid-2">
+        <div class="producto">
+          <strong>Materiales principales</strong>
+          <ul class="checklist">
+            <li><span class="check">✓</span>Transformador con punto medio.</li>
+            <li><span class="check">✓</span>Osciloscopio digital.</li>
+            <li><span class="check">✓</span>Multitester digital para medir resistencia.</li>
+          </ul>
+        </div>
+        <div class="nota">
+          <strong>Accesorios de conexión</strong>
+          <ul class="checklist">
+            <li><span class="check">✓</span>Sonda de osciloscopio.</li>
+            <li><span class="check">✓</span>Puntas del multitester.</li>
+            <li><span class="check">✓</span>Cables o terminales seguros para el secundario.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alerta" style="margin-top:16px;">
+        <strong>Importante:</strong> aunque el foco sea el osciloscopio y el transformador, para la primera parte necesitas multitester, porque debes medir resistencia de bobinas.
+      </div>
+    </section>
+
     <section id="tarea" class="card">
       <h2 class="section-title"><span class="badge">1</span>Tu tarea concreta de hoy</h2>
       <div class="grid-2">
@@ -300,7 +326,7 @@
         </div>
       </div>
       <div class="task-board">
-        <div class="task"><div class="n">1</div><h3>Medir primario</h3><p>Mide resistencia de la bobina primaria con la fuente desconectada.</p><span class="result">Resultado: resistencia anotada</span></div>
+        <div class="task"><div class="n">1</div><h3>Medir primario</h3><p>Mide resistencia de la bobina primaria con el transformador desconectado.</p><span class="result">Resultado: resistencia anotada</span></div>
         <div class="task"><div class="n">2</div><h3>Medir secundarios</h3><p>Mide Fase 1-CM, Fase 2-CM y Fase 1-Fase 2.</p><span class="result">Resultado: tabla completa</span></div>
         <div class="task"><div class="n">3</div><h3>Observar señal</h3><p>Conecta la sonda al secundario indicado y observa la onda senoidal.</p><span class="result">Resultado: señal visible</span></div>
         <div class="task"><div class="n">4</div><h3>Medir onda</h3><p>Mide amplitud máxima, voltaje punta a punta y período.</p><span class="result">Resultado: datos de pantalla</span></div>
@@ -326,21 +352,29 @@
     </section>
 
     <section class="card">
-      <h2 class="section-title"><span class="badge">2</span>Imagen guía del transformador</h2>
+      <h2 class="section-title"><span class="badge">2</span>Imágenes guía</h2>
       <div class="circuit-wrap">
         <div class="diagram">
           <span class="mini-label">Esquema del transformador</span>
           <div class="image-frame">
-            <img src="1.PNG" alt="Esquema del transformador con punto medio: primario, Fase 1, punto medio y Fase 2" class="guide-image">
+            <div>
+              <img src="1.PNG" alt="Esquema del transformador con punto medio" class="guide-image"><br>
+              ESPACIO PARA IMAGEN 1.PNG<br>
+              Guarda aquí el esquema del transformador con primario, Fase 1, punto medio y Fase 2.
+            </div>
           </div>
-          <p class="image-note">Imagen generada: guarda el archivo <strong>1.PNG</strong> en la misma carpeta del HTML.</p>
+          <p class="image-note">La imagen debe estar en la misma carpeta del HTML y llamarse exactamente <strong>1.PNG</strong>.</p>
         </div>
         <div class="diagram">
           <span class="mini-label">Conexión de osciloscopio</span>
           <div class="image-frame">
-            <img src="2.PNG" alt="Conexión de la sonda del osciloscopio al secundario del transformador" class="guide-image">
+            <div>
+              <img src="2.PNG" alt="Conexión de la sonda del osciloscopio al secundario" class="guide-image"><br>
+              ESPACIO PARA IMAGEN 2.PNG<br>
+              Guarda aquí la imagen de conexión de la sonda al secundario.
+            </div>
           </div>
-          <p class="image-note">Imagen generada: guarda el archivo <strong>2.PNG</strong> en la misma carpeta del HTML.</p>
+          <p class="image-note">La imagen debe estar en la misma carpeta del HTML y llamarse exactamente <strong>2.PNG</strong>.</p>
         </div>
       </div>
     </section>
@@ -381,47 +415,57 @@
       <div class="paso"><div class="num">1</div><div><h3>Revisión antes de energizar</h3><p>El profesor revisa el transformador, la conexión y el punto donde se conectará la sonda.</p></div></div>
       <div class="paso"><div class="num">2</div><div><h3>Conectar la sonda al secundario</h3><p>Conecta la punta de la sonda a una fase del secundario y la pinza de referencia al punto medio, según la imagen guía.</p></div></div>
       <div class="paso"><div class="num">3</div><div><h3>Observar la onda</h3><p>En el osciloscopio digital, ajusta la escala vertical y horizontal hasta ver una onda estable y completa.</p></div></div>
-      <div class="paso"><div class="num">4</div><div><h3>Medir valores</h3><p>Lee en pantalla o mide con cursores: amplitud máxima, voltaje punta a punta y período.</p></div></div>
+      <div class="paso"><div class="num">4</div><div><h3>Medir valores</h3><p>Lee en pantalla o mide contando cuadros: amplitud máxima, voltaje punta a punta y período.</p></div></div>
     </section>
 
     <section id="osciloscopio" class="card">
-      <h2 class="section-title"><span class="badge">5</span>Qué significa cada medición</h2>
-      <div class="grid-3">
+      <h2 class="section-title"><span class="badge">5</span>Cómo medir la señal contando cuadros</h2>
+      <div class="diagram">
+        <span class="mini-label">Imagen de apoyo: parámetros de la señal alterna</span>
+        <div class="image-frame clean">
+          <img src="3.PNG" alt="Parámetros de señal alterna en osciloscopio: Vmax, Vpp, período y frecuencia" class="guide-image">
+        </div>
+        <p class="image-note">La imagen debe estar en la misma carpeta del HTML y llamarse exactamente <strong>3.PNG</strong>.</p>
+      </div>
+
+      <div class="grid-3" style="margin-top:18px">
         <div class="measure-box">
-          <h3>Amplitud máxima</h3>
-          <p>Es el voltaje desde 0 V hasta el punto más alto de la onda.</p>
-          <p class="strong">Símbolo: Vmax</p>
+          <h3>1. Amplitud máxima</h3>
+          <p>Cuenta los cuadros desde la línea de 0 V hasta el pico superior.</p>
+          <p class="strong">Vmax = cuadros × V/div</p>
         </div>
         <div class="measure-box">
-          <h3>Voltaje punta a punta</h3>
-          <p>Es la distancia vertical entre el punto más alto y el punto más bajo de la onda.</p>
-          <p class="strong">Símbolo: Vpp</p>
+          <h3>2. Voltaje punta a punta</h3>
+          <p>Cuenta los cuadros desde el pico superior hasta el pico inferior.</p>
+          <p class="strong">Vpp = cuadros × V/div</p>
         </div>
         <div class="measure-box">
-          <h3>Período</h3>
-          <p>Es el tiempo que demora la onda en completar un ciclo.</p>
-          <p class="strong">Símbolo: T</p>
+          <h3>3. Período</h3>
+          <p>Cuenta los cuadros horizontales que ocupa un ciclo completo.</p>
+          <p class="strong">T = cuadros × tiempo/div</p>
         </div>
       </div>
-      <div class="formula">\[f=\frac{1}{T}\]</div>
-      <div class="nota">
-        En Chile la red eléctrica trabaja normalmente a <strong>50 Hz</strong>. Una señal de 50 Hz tiene un período aproximado de <strong>20 ms</strong>.
+
+      <div class="nota" style="margin-top:16px">
+        <strong>Ejemplo concreto:</strong> si un ciclo ocupa 4 cuadros y la escala horizontal es 5 ms/div, entonces:
       </div>
-      <div class="nota">
-        Si el período está en milisegundos, primero conviértelo a segundos. Por ejemplo: \(20ms = 0.020s\).
+      <div class="formula">\[T=4\times5ms=20ms=0.020s\]</div>
+      <div class="formula">\[f=\frac{1}{T}=\frac{1}{0.020s}=50Hz\]</div>
+      <div class="producto">
+        <strong>Dato esperado en Chile:</strong> la frecuencia de la red eléctrica es de aproximadamente <strong>50 Hz</strong>. Por eso, en el secundario del transformador también se espera una señal de aproximadamente 50 Hz.
       </div>
-      <div class="formula">\[f=\frac{1}{0.020s}=50Hz\]</div>
     </section>
 
     <section class="card">
       <h2 class="section-title"><span class="badge">6</span>Organización de las 4 horas pedagógicas</h2>
       <div class="timeline">
-        <div class="time-row"><div class="time">0-20 min</div><div>Reconocer transformador y terminales</div><div>Primario, Fase 1, punto medio y Fase 2 identificados</div></div>
-        <div class="time-row"><div class="time">20-65 min</div><div>Medir resistencias de bobinas</div><div>Tabla de continuidad completa</div></div>
-        <div class="time-row"><div class="time">65-85 min</div><div>Revisión de seguridad</div><div>Transformador listo para energizar</div></div>
-        <div class="time-row"><div class="time">85-125 min</div><div>Observar señal alterna en osciloscopio</div><div>Onda estable en pantalla</div></div>
-        <div class="time-row"><div class="time">125-155 min</div><div>Medir Vmax, Vpp y período</div><div>Datos anotados</div></div>
-        <div class="time-row"><div class="time">155-180 min</div><div>Calcular frecuencia y reflexionar</div><div>Hoja terminada</div></div>
+        <div class="time-row"><div class="time">0-15 min</div><div>Revisar materiales</div><div>Transformador, osciloscopio, multitester y sonda identificados</div></div>
+        <div class="time-row"><div class="time">15-30 min</div><div>Reconocer transformador y terminales</div><div>Primario, Fase 1, punto medio y Fase 2 identificados</div></div>
+        <div class="time-row"><div class="time">30-70 min</div><div>Medir resistencias de bobinas</div><div>Tabla de continuidad completa</div></div>
+        <div class="time-row"><div class="time">70-90 min</div><div>Revisión de seguridad</div><div>Transformador listo para energizar</div></div>
+        <div class="time-row"><div class="time">90-125 min</div><div>Observar señal alterna en osciloscopio</div><div>Onda estable en pantalla</div></div>
+        <div class="time-row"><div class="time">125-160 min</div><div>Medir Vmax, Vpp y período contando cuadros</div><div>Datos anotados</div></div>
+        <div class="time-row"><div class="time">160-180 min</div><div>Calcular frecuencia y reflexionar</div><div>Hoja terminada</div></div>
       </div>
     </section>
 
@@ -434,7 +478,19 @@
         </tbody>
       </table>
 
-      <h3>1. Identificación de terminales</h3>
+      <h3>1. Checklist de materiales</h3>
+      <table>
+        <thead><tr><th>Material</th><th class="center">Lo tengo</th><th class="center">Lo usé</th></tr></thead>
+        <tbody>
+          <tr><td>Transformador con punto medio</td><td class="center">☐</td><td class="center">☐</td></tr>
+          <tr><td>Osciloscopio digital</td><td class="center">☐</td><td class="center">☐</td></tr>
+          <tr><td>Multitester digital</td><td class="center">☐</td><td class="center">☐</td></tr>
+          <tr><td>Sonda de osciloscopio</td><td class="center">☐</td><td class="center">☐</td></tr>
+          <tr><td>Puntas de multitester / cables seguros</td><td class="center">☐</td><td class="center">☐</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2. Identificación de terminales</h3>
       <table>
         <thead><tr><th>Terminal</th><th class="center">Lo identifiqué</th><th>Observación</th></tr></thead>
         <tbody>
@@ -445,7 +501,7 @@
         </tbody>
       </table>
 
-      <h3>2. Medición de resistencia de bobinas</h3>
+      <h3>3. Medición de resistencia de bobinas</h3>
       <table>
         <thead><tr><th>Medición</th><th>Valor medido</th><th>¿Tiene continuidad?</th></tr></thead>
         <tbody>
@@ -456,39 +512,41 @@
         </tbody>
       </table>
 
-      <h3>3. Medición de señal alterna en osciloscopio</h3>
+      <h3>4. Medición de señal alterna contando cuadros</h3>
       <table>
-        <thead><tr><th>Medición</th><th>Valor observado</th><th>Unidad</th></tr></thead>
+        <thead><tr><th>Medición</th><th>Cuadros contados</th><th>Escala usada</th><th>Resultado</th></tr></thead>
         <tbody>
-          <tr><td>Amplitud máxima</td><td>__________</td><td>V</td></tr>
-          <tr><td>Voltaje punta a punta</td><td>__________</td><td>Vpp</td></tr>
-          <tr><td>Período</td><td>__________</td><td>ms o s</td></tr>
-          <tr><td>Frecuencia calculada</td><td>__________</td><td>Hz</td></tr>
+          <tr><td>Amplitud máxima</td><td>__________ cuadros</td><td>__________ V/div</td><td>__________ V</td></tr>
+          <tr><td>Voltaje punta a punta</td><td>__________ cuadros</td><td>__________ V/div</td><td>__________ Vpp</td></tr>
+          <tr><td>Período</td><td>__________ cuadros</td><td>__________ ms/div</td><td>__________ ms</td></tr>
+          <tr><td>Frecuencia calculada</td><td colspan="2">f = 1 / T</td><td>__________ Hz</td></tr>
         </tbody>
       </table>
 
-      <h3>4. Cálculo de frecuencia</h3>
+      <h3>5. Cálculo de frecuencia</h3>
       <div class="formula">\[f=\frac{1}{T}\]</div>
       <p>Escribe aquí tu cálculo:</p>
       <div class="answer-line"></div>
       <div class="answer-line"></div>
 
-      <h3>5. Preguntas breves</h3>
+      <h3>6. Preguntas breves</h3>
       <p><strong>¿Qué comprobaste al medir la resistencia de las bobinas?</strong></p>
       <div class="answer-line"></div>
       <p><strong>¿Qué forma tenía la señal observada en el osciloscopio?</strong></p>
       <div class="answer-line"></div>
-      <p><strong>¿Qué aprendiste al medir el período y calcular la frecuencia?</strong></p>
+      <p><strong>¿Cómo usaste los cuadros del osciloscopio para calcular un valor?</strong></p>
+      <div class="answer-line"></div>
+      <p><strong>¿La frecuencia se acercó a 50 Hz?</strong></p>
       <div class="answer-line"></div>
 
-      <h3>6. Autoevaluación</h3>
+      <h3>7. Autoevaluación</h3>
       <table>
         <thead><tr><th>Pregunta</th><th class="center">Sí</th><th class="center">Con ayuda</th><th class="center">No</th></tr></thead>
         <tbody>
           <tr><td>Identifiqué los terminales del transformador.</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td></tr>
           <tr><td>Medí resistencia con el transformador desconectado.</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td></tr>
           <tr><td>Observé la señal alterna en el osciloscopio.</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td></tr>
-          <tr><td>Medí amplitud máxima, Vpp y período.</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td></tr>
+          <tr><td>Medí amplitud máxima, Vpp y período contando cuadros.</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td></tr>
           <tr><td>Calculé la frecuencia usando el período.</td><td class="center">☐</td><td class="center">☐</td><td class="center">☐</td></tr>
         </tbody>
       </table>
@@ -511,15 +569,15 @@
           <tr><th>Criterio</th><th>Logrado<br>3 pts</th><th>Medianamente logrado<br>2 pts</th><th>En proceso<br>1 pt</th><th>No logrado<br>0 pts</th><th>Pje.</th></tr>
         </thead>
         <tbody>
-          <tr><td><strong>1. Identifica terminales</strong></td><td>Reconoce primario, secundario y punto medio.</td><td>Reconoce la mayoría.</td><td>Reconoce con ayuda directa.</td><td>No identifica terminales.</td><td>____</td></tr>
-          <tr><td><strong>2. Usa multitester en Ω</strong></td><td>Configura y usa correctamente el multitester.</td><td>Corrige con ayuda menor.</td><td>Requiere apoyo constante.</td><td>No logra medir resistencia.</td><td>____</td></tr>
-          <tr><td><strong>3. Mide primario</strong></td><td>Mide y registra correctamente.</td><td>Mide con error menor corregido.</td><td>Mide con ayuda directa.</td><td>No logra medir.</td><td>____</td></tr>
-          <tr><td><strong>4. Mide secundarios</strong></td><td>Mide las tres combinaciones solicitadas.</td><td>Omite o corrige una medición.</td><td>Requiere apoyo frecuente.</td><td>No completa mediciones.</td><td>____</td></tr>
+          <tr><td><strong>1. Revisa materiales</strong></td><td>Identifica transformador, osciloscopio, multitester y sonda.</td><td>Reconoce la mayoría.</td><td>Reconoce con ayuda directa.</td><td>No reconoce materiales.</td><td>____</td></tr>
+          <tr><td><strong>2. Identifica terminales</strong></td><td>Reconoce primario, secundario y punto medio.</td><td>Reconoce la mayoría.</td><td>Reconoce con ayuda directa.</td><td>No identifica terminales.</td><td>____</td></tr>
+          <tr><td><strong>3. Usa multitester en Ω</strong></td><td>Configura y usa correctamente el multitester.</td><td>Corrige con ayuda menor.</td><td>Requiere apoyo constante.</td><td>No logra medir resistencia.</td><td>____</td></tr>
+          <tr><td><strong>4. Mide bobinas</strong></td><td>Mide primario y las tres combinaciones del secundario.</td><td>Omite o corrige una medición.</td><td>Requiere apoyo frecuente.</td><td>No completa mediciones.</td><td>____</td></tr>
           <tr><td><strong>5. Respeta seguridad</strong></td><td>No manipula red eléctrica y espera revisión.</td><td>Requiere un recordatorio.</td><td>Requiere varios recordatorios.</td><td>Actúa de forma insegura.</td><td>____</td></tr>
           <tr><td><strong>6. Conecta sonda</strong></td><td>Conecta correctamente en el secundario.</td><td>Corrige con ayuda menor.</td><td>Requiere apoyo directo.</td><td>No logra conectar.</td><td>____</td></tr>
           <tr><td><strong>7. Observa señal</strong></td><td>Obtiene una señal estable en pantalla.</td><td>Obtiene señal con apoyo menor.</td><td>Requiere guía permanente.</td><td>No logra observar señal.</td><td>____</td></tr>
-          <tr><td><strong>8. Mide la onda</strong></td><td>Mide Vmax, Vpp y período.</td><td>Le falta un dato o corrige uno.</td><td>Registra datos incompletos.</td><td>No mide la onda.</td><td>____</td></tr>
-          <tr><td><strong>9. Calcula frecuencia</strong></td><td>Aplica correctamente f=1/T.</td><td>Corrige unidades con ayuda.</td><td>Requiere guía directa.</td><td>No calcula frecuencia.</td><td>____</td></tr>
+          <tr><td><strong>8. Cuenta cuadros</strong></td><td>Cuenta cuadros para Vmax, Vpp y período.</td><td>Corrige un dato con ayuda.</td><td>Registra datos incompletos.</td><td>No logra contar cuadros.</td><td>____</td></tr>
+          <tr><td><strong>9. Calcula frecuencia</strong></td><td>Aplica correctamente f=1/T y reconoce 50 Hz.</td><td>Corrige unidades con ayuda.</td><td>Requiere guía directa.</td><td>No calcula frecuencia.</td><td>____</td></tr>
           <tr><td><strong>10. Reflexiona y registra</strong></td><td>Completa hoja y responde con sentido.</td><td>Completa parcialmente.</td><td>Responde con mucho apoyo.</td><td>No completa la hoja.</td><td>____</td></tr>
         </tbody>
       </table>
@@ -537,4 +595,3 @@
   <footer>Material de apoyo visual - Electrónica de potencia - Transformador con punto medio.</footer>
 </body>
 </html>
-
