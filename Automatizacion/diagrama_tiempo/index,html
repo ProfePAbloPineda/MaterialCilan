@@ -1,1 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Laboratorio - Control Secuencial con PLC Delta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        section {
+            margin: 30px 0;
+        }
+        
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin: 30px 0 20px 0;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #555;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .timing-diagram {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+        
+        .timing-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .step {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        .checkbox-item {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .checkbox-item li {
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .checkbox-item li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+        
+        .rubric-table th {
+            background-color: #764ba2;
+        }
+        
+        .rubric-table td:last-child,
+        .rubric-table th:last-child {
+            text-align: center;
+            width: 100px;
+        }
+        
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-top: 2px solid #dee2e6;
+            color: #666;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            table {
+                font-size: 0.9em;
+            }
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Guía de Laboratorio</h1>
+            <p class="subtitle">Control Secuencial de Procesos con PLC Delta DVP-SX2 e ISPSoft</p>
+            <p style="margin-top: 15px; font-size: 0.95em;">
+                <strong>Asignatura:</strong> Automatización Industrial | 
+                <strong>Duración:</strong> 90 minutos | 
+                <strong>Modalidad:</strong> Individual o en parejas
+            </p>
+        </header>
 
+        <section id="objetivo">
+            <h2>1. Objetivo de Aprendizaje</h2>
+            <div class="info-box">
+                <p>Desarrollar, compilar y descargar un programa de control secuencial en un PLC Delta DVP-SX2 utilizando el software ISPSoft, verificando el cumplimiento de un diagrama de tiempo mediante la observación de los LEDs de salida, e integrando lógica de seguridad básica.</p>
+            </div>
+        </section>
+
+        <section id="descripcion">
+            <h2>2. Descripción del Sistema</h2>
+            <p>Se debe programar el control de una estación de procesamiento químico simplificada. El proceso consiste en <strong>llenar un tanque, mezclar su contenido y vaciarlo</strong>, siguiendo una secuencia temporal estricta. Dado que no se cuenta con actuadores físicos en esta etapa, <span class="highlight">las salidas del PLC (Y0, Y1, Y2, Y3) se visualizarán mediante sus LEDs indicadores integrados</span>.</p>
+            
+            <h3>Asignación de Entradas y Salidas (I/O Mapping)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dirección</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Elemento Físico / Simulado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>X0</code></td>
+                        <td>Entrada</td>
+                        <td>Pulsador de Inicio (NO)</td>
+                        <td>Interruptor o botón en el PLC</td>
+                    </tr>
+                    <tr>
+                        <td><code>X1</code></td>
+                        <td>Entrada</td>
+                        <td>Pulsador de Paro de Emergencia (NC)</td>
+                        <td>Interruptor o botón en el PLC</td>
+                    </tr>
+                    <tr>
+                        <td><code>Y0</code></td>
+                        <td>Salida</td>
+                        <td>Válvula de Llenado</td>
+                        <td><strong>LED 0</strong> del PLC</td>
+                    </tr>
+                    <tr>
+                        <td><code>Y1</code></td>
+                        <td>Salida</td>
+                        <td>Motor del Mezclador</td>
+                        <td><strong>LED 1</strong> del PLC</td>
+                    </tr>
+                    <tr>
+                        <td><code>Y2</code></td>
+                        <td>Salida</td>
+                        <td>Válvula de Vaciado</td>
+                        <td><strong>LED 2</strong> del PLC</td>
+                    </tr>
+                    <tr>
+                        <td><code>Y3</code></td>
+                        <td>Salida</td>
+                        <td>Piloto de "Proceso Activo"</td>
+                        <td><strong>LED 3</strong> del PLC</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="diagrama">
+            <h2>3. Especificación del Diagrama de Tiempo</h2>
+            <div class="warning-box">
+                <p><strong>Nota importante:</strong> El siguiente diagrama representa el comportamiento esperado del sistema. Debes verificar que tus LEDs sigan exactamente esta secuencia temporal.</p>
+            </div>
+            
+            <div class="timing-diagram">
+                <h4 style="margin-bottom: 20px;">Diagrama de Tiempo del Proceso Secuencial</h4>
+                <img src="1.png" alt="Diagrama de tiempo mostrando la secuencia: X0 pulso inicial, Y0 activo 0-5s (llenado), Y1 activo 5-15s (mezclador 10s), Y2 activo 15-20s (vaciado 5s), Y3 activo durante todo el proceso">
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><em>Figura 1: Secuencia temporal del proceso automatizado de llenado, mezclado y vaciado</em></p>
+            </div>
+
+            <h4>Secuencia Detallada:</h4>
+            <ol>
+                <li><strong>Reposo:</strong> Todas las salidas (Y0-Y3) están en OFF.</li>
+                <li><strong>Inicio:</strong> Al presionar y soltar <code>X0</code>, se activa <code>Y3</code> (Proceso Activo) y simultáneamente se activa <code>Y0</code> (Llenado).</li>
+                <li><strong>Temporización 1:</strong> <code>Y0</code> permanece activo por <strong>5 segundos</strong> (Temporizador T0).</li>
+                <li><strong>Transición 1:</strong> Al cumplir los 5s, <code>Y0</code> se desactiva y se activa <code>Y1</code> (Mezclador).</li>
+                <li><strong>Temporización 2:</strong> <code>Y1</code> permanece activo por <strong>10 segundos</strong> (Temporizador T1).</li>
+                <li><strong>Transición 2:</strong> Al cumplir los 10s, <code>Y1</code> se desactiva y se activa <code>Y2</code> (Vaciado).</li>
+                <li><strong>Temporización 3:</strong> <code>Y2</code> permanece activo por <strong>5 segundos</strong> (Temporizador T2).</li>
+                <li><strong>Fin del Ciclo:</strong> Al cumplir los 5s, <code>Y2</code> y <code>Y3</code> se desactivan. El sistema vuelve al estado de reposo.</li>
+                <li><strong>Seguridad:</strong> Si en cualquier momento se presiona <code>X1</code> (Paro de Emergencia), todas las salidas (Y0-Y3) se desactivan inmediatamente y el proceso se reinicia solo si se vuelve a presionar X0.</li>
+            </ol>
+        </section>
+
+        <section id="materiales">
+            <h2>4. Materiales y Equipos Requeridos</h2>
+            <ul>
+                <li>Computador con el software <strong>ISPSoft</strong> (Delta Electronics) instalado.</li>
+                <li>PLC <strong>Delta DVP-SX2</strong> (o modelo compatible de la serie DVP).</li>
+                <li>Cable de comunicación USB o RS-232 (según el modelo del PLC).</li>
+                <li>Fuente de alimentación de 24V DC para el PLC.</li>
+            </ul>
+        </section>
+
+        <section id="desarrollo">
+            <h2>5. Pasos de Desarrollo</h2>
+            
+            <div class="step">
+                <h4><span class="step-number">1</span>Configuración del Proyecto en ISPSoft</h4>
+                <ol>
+                    <li>Abre ISPSoft y selecciona <strong>Archivo > Nuevo</strong>.</li>
+                    <li>En "Tipo de dispositivo", busca y selecciona <strong>DVP-SX2</strong> (asegúrate de que coincida con la etiqueta de tu PLC).</li>
+                    <li>En "Tipo de lenguaje", selecciona <strong>LD (Ladder Diagram)</strong>.</li>
+                    <li>Asigna un nombre al proyecto (Ej: <code>Practica_Secuencial_Tanque</code>) y haz clic en Aceptar.</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h4><span class="step-number">2</span>Definición de Variables (Opcional pero recomendado)</h4>
+                <ol>
+                    <li>Ve a la pestaña <strong>Variables</strong> o <strong>Símbolos</strong>.</li>
+                    <li>Define las variables para X0, X1, Y0, Y1, Y2, Y3 con sus respectivos comentarios (Ej: <code>Valvula_Llenado</code>). Esto mejora la legibilidad del código.</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h4><span class="step-number">3</span>Desarrollo de la Lógica Ladder</h4>
+                <p><strong>Red 1 - Paro de Emergencia y Habilitación:</strong></p>
+                <ul>
+                    <li>Usa un contacto normalmente abierto (NO) de X0 en paralelo con un contacto NO de un relé auxiliar (M0) para el enclavamiento.</li>
+                    <li>En serie, coloca un contacto normalmente cerrado (NC) de X1.</li>
+                    <li>La bobina será M0 (Memoria de Marcha).</li>
+                </ul>
+
+                <p><strong>Red 2 - Piloto de Proceso:</strong></p>
+                <ul>
+                    <li>Contacto NO de M0 → Bobina Y3</li>
+                </ul>
+
+                <p><strong>Red 3 - Llenado (5s):</strong></p>
+                <ul>
+                    <li>Contacto NO de M0 AND Contacto NC de T1 → Bobina Y0 AND Bobina de Temporizador <strong>T0 K50</strong> (50 x 0.1s = 5s).</li>
+                    <li><em>Nota: Ajusta la base de tiempo del temporizador según la configuración de tu DVP-SX2 (usualmente T0-T199 son de 100ms).</em></li>
+                </ul>
+
+                <p><strong>Red 4 - Mezclado (10s):</strong></p>
+                <ul>
+                    <li>Contacto NO de T0 → Bobina Y1 AND Bobina de Temporizador <strong>T1 K100</strong> (10s).</li>
+                </ul>
+
+                <p><strong>Red 5 - Vaciado (5s):</strong></p>
+                <ul>
+                    <li>Contacto NO de T1 → Bobina Y2 AND Bobina de Temporizador <strong>T2 K50</strong> (5s).</li>
+                </ul>
+
+                <p><strong>Red 6 - Reset del Ciclo:</strong></p>
+                <ul>
+                    <li>Contacto NO de T2 → Instrucción <code>RST M0</code> (o <code>ZRST Y0 Y3</code> para mayor robustez), asegurando que el ciclo termine limpiamente.</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4><span class="step-number">4</span>Compilación y Verificación</h4>
+                <ol>
+                    <li>Haz clic en el botón <strong>Compilar</strong> (o presiona <code>F7</code>).</li>
+                    <li>Revisa la ventana de "Mensaje" en la parte inferior. Si hay errores (círculos rojos), corrige la sintaxis o la lógica.</li>
+                    <li>El mensaje debe indicar <strong>"Compilación exitosa"</strong>.</li>
+                </ol>
+            </div>
+
+            <div class="step">
+                <h4><span class="step-number">5</span>Descarga y Prueba Física (Modo RUN)</h4>
+                <ol>
+                    <li>Conecta el PLC al computador y enciéndelo.</li>
+                    <li>En ISPSoft, ve a <strong>Comunicación > Configuración de Comunicación</strong> y selecciona el puerto COM o USB correcto. Haz clic en "Prueba de conexión".</li>
+                    <li>Ve a <strong>En línea > Descargar a PLC</strong> (o <code>Ctrl + D</code>). Confirma la descarga.</li>
+                    <li>Cambia el interruptor físico del PLC a la posición <strong>RUN</strong>.</li>
+                    <li><strong>Observación:</strong> Presiona X0. Observa la secuencia de encendido y apagado de los <strong>LEDs 0, 1, 2 y 3</strong> en el frente del PLC.</li>
+                    <li>Verifica con un cronómetro que los tiempos (5s, 10s, 5s) se cumplan.</li>
+                    <li>Prueba la parada de emergencia presionando X1 durante la secuencia y verifica que todo se apague de inmediato.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="profundizacion">
+            <h2>6. Preguntas de Profundización</h2>
+            <div class="info-box">
+                <p><em>El estudiante debe responder estas preguntas por escrito o de forma oral al finalizar la práctica.</em></p>
+            </div>
+
+            <div class="step">
+                <h4>Pregunta 1 - Temporizadores</h4>
+                <p>En el programa utilizado, los temporizadores son de tipo TON (On-Delay). ¿Qué sucedería en la secuencia si, por error, se utilizara un temporizador TOF (Off-Delay) en la etapa de mezclado (Y1)?</p>
+            </div>
+
+            <div class="step">
+                <h4>Pregunta 2 - Seguridad</h4>
+                <p>¿Por qué se recomienda que el pulsador de paro de emergencia (X1) sea físicamente un contacto Normalmente Cerrado (NC) y no Normalmente Abierto (NO), incluso si en el programa Ladder lo programamos como un contacto NC?</p>
+            </div>
+
+            <div class="step">
+                <h4>Pregunta 3 - Escalabilidad</h4>
+                <p>Si el cliente solicita que, después del vaciado, el sistema espere 10 segundos antes de permitir un nuevo ciclo (para enfriamiento), ¿cómo modificarías el diagrama de tiempo y el programa Ladder para implementarlo?</p>
+            </div>
+        </section>
+
+        <section id="autoevaluacion">
+            <h2>7. Lista de Autoevaluación</h2>
+            <div class="success-box">
+                <p><em>Marca con ✓ antes de llamar al profesor para la evaluación final.</em></p>
+            </div>
+
+            <ul class="checkbox-item">
+                <li>El proyecto en ISPSoft está configurado correctamente para el modelo DVP-SX2.</li>
+                <li>El programa compila sin errores ni advertencias críticas.</li>
+                <li>La lógica incluye el enclavamiento (self-holding) para que el proceso continúe al soltar el botón de inicio (X0).</li>
+                <li>El paro de emergencia (X1) detiene el proceso inmediatamente, sin importar en qué etapa se encuentre.</li>
+                <li>Los LEDs del PLC (Y0, Y1, Y2, Y3) siguen exactamente la secuencia y los tiempos (5s, 10s, 5s) especificados.</li>
+                <li>He respondido las preguntas de profundización con mis propias palabras.</li>
+                <li>El área de trabajo y el equipo están ordenados y limpios al finalizar.</li>
+            </ul>
+        </section>
+
+        <section id="evaluacion">
+            <h2>8. Rúbrica de Evaluación del Profesor</h2>
+            <table class="rubric-table">
+                <thead>
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Descripción</th>
+                        <th>Puntaje Máx.</th>
+                        <th>Puntaje Obtenido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Configuración del Entorno</strong></td>
+                        <td>Selección correcta del PLC (DVP-SX2) y lenguaje (LD) en ISPSoft. Variables bien comentadas.</td>
+                        <td>10</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lógica y Sintaxis</strong></td>
+                        <td>El código Ladder es eficiente, usa correctamente los temporizadores (K valores) y no tiene bobinas dobles o errores de lógica.</td>
+                        <td>25</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Funcionamiento Secuencial</strong></td>
+                        <td>Los LEDs del PLC replican exactamente el diagrama de tiempo (5s, 10s, 5s) y el ciclo termina correctamente.</td>
+                        <td>30</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lógica de Seguridad</strong></td>
+                        <td>El paro de emergencia (X1) funciona de manera inmediata y prioritaria, reseteando el ciclo de forma segura.</td>
+                        <td>15</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Preguntas de Profundización</strong></td>
+                        <td>Respuestas técnicas correctas que demuestran comprensión de los conceptos (TON/TOF, seguridad NC, escalabilidad).</td>
+                        <td>15</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Orden y Seguridad</strong></td>
+                        <td>Manejo adecuado del equipo, conexión segura del PLC y área de trabajo limpia al finalizar.</td>
+                        <td>5</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background-color: #667eea; color: white; font-weight: bold;">
+                        <td colspan="2" style="text-align: right;">TOTAL</td>
+                        <td style="text-align: center;">100</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 30px; padding: 20px; border: 2px solid #dee2e6; border-radius: 8px;">
+                <h4 style="margin-top: 0; color: #667eea;">Comentarios del Profesor:</h4>
+                <div style="min-height: 100px; background-color: #f8f9fa; border-radius: 4px; margin-top: 10px;"></div>
+            </div>
+        </section>
+
+        <section id="notas">
+            <h2>Notas para el Docente</h2>
+            <div class="info-box">
+                <h4>Variantes de dificultad:</h4>
+                <ul>
+                    <li><strong>Nivel básico:</strong> Seguir la guía tal como está planteada.</li>
+                    <li><strong>Nivel intermedio:</strong> Agregar un sensor de nivel simulado (ej. X2) que detenga el llenado (Y0) antes de los 5 segundos si se activa, obligando al alumno a usar lógica de interrupción de temporizador.</li>
+                    <li><strong>Nivel avanzado:</strong> Solicitar que el sistema permita ciclos continuos automáticos hasta que se presione el paro, o implementar un contador de ciclos completados.</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>Consideraciones técnicas importantes:</h4>
+                <ul>
+                    <li>Recuerde a los estudiantes que en los PLC Delta, la base de tiempo de los temporizadores <strong>T0-T199 es generalmente de 100 ms (0.1s)</strong>. Por lo tanto, <code>K50 = 5 segundos</code>.</li>
+                    <li>Si usan T200 en adelante, la base de tiempo cambia a 10ms o 1ms, lo cual es un error común que puede usar como momento de aprendizaje.</li>
+                    <li>Verifique que todos los PLCs tengan la misma configuración de comunicación antes de iniciar la práctica.</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p><strong>Guía de Laboratorio - Automatización Industrial</strong></p>
+            <p>PLC Delta DVP-SX2 | ISPSoft | Control Secuencial</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">© 2026 - Material educativo para fines académicos</p>
+        </footer>
+    </div>
+
+    <script>
+        // Script simple para manejar checkboxes en la autoevaluación
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.checkbox-item li');
+            checkboxes.forEach(item => {
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', function() {
+                    const currentContent = this.innerHTML;
+                    if (currentContent.startsWith('✓')) {
+                        this.innerHTML = currentContent.replace('✓', '☐');
+                    } else {
+                        this.innerHTML = currentContent.replace('☐', '✓');
+                    }
+                });
+            });
+
+            // Imprimir
+            window.addEventListener('beforeprint', function() {
+                console.log('Preparando impresión...');
+            });
+        });
+    </script>
+</body>
+</html>
