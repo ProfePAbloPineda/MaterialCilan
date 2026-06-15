@@ -1,1 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Tomás - Sensores y Actuadores del Montacarga</title>
+<style>
+  :root{
+    --azul:#1f4e79;
+    --celeste:#d9eaf7;
+    --verde:#d9ead3;
+    --amarillo:#fff2cc;
+    --naranjo:#fce4d6;
+    --gris:#f4f4f4;
+    --borde:#b7b7b7;
+    --texto:#1f1f1f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color:var(--texto);
+    background:#e9eef3;
+    line-height:1.45;
+  }
+  .page{
+    width:210mm;
+    min-height:297mm;
+    margin:12px auto;
+    padding:16mm;
+    background:white;
+    box-shadow:0 0 8px rgba(0,0,0,.2);
+  }
+  h1,h2,h3{margin:0 0 10px 0;}
+  h1{
+    font-size:28px;
+    color:white;
+    background:var(--azul);
+    padding:16px;
+    border-radius:14px;
+    text-align:center;
+  }
+  h2{
+    font-size:21px;
+    color:var(--azul);
+    border-bottom:3px solid var(--azul);
+    padding-bottom:5px;
+    margin-top:24px;
+  }
+  h3{font-size:18px;color:#333;margin-top:16px;}
+  p{font-size:15px;margin:8px 0;}
+  .subtitulo{
+    text-align:center;
+    font-size:17px;
+    margin:10px 0 18px;
+    font-weight:bold;
+  }
+  .datos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin:16px 0;
+  }
+  .campo{
+    border:1px solid var(--borde);
+    padding:8px;
+    min-height:38px;
+    border-radius:8px;
+    background:#fafafa;
+  }
+  .box{
+    border:2px solid var(--borde);
+    border-radius:12px;
+    padding:12px;
+    margin:12px 0;
+    background:#fff;
+  }
+  .box.azul{background:var(--celeste);border-color:#9fc5e8;}
+  .box.verde{background:var(--verde);border-color:#93c47d;}
+  .box.amarillo{background:var(--amarillo);border-color:#f1c232;}
+  .box.naranjo{background:var(--naranjo);border-color:#e69138;}
+  .objetivos li, .pasos li{margin:6px 0;font-size:15px;}
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:10px 0 16px;
+    font-size:14px;
+  }
+  th{
+    background:var(--azul);
+    color:white;
+    padding:8px;
+    border:1px solid #fff;
+  }
+  td{
+    border:1px solid var(--borde);
+    padding:8px;
+    vertical-align:top;
+    min-height:34px;
+  }
+  .respuesta{
+    height:34px;
+    background:#fff;
+  }
+  .linea{
+    display:inline-block;
+    min-width:180px;
+    border-bottom:2px solid #333;
+    height:20px;
+  }
+  .imagen{
+    border:2px dashed #999;
+    border-radius:12px;
+    min-height:170px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#555;
+    background:#fafafa;
+    margin:10px 0;
+    padding:10px;
+  }
+  .img-real{
+    width:100%;
+    max-height:260px;
+    object-fit:contain;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin:8px 0;
+  }
+  .codigo{
+    background:#222;
+    color:#f5f5f5;
+    padding:10px;
+    border-radius:8px;
+    font-family:Consolas, monospace;
+    font-size:13px;
+    white-space:pre-wrap;
+    margin:8px 0 14px;
+  }
+  .diagrama{
+    font-family:Consolas, monospace;
+    background:#f7f7f7;
+    border:2px solid #ccc;
+    border-radius:12px;
+    padding:14px;
+    font-size:16px;
+    line-height:1.45;
+  }
+  .mini-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .check td:first-child{width:65%;}
+  .check td:not(:first-child){text-align:center;height:30px;}
+  .badge{
+    display:inline-block;
+    padding:4px 9px;
+    border-radius:999px;
+    background:var(--azul);
+    color:white;
+    font-weight:bold;
+  }
+  .nota{
+    font-size:13px;
+    color:#444;
+    background:#f7f7f7;
+    border-left:5px solid var(--azul);
+    padding:8px;
+    margin:8px 0;
+  }
+  .salto{page-break-before:always;}
+  @media print{
+    body{background:white;}
+    .page{margin:0;box-shadow:none;width:210mm;min-height:297mm;page-break-after:always;}
+    h2{break-after:avoid;}
+    table,.box,.imagen{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <h1>Guía adaptada: Sensores y actuadores de un montacarga industrial</h1>
+  <div class="subtitulo">Actividad teórica previa al programa Ladder — Duración: 2 horas pedagógicas / 90 minutos</div>
+
+  <div class="datos">
+    <div class="campo"><strong>Nombre:</strong></div>
+    <div class="campo"><strong>Fecha:</strong></div>
+    <div class="campo"><strong>Curso:</strong></div>
+    <div class="campo"><strong>Docente:</strong></div>
+  </div>
+
+  <div class="box azul">
+    <h2>1. Propósito de la actividad</h2>
+    <p>Antes de programar en ISPSoft, primero necesitamos entender qué elementos físicos tiene el montacarga y cómo se relacionan con el PLC.</p>
+    <p>En esta guía trabajaremos la relación:</p>
+    <p style="text-align:center;font-size:20px;"><span class="badge">Sensor</span> → Entrada del PLC → Programa → Salida del PLC → <span class="badge">Actuador</span></p>
+  </div>
+
+  <h2>2. Objetivos</h2>
+  <div class="box verde objetivos">
+    <ul>
+      <li>Reconocer qué es un sensor dentro del sistema.</li>
+      <li>Reconocer qué es un actuador dentro del sistema.</li>
+      <li>Relacionar sensores con entradas del PLC.</li>
+      <li>Relacionar actuadores con salidas del PLC.</li>
+      <li>Explicar cuándo el montacarga debe subir, bajar o detenerse.</li>
+    </ul>
+  </div>
+
+  <h2>3. Imagen general del sistema</h2>
+  <p>Observa el sistema del montacarga. Identifica la plataforma, los pisos, los sensores y el motor.</p>
+
+  <img src="11.png" alt="Descripción de la imagen" width="600" height="1000">
+
+  <div class="box amarillo">
+    <h3>Preguntas de observación</h3>
+    <p>1. ¿Qué parte del sistema se mueve? <span class="linea"></span></p>
+    <p>2. ¿Qué elemento entrega información al PLC? <span class="linea"></span></p>
+    <p>3. ¿Qué elemento recibe órdenes del PLC? <span class="linea"></span></p>
+    <p>4. ¿Qué podría pasar si el PLC no sabe en qué piso está la plataforma?</p>
+    <div class="respuesta"></div>
+  </div>
+</section>
+
+<section class="page">
+  <h2>4. Entradas del PLC: sensores y pulsadores</h2>
+  <p>Las entradas son señales que llegan al PLC. En este sistema las entradas vienen desde pulsadores y sensores.</p>
+
+  <div class="box azul">
+    <h3>Idea principal</h3>
+    <p>Un sensor no mueve nada. Un sensor informa algo al PLC.</p>
+    <p>Ejemplo: el sensor de Piso 2 informa que la plataforma está en el Piso 2.</p>
+  </div>
+
+  <h3>Tabla de entradas</h3>
+  <table>
+    <tr>
+      <th>Elemento físico</th>
+      <th>Dirección PLC</th>
+      <th>¿Qué informa?</th>
+    </tr>
+    <tr><td>Pulsador Piso 1</td><td>M0</td><td>El usuario solicita ir al Piso 1.</td></tr>
+    <tr><td>Pulsador Piso 2</td><td>M1</td><td>El usuario solicita ir al Piso 2.</td></tr>
+    <tr><td>Pulsador Piso 3</td><td>M2</td><td>El usuario solicita ir al Piso 3.</td></tr>
+    <tr><td>Sensor Piso 1</td><td>M3</td><td>La plataforma está en el Piso 1.</td></tr>
+    <tr><td>Sensor Piso 2</td><td>M4</td><td>La plataforma está en el Piso 2.</td></tr>
+    <tr><td>Sensor Piso 3</td><td>M5</td><td>La plataforma está en el Piso 3.</td></tr>
+    <tr><td>Sensor aviso Piso 1</td><td>M6</td><td>La plataforma se acerca al Piso 1.</td></tr>
+    <tr><td>Sensor aviso Piso 2 desde abajo</td><td>M7</td><td>La plataforma se acerca al Piso 2 subiendo.</td></tr>
+    <tr><td>Sensor aviso Piso 3</td><td>M8</td><td>La plataforma se acerca al Piso 3.</td></tr>
+    <tr><td>Sensor aviso Piso 2 desde arriba</td><td>M9</td><td>La plataforma se acerca al Piso 2 bajando.</td></tr>
+  </table>
+
+  <div class="box amarillo">
+    <h3>Ejercicio 1: completar</h3>
+    <p>Si la plataforma está en el Piso 1, se activa el sensor <span class="linea"></span></p>
+    <p>Si la plataforma está en el Piso 2, se activa el sensor <span class="linea"></span></p>
+    <p>Si la plataforma está en el Piso 3, se activa el sensor <span class="linea"></span></p>
+    <p>Si el usuario presiona el botón para ir al Piso 2, se activa <span class="linea"></span></p>
+  </div>
+
+ <img src="2.png" alt="Descripción de la imagen" width="400" height="300">
+
+
+<section class="page">
+  <h2>5. Sensores de aviso: detener antes para llegar bien</h2>
+  <p>El motor del montacarga no se detiene de inmediato. Tiene inercia. Por eso se usan sensores de aviso.</p>
+
+  <div class="box naranjo">
+    <h3>Idea clave</h3>
+    <p>El sensor de piso indica dónde quedó la plataforma.</p>
+    <p>El sensor de aviso indica que la plataforma se está acercando y que debe comenzar la detención.</p>
+  </div>
+
+  <div class="diagrama">
+Piso 3
+  M5  Sensor Piso 3
+  M8  Aviso Piso 3
+
+Piso 2
+  M9  Aviso Piso 2 bajando
+  M4  Sensor Piso 2
+  M7  Aviso Piso 2 subiendo
+
+Piso 1
+  M6  Aviso Piso 1
+  M3  Sensor Piso 1
+  </div>
+
+  <h3>Ejercicio 2: observar el sentido del movimiento</h3>
+  <table>
+    <tr>
+      <th>Situación</th>
+      <th>¿Qué sensor de aviso debería aparecer antes de detener?</th>
+    </tr>
+    <tr>
+      <td>La plataforma baja desde Piso 2 hacia Piso 1.</td>
+      <td class="respuesta"></td>
+    </tr>
+    <tr>
+      <td>La plataforma sube desde Piso 1 hacia Piso 2.</td>
+      <td class="respuesta"></td>
+    </tr>
+    <tr>
+      <td>La plataforma baja desde Piso 3 hacia Piso 2.</td>
+      <td class="respuesta"></td>
+    </tr>
+    <tr>
+      <td>La plataforma sube desde Piso 2 hacia Piso 3.</td>
+      <td class="respuesta"></td>
+    </tr>
+  </table>
+
+  <div class="box azul">
+    <h3>Explicación para Tomás</h3>
+    <p>Cuando el montacarga viene desde abajo hacia el Piso 2, primero pasa por el aviso de Piso 2 desde abajo.</p>
+    <p>Cuando el montacarga viene desde arriba hacia el Piso 2, primero pasa por el aviso de Piso 2 desde arriba.</p>
+  </div>
+</section>
+
+<section class="page">
+  <h2>6. Salidas del PLC: actuadores</h2>
+  <p>Las salidas son órdenes que entrega el PLC. En este sistema las salidas activan el motor y las luces.</p>
+
+  <div class="box azul">
+    <h3>Idea principal</h3>
+    <p>Una salida sí realiza una acción física.</p>
+    <p>Ejemplo: Y0 ordena que el motor suba la plataforma.</p>
+  </div>
+
+  <table>
+    <tr>
+      <th>Actuador</th>
+      <th>Dirección PLC</th>
+      <th>Acción</th>
+    </tr>
+    <tr><td>Motor subir</td><td>Y0</td><td>Hace subir la plataforma.</td></tr>
+    <tr><td>Motor bajar</td><td>Y1</td><td>Hace bajar la plataforma.</td></tr>
+    <tr><td>Luz Piso 1</td><td>Y2</td><td>Indica Piso 1.</td></tr>
+    <tr><td>Luz Piso 2</td><td>Y3</td><td>Indica Piso 2.</td></tr>
+    <tr><td>Luz Piso 3</td><td>Y4</td><td>Indica Piso 3.</td></tr>
+  </table>
+
+  <div class="box amarillo">
+    <h3>Ejercicio 3: completar</h3>
+    <p>Para subir la plataforma se activa la salida <span class="linea"></span></p>
+    <p>Para bajar la plataforma se activa la salida <span class="linea"></span></p>
+    <p>Cuando la plataforma está en el Piso 1, debería encender la luz <span class="linea"></span></p>
+    <p>Cuando la plataforma está en el Piso 3, debería encender la luz <span class="linea"></span></p>
+  </div>
+
+  <img src="3.png" alt="Descripción de la imagen" width="600" height="400">
+
+<section class="page">
+  <h2>7. Análisis de situaciones</h2>
+  <p>Ahora relacionaremos entradas, salidas y movimiento.</p>
+
+  <div class="box verde">
+    <h3>Regla simple</h3>
+    <p>Si el piso pedido está más arriba, el montacarga debe subir.</p>
+    <p>Si el piso pedido está más abajo, el montacarga debe bajar.</p>
+    <p>Si el montacarga ya está en el piso pedido, no debe moverse.</p>
+  </div>
+
+  <table>
+    <tr>
+      <th>Situación</th>
+      <th>¿Sube, baja o queda detenido?</th>
+      <th>Salida que se activa</th>
+      <th>Sensor final esperado</th>
+    </tr>
+    <tr>
+      <td>Está en Piso 1 y se presiona Piso 2.</td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+    </tr>
+    <tr>
+      <td>Está en Piso 3 y se presiona Piso 1.</td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+    </tr>
+    <tr>
+      <td>Está en Piso 2 y se presiona Piso 2.</td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+    </tr>
+    <tr>
+      <td>Está en Piso 2 y se presiona Piso 3.</td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+      <td class="respuesta"></td>
+    </tr>
+  </table>  
+</section>
+<section class="page">
+  <h2>9. Ficha resumen</h2>
+  <p>Completa la tabla usando la información trabajada en la guía.</p>
+
+  <table>
+    <tr><th>Elemento</th><th>Dirección PLC</th><th>¿Es entrada o salida?</th><th>¿Qué hace?</th></tr>
+    <tr><td>Motor subir</td><td></td><td></td><td></td></tr>
+    <tr><td>Motor bajar</td><td></td><td></td><td></td></tr>
+    <tr><td>Sensor Piso 1</td><td></td><td></td><td></td></tr>
+    <tr><td>Sensor Piso 2</td><td></td><td></td><td></td></tr>
+    <tr><td>Sensor Piso 3</td><td></td><td></td><td></td></tr>
+    <tr><td>Luz Piso 1</td><td></td><td></td><td></td></tr>
+    <tr><td>Luz Piso 2</td><td></td><td></td><td></td></tr>
+    <tr><td>Luz Piso 3</td><td></td><td></td><td></td></tr>
+  </table>
+
+  <h2>10. Autoevaluación</h2>
+  <table class="check">
+    <tr><th>Indicador</th><th>Sí</th><th>Con ayuda</th><th>No</th></tr>
+    <tr><td>Reconozco los sensores del montacarga.</td><td></td><td></td><td></td></tr>
+    <tr><td>Reconozco los actuadores del montacarga.</td><td></td><td></td><td></td></tr>
+    <tr><td>Puedo decir qué significa M3, M4 y M5.</td><td></td><td></td><td></td></tr>
+    <tr><td>Puedo decir qué hacen Y0 e Y1.</td><td></td><td></td><td></td></tr>
+    <tr><td>Comprendo para qué sirven los sensores de aviso.</td><td></td><td></td><td></td></tr>
+    <tr><td>Puedo explicar cuándo el montacarga sube, baja o se detiene.</td><td></td><td></td><td></td></tr>
+  </table>
+
+  <h2>11. Evaluación del profesor</h2>
+  <table class="check">
+    <tr><th>Criterio</th><th>Logrado</th><th>En desarrollo</th><th>Requiere apoyo</th></tr>
+    <tr><td>Identifica entradas del PLC.</td><td></td><td></td><td></td></tr>
+    <tr><td>Identifica salidas del PLC.</td><td></td><td></td><td></td></tr>
+    <tr><td>Relaciona sensor con función física.</td><td></td><td></td><td></td></tr>
+    <tr><td>Relaciona salida con actuador.</td><td></td><td></td><td></td></tr>
+    <tr><td>Analiza situaciones simples de movimiento.</td><td></td><td></td><td></td></tr>
+    <tr><td>Explica verbalmente el funcionamiento básico del sistema.</td><td></td><td></td><td></td></tr>
+  </table>
+
+  <div class="box amarillo">
+    <h3>Observaciones del profesor</h3>
+    <div style="height:90px;border:1px solid #aaa;background:white;border-radius:8px;"></div>
+  </div>
+</section>
+
+</body>
+</html>
 
