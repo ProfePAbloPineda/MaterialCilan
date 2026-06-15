@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de caso: Montacarga industrial de 3 pisos</title>
+<style>
+  @page { size: A4; margin: 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color:#111; line-height:1.35; margin:0; background:#eee; }
+  main { max-width: 900px; margin: 0 auto; background:#fff; padding: 24px 34px; }
+  h1, h2, h3 { margin: 0.9em 0 0.35em; line-height:1.15; }
+  h1 { text-align:center; font-size: 24px; border-bottom:2px solid #111; padding-bottom:10px; }
+  h2 { font-size: 18px; border-bottom:1px solid #777; padding-bottom:4px; page-break-after: avoid; }
+  h3 { font-size: 15px; }
+  p { margin: 0.45em 0; }
+  ul, ol { margin-top: 0.3em; }
+  table { width:100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 13px; }
+  th, td { border:1px solid #333; padding:6px 7px; vertical-align: top; }
+  th { background:#f2f2f2; text-align:center; }
+  .datos td:first-child { width:28%; font-weight:bold; background:#fafafa; }
+  .mapa td:nth-child(1){ width:38%; }
+  .mapa td:nth-child(2){ width:18%; text-align:center; font-weight:bold; }
+  .nota { border-left:4px solid #333; padding:8px 10px; background:#f7f7f7; margin:10px 0; }
+  .advertencia { border:1px solid #111; padding:8px 10px; background:#fffbe6; }
+  .foto, .video { border:2px dashed #888; min-height: 135px; display:flex; align-items:center; justify-content:center; text-align:center; margin:10px 0 14px; padding:10px; color:#444; background:#fafafa; }
+  .video { min-height: 190px; }
+  .codigo { font-family: Consolas, monospace; background:#f4f4f4; border:1px solid #bbb; padding:8px; white-space:pre-wrap; font-size:12px; }
+  .lineas { height: 95px; border:1px solid #aaa; background: repeating-linear-gradient(#fff, #fff 23px, #ddd 24px); margin:8px 0 14px; }
+  .page-break { page-break-before: always; }
+  .compacto li { margin-bottom: 3px; }
+  .check td:first-child { width:34px; text-align:center; }
+  .rubrica td, .rubrica th { font-size:12.5px; }
+  @media print { body { background:#fff; } main { padding:0; max-width:none; } .no-print { display:none; } a { color:#111; text-decoration:none; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Guía de análisis de caso: Montacarga industrial de 3 pisos</h1>
+
+<table class="datos">
+<tr><td>Asignatura / módulo</td><td>Automatización industrial / PLC</td></tr>
+<tr><td>PLC</td><td>Delta SX2, programado en ISPSoft</td></tr>
+<tr><td>Simulación</td><td>Factory I/O enlazado mediante KepServer</td></tr>
+<tr><td>Duración</td><td>2 sesiones de trabajo</td></tr>
+<tr><td>Producto final</td><td>Programa Ladder funcional, tabla de análisis y verificación en simulación</td></tr>
+</table>
+
+<h2>1. Objetivos de aprendizaje</h2>
+<p>Al finalizar la actividad, el estudiante será capaz de analizar un sistema de montacarga industrial, modelar su funcionamiento lógico y construir un programa en lenguaje Ladder usando ISPSoft, respetando un mapa de entradas y salidas definido.</p>
+<ul class="compacto">
+<li>Interpretar el funcionamiento de sensores de piso y sensores de aviso asociados a la inercia mecánica del motor.</li>
+<li>Diseñar la lógica de movimiento hacia arriba y hacia abajo según piso solicitado y posición actual.</li>
+<li>Aplicar enclavamientos básicos para evitar órdenes simultáneas incompatibles.</li>
+<li>Probar el programa en Factory I/O y registrar evidencias de funcionamiento.</li>
+</ul>
+
+<h2>2. Contexto del caso</h2>
+<p>Una empresa utiliza un montacarga industrial de tres pisos para trasladar carga entre niveles. La plataforma se mueve mediante un motor con dos sentidos de giro: subida y bajada. Debido a la inercia del sistema, el motor no se detiene exactamente en el instante en que se desactiva la salida. Por esta razón, se incorporan sensores de aviso antes de cada piso para anticipar la detención.</p>
+<p>El sistema será programado en ISPSoft para un PLC Delta SX2. La prueba se realizará en Factory I/O. La configuración de KepServer y del simulador será entregada lista; el foco de esta guía es el análisis lógico y la programación Ladder.</p>
+
+<img src="1.png" alt="Descripción de la foto" width="300" height="600">
+
+<h2>3. Mapeo obligatorio de señales</h2>
+<p>El programa debe respetar estrictamente el siguiente mapeo. No cambie nombres ni recursos, porque la simulación ya está enlazada con estas direcciones.</p>
+<table class="mapa">
+<tr><th>Nombre</th><th>Recurso</th><th>Función</th></tr>
+<tr><td>Piso1</td><td>M0</td><td>Solicitud de movimiento hacia piso 1</td></tr>
+<tr><td>Piso2</td><td>M1</td><td>Solicitud de movimiento hacia piso 2</td></tr>
+<tr><td>Piso3</td><td>M2</td><td>Solicitud de movimiento hacia piso 3</td></tr>
+<tr><td>SensorPiso1</td><td>M3</td><td>Plataforma ubicada en piso 1</td></tr>
+<tr><td>SensorPiso2</td><td>M4</td><td>Plataforma ubicada en piso 2</td></tr>
+<tr><td>SensorPiso3</td><td>M5</td><td>Plataforma ubicada en piso 3</td></tr>
+<tr><td>SensorAvisoPiso1</td><td>M6</td><td>Aviso anticipado para detener al llegar a piso 1 desde arriba</td></tr>
+<tr><td>SensorAvisoPiso2Abajo</td><td>M7</td><td>Aviso anticipado para detener al llegar a piso 2 desde abajo</td></tr>
+<tr><td>SensorAvisoPiso3</td><td>M8</td><td>Aviso anticipado para detener al llegar a piso 3 desde abajo</td></tr>
+<tr><td>SensorAvisoPiso2Arriba</td><td>M9</td><td>Aviso anticipado para detener al llegar a piso 2 desde arriba</td></tr>
+<tr><td>Inicio</td><td>M20</td><td>Habilitación de marcha del sistema</td></tr>
+<tr><td>Parada</td><td>M21</td><td>Parada del sistema</td></tr>
+<tr><td>Encendido</td><td>M22</td><td>Estado general de sistema energizado/habilitado</td></tr>
+<tr><td>AscensorArriba</td><td>Y0</td><td>Salida para subir la plataforma</td></tr>
+<tr><td>AscensorAbajo</td><td>Y1</td><td>Salida para bajar la plataforma</td></tr>
+<tr><td>LuzPiso1</td><td>Y2</td><td>Indicador de piso 1</td></tr>
+<tr><td>LuzPiso2</td><td>Y3</td><td>Indicador de piso 2</td></tr>
+<tr><td>LuzPiso3</td><td>Y4</td><td>Indicador de piso 3</td></tr>
+<tr><td>LuzEncendido</td><td>Y5</td><td>Indicador de sistema encendido</td></tr>
+<tr><td>LuzInicio</td><td>Y6</td><td>Indicador de orden de inicio</td></tr>
+<tr><td>LuzStop</td><td>Y7</td><td>Indicador de parada</td></tr>
+</table>
+
+<div class="advertencia"><strong>Condición crítica:</strong> las salidas Y0 y Y1 nunca deben activarse al mismo tiempo. Esa condición representa una falla lógica de control.</div>
+
+<h2>4. Análisis técnico del sistema</h2>
+<p>El montacarga tiene tres sensores principales de posición: SensorPiso1, SensorPiso2 y SensorPiso3. Estos indican la posición final de la plataforma. Además, existen sensores de aviso que permiten detener antes el motor para compensar la inercia.</p>
+<ul>
+<li>Para llegar al piso 1, la plataforma solo puede venir desde arriba. Por eso el SensorAvisoPiso1 está ubicado sobre el SensorPiso1.</li>
+<li>Para llegar al piso 3, la plataforma solo puede venir desde abajo. Por eso el SensorAvisoPiso3 está ubicado bajo el SensorPiso3.</li>
+<li>Para llegar al piso 2, la plataforma puede venir desde abajo o desde arriba. Por eso existen dos sensores de aviso: SensorAvisoPiso2Abajo y SensorAvisoPiso2Arriba.</li>
+</ul>
+
+<img src="2.png" alt="Descripción de la foto" width="600" height="600">
+
+<h2>5. Reglas mínimas de funcionamiento</h2>
+<ol>
+<li>El sistema debe encenderse mediante Inicio y detenerse mediante Parada.</li>
+<li>Cuando el sistema está habilitado, debe activarse LuzEncendido.</li>
+<li>La solicitud Piso1, Piso2 o Piso3 debe generar movimiento solo si la plataforma no está ya en el piso solicitado.</li>
+<li>Si el destino está sobre la posición actual, debe activarse AscensorArriba.</li>
+<li>Si el destino está bajo la posición actual, debe activarse AscensorAbajo.</li>
+<li>El motor debe detenerse al detectar el sensor de aviso correspondiente al sentido de llegada.</li>
+<li>Al quedar en un piso, debe encenderse la luz del piso correspondiente.</li>
+<li>La lógica debe impedir subida y bajada simultánea.</li>
+</ol>
+
+<h2>6. Sesión 1: análisis y modelado en papel</h2>
+<h3>6.1 Identificación de estados</h3>
+<p>Complete la tabla antes de programar. Use lenguaje claro y operativo.</p>
+<table>
+<tr><th>Estado del sistema</th><th>Condición de entrada</th><th>Salida esperada</th><th>Condición de término</th></tr>
+<tr><td>Detenido / sin habilitación</td><td></td><td></td><td></td></tr>
+<tr><td>En piso 1</td><td></td><td></td><td></td></tr>
+<tr><td>En piso 2</td><td></td><td></td><td></td></tr>
+<tr><td>En piso 3</td><td></td><td></td><td></td></tr>
+<tr><td>Subiendo</td><td></td><td></td><td></td></tr>
+<tr><td>Bajando</td><td></td><td></td><td></td></tr>
+</table>
+
+<h3>6.2 Tabla de decisión de movimiento</h3>
+<table>
+<tr><th>Posición actual</th><th>Destino solicitado</th><th>Sentido de movimiento</th><th>Sensor de aviso que debe detener</th></tr>
+<tr><td>Piso 1</td><td>Piso 2</td><td></td><td></td></tr>
+<tr><td>Piso 1</td><td>Piso 3</td><td></td><td></td></tr>
+<tr><td>Piso 2</td><td>Piso 1</td><td></td><td></td></tr>
+<tr><td>Piso 2</td><td>Piso 3</td><td></td><td></td></tr>
+<tr><td>Piso 3</td><td>Piso 1</td><td></td><td></td></tr>
+<tr><td>Piso 3</td><td>Piso 2</td><td></td><td></td></tr>
+</table>
+
+<h3>6.3 Modelo Ladder en papel</h3>
+<p>Antes de abrir ISPSoft, dibuje en papel la estructura del programa. Debe incluir, al menos, los siguientes bloques:</p>
+<ul class="compacto">
+<li>Enclavamiento de inicio/parada.</li>
+<li>Memoria de destino o condición equivalente.</li>
+<li>Lógica de subida.</li>
+<li>Lógica de bajada.</li>
+<li>Condiciones de detención por sensores de aviso.</li>
+<li>Luces de piso y luces de estado.</li>
+</ul>
+<div class="lineas"></div>
+<div class="lineas"></div>
+
+<h2 class="page-break">7. Sesión 2: programación y prueba en simulación</h2>
+<p>En esta sesión el estudiante implementa el programa en ISPSoft, lo descarga al PLC Delta SX2 simulado y verifica el funcionamiento en Factory I/O. Los archivos de KepServer y Factory I/O serán entregados ya configurados.</p>
+
+<img src="3.png" alt="Descripción de la foto" width="600" height="600">
+
+
+<h3>7.1 Pruebas obligatorias</h3>
+<table>
+<tr><th>Prueba</th><th>Acción</th><th>Resultado esperado</th><th>Resultado observado</th></tr>
+<tr><td>1</td><td>Iniciar sistema</td><td>LuzEncendido y LuzInicio activas según lógica definida</td><td></td></tr>
+<tr><td>2</td><td>Desde piso 1 solicitar piso 2</td><td>Sube y se detiene con SensorAvisoPiso2Abajo</td><td></td></tr>
+<tr><td>3</td><td>Desde piso 2 solicitar piso 3</td><td>Sube y se detiene con SensorAvisoPiso3</td><td></td></tr>
+<tr><td>4</td><td>Desde piso 3 solicitar piso 2</td><td>Baja y se detiene con SensorAvisoPiso2Arriba</td><td></td></tr>
+<tr><td>5</td><td>Desde piso 2 solicitar piso 1</td><td>Baja y se detiene con SensorAvisoPiso1</td><td></td></tr>
+<tr><td>6</td><td>Solicitar el mismo piso actual</td><td>No debe activarse el motor</td><td></td></tr>
+<tr><td>7</td><td>Presionar Parada durante movimiento</td><td>Se desactiva el movimiento y se indica parada</td><td></td></tr>
+<tr><td>8</td><td>Revisar Y0 e Y1</td><td>Nunca deben estar activas simultáneamente</td><td></td></tr>
+</table>
+
+<h3>7.2 Evidencia en video</h3>
+<p>Registre una prueba de funcionamiento donde se vea el movimiento entre pisos, las luces y la detención anticipada por sensores de aviso. El video recomendado es formato <strong>MP4</strong>, codificación <strong>H.264</strong>, resolución 720p o 1080p. Nombre sugerido: <strong>video_prueba.mp4</strong>.</p>
+
+<video width="640" height="360" controls>
+  <source src="Simulacion_factori_montacarga.mp4" type="video/mp4">
+  Tu navegador no soporta la etiqueta de video.
+</video>
+
+
+<h2>8. Entregables</h2>
+<ul>
+<li>Programa Ladder realizado en ISPSoft, usando el mapeo definido.</li>
+<li>Hoja de análisis de la sesión 1 completada.</li>
+<li>Tabla de pruebas de la sesión 2 completada.</li>
+<li>Capturas de pantalla del programa o de la simulación.</li>
+<li>Video breve de funcionamiento en formato MP4 H.264.</li>
+</ul>
+
+<h2>9. Preguntas de profundización</h2>
+<ol>
+<li>¿Por qué no es suficiente detener el motor usando solamente SensorPiso1, SensorPiso2 y SensorPiso3?</li>
+<li>¿Qué falla podría ocurrir si no se usa un enclavamiento entre AscensorArriba y AscensorAbajo?</li>
+<li>¿Por qué el piso 2 necesita dos sensores de aviso y los pisos 1 y 3 solo uno?</li>
+<li>¿Qué pasaría si el montacarga recibe una nueva solicitud mientras está en movimiento?</li>
+<li>¿Cómo modificaría el programa para agregar prioridad, cola de llamados o memoria de destino?</li>
+<li>¿Qué diferencias existirían entre esta simulación y una puesta en marcha real con motor, contactores y finales de carrera?</li>
+</ol>
+
+<h2 class="page-break">10. Autoevaluación del estudiante</h2>
+<table class="check">
+<tr><th>✓</th><th>Criterio</th><th>Comentario breve</th></tr>
+<tr><td></td><td>Respeté todos los nombres y recursos del mapa de señales.</td><td></td></tr>
+<tr><td></td><td>Realicé el análisis en papel antes de programar.</td><td></td></tr>
+<tr><td></td><td>La lógica de subida y bajada funciona según el destino solicitado.</td><td></td></tr>
+<tr><td></td><td>El programa detiene el motor usando sensores de aviso.</td><td></td></tr>
+<tr><td></td><td>Y0 e Y1 nunca se activan simultáneamente.</td><td></td></tr>
+<tr><td></td><td>Registré evidencias de prueba en Factory I/O.</td><td></td></tr>
+<tr><td></td><td>Puedo explicar la función de cada sensor de aviso.</td><td></td></tr>
+</table>
+
+<h2>11. Evaluación del profesor</h2>
+<table class="rubrica">
+<tr><th>Criterio</th><th>Logrado<br>3 pts</th><th>Medianamente logrado<br>2 pts</th><th>Por lograr<br>1 pt</th><th>Puntaje</th></tr>
+<tr><td>Análisis del caso</td><td>Identifica posición, destino, sentido y sensores de aviso.</td><td>Identifica la mayoría de las condiciones, con errores menores.</td><td>El análisis es incompleto o no permite programar.</td><td></td></tr>
+<tr><td>Uso del mapeo</td><td>Respeta completamente nombres y recursos.</td><td>Presenta errores menores corregibles.</td><td>Cambia direcciones o nombres críticos.</td><td></td></tr>
+<tr><td>Lógica Ladder</td><td>El programa controla subida, bajada y detención correctamente.</td><td>Funciona parcialmente o requiere ajustes.</td><td>No logra controlar el ciclo principal.</td><td></td></tr>
+<tr><td>Seguridad lógica</td><td>Impide activación simultánea de Y0 e Y1.</td><td>El enclavamiento existe, pero es débil o incompleto.</td><td>No existe control contra salidas incompatibles.</td><td></td></tr>
+<tr><td>Prueba en simulación</td><td>Verifica todos los casos y registra evidencias.</td><td>Verifica algunos casos.</td><td>No demuestra funcionamiento suficiente.</td><td></td></tr>
+<tr><td>Explicación técnica</td><td>Explica con claridad el efecto de la inercia y los sensores de aviso.</td><td>Explica parcialmente el fenómeno.</td><td>No justifica técnicamente la solución.</td><td></td></tr>
+<tr><th colspan="4">Puntaje total</th><th></th></tr>
+</table>
+
+<h2>12. Observaciones finales</h2>
+<div class="lineas"></div>
+
+</main>
+</body>
+</html>
 
