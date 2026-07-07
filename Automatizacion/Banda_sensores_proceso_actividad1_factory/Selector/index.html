@@ -1,1 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de Laboratorio · Separador de Piezas Metálicas y Baldosas</title>
+  <style>
+    :root{
+      --bg:#f4f6f8;
+      --paper:#ffffff;
+      --ink:#1f2933;
+      --muted:#5b6773;
+      --blue:#1f5eff;
+      --cyan:#00a7c7;
+      --green:#16a34a;
+      --orange:#f59e0b;
+      --red:#dc2626;
+      --line:#d8dee6;
+      --soft:#eef4ff;
+      --soft2:#ecfdf5;
+      --soft3:#fff7ed;
+      --code:#101828;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#eaf0f8 0%,var(--bg) 260px);
+      color:var(--ink);
+      font-family:Arial, Helvetica, sans-serif;
+      line-height:1.55;
+    }
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:28px 18px 70px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#102a56 0%,#1f5eff 55%,#00a7c7 100%);
+      color:white;
+      border-radius:22px;
+      padding:34px;
+      box-shadow:0 18px 45px rgba(16,42,86,.22);
+      margin-bottom:24px;
+    }
+    .hero p{max-width:850px;color:#e8f2ff;margin:10px 0 0;}
+    h1{font-size:34px;line-height:1.1;margin:0 0 8px;}
+    h2{font-size:24px;margin:34px 0 12px;color:#102a56;}
+    h3{font-size:18px;margin:22px 0 8px;color:#183b73;}
+    .tag{
+      display:inline-block;
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.35);
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:13px;
+      margin-bottom:12px;
+    }
+    .card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:24px;
+      margin:18px 0;
+      box-shadow:0 8px 24px rgba(31,41,51,.06);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+    .box{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px;
+      background:#fbfcfe;
+    }
+    .blue{background:var(--soft);border-color:#bfd2ff;}
+    .green{background:var(--soft2);border-color:#bbf7d0;}
+    .orange{background:var(--soft3);border-color:#fed7aa;}
+    .red{background:#fff1f2;border-color:#fecdd3;}
+    .small{font-size:14px;color:var(--muted);}
+    .imgbox{
+      border:2px dashed #b8c3d1;
+      border-radius:18px;
+      background:#f8fafc;
+      padding:14px;
+      margin:16px 0;
+      text-align:center;
+    }
+    .imgbox img{
+      max-width:100%;
+      height:auto;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:white;
+    }
+    .caption{font-size:13px;color:var(--muted);margin-top:8px;}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin:14px 0;
+      font-size:14px;
+      overflow:hidden;
+      border-radius:12px;
+    }
+    th,td{border:1px solid var(--line);padding:10px;vertical-align:top;}
+    th{background:#eaf0ff;color:#102a56;text-align:left;}
+    tr:nth-child(even) td{background:#fafafa;}
+    code{
+      background:#eef2f7;
+      color:#0f172a;
+      padding:2px 6px;
+      border-radius:6px;
+      font-family:Consolas, monospace;
+      font-size:.95em;
+    }
+    pre{
+      background:var(--code);
+      color:#e5e7eb;
+      padding:16px;
+      border-radius:14px;
+      overflow:auto;
+      font-size:13px;
+    }
+    .step{
+      display:flex;
+      gap:14px;
+      margin:12px 0;
+      align-items:flex-start;
+    }
+    .num{
+      min-width:34px;height:34px;border-radius:50%;
+      background:var(--blue);color:white;font-weight:bold;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .checklist label{
+      display:block;
+      padding:8px 0;
+      border-bottom:1px solid #eef2f7;
+    }
+    .video{
+      position:relative;
+      width:100%;
+      padding-bottom:56.25%;
+      height:0;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#111827;
+      margin-top:12px;
+    }
+    .video iframe{
+      position:absolute;top:0;left:0;width:100%;height:100%;border:0;
+    }
+    .note{
+      border-left:6px solid var(--blue);
+      background:#f8fbff;
+      padding:14px 16px;
+      border-radius:12px;
+      margin:14px 0;
+    }
+    .warning{border-left-color:var(--orange);background:#fffaf0;}
+    .danger{border-left-color:var(--red);background:#fff5f5;}
+    .ok{border-left-color:var(--green);background:#f0fdf4;}
+    .answer{
+      min-height:70px;
+      border:1px dashed #aab4c0;
+      border-radius:12px;
+      background:#fcfcfd;
+      margin:10px 0 20px;
+      padding:12px;
+    }
+    @media(max-width:780px){.grid,.grid3{grid-template-columns:1fr}.hero{padding:24px}h1{font-size:28px}}
+    @media print{
+      body{background:white}.page{max-width:none;padding:0}.hero,.card{box-shadow:none}.card{break-inside:avoid}.video{display:none}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="tag">Laboratorio PLC Delta SX2 · Factory I/O · KEPServerEX</div>
+      <h1>Separador de piezas metálicas y baldosas</h1>
+      <p>En esta actividad debes poner en marcha una celda de clasificación, analizar el programa ladder entregado, relacionar cada sensor y actuador con el proceso físico, y ajustar la simulación hasta que el ciclo funcione correctamente.</p>
+    </section>
+
+    <section class="card">
+      <h2>1. Objetivo de la actividad</h2>
+      <p>Analizar, simular y explicar el funcionamiento de un sistema automatizado que separa piezas metálicas de piezas no metálicas. En esta guía, las piezas no metálicas se llamarán <strong>baldosas</strong>.</p>
+      <div class="grid3">
+        <div class="box blue"><strong>Analizar</strong><br><span class="small">Identificar entradas, salidas, marcas internas, temporizadores y secuencia de control.</span></div>
+        <div class="box green"><strong>Simular</strong><br><span class="small">Abrir Factory I/O, cargar la configuración de comunicación y ejecutar el programa PLC.</span></div>
+        <div class="box orange"><strong>Explicar</strong><br><span class="small">Relacionar cada línea del ladder con una acción física del proceso.</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Archivos entregados</h2>
+      <table>
+        <thead><tr><th>Archivo</th><th>Uso en la actividad</th></tr></thead>
+        <tbody>
+          <tr><td>Proyecto de Factory I/O</td><td>Contiene la escena del proceso: bandas transportadoras, sensores, seleccionador, balizas y piezas.</td></tr>
+          <tr><td>Configuración de KEPServerEX</td><td>Permite comunicar Factory I/O con el PLC Delta SX2 mediante las variables configuradas.</td></tr>
+          <tr><td>Programa PLC Delta SX2</td><td>Contiene la lógica ladder base que debes revisar, editar si corresponde, descargar al PLC o ejecutar en simulación.</td></tr>
+          <tr><td>Esta guía de laboratorio</td><td>Orienta el análisis, la puesta en marcha, la prueba de funcionamiento y la entrega final.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>3. Vista general del proceso</h2>
+      <p>El sistema recibe una pieza desde un depósito. La pieza cae sobre la banda recta y activa el sensor reflectivo. Luego avanza hacia un marco de detección compuesto por un sensor inductivo y un sensor capacitivo. Según la lectura de estos sensores, el programa decide si la pieza debe desviarse como metálica o seguir recto como baldosa.</p>
+      <div class="imgbox">
+        <img src="1.PNG" alt="Vista general del proceso en Factory I/O">
+        <div class="caption">Imagen 1. Vista general del proceso. Reemplaza el archivo <code>1.PNG</code> por la captura correspondiente.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Video de referencia</h2>
+      <p>Observa el video antes de intervenir el programa. El objetivo es reconocer el movimiento esperado de las piezas, el momento en que se activan los sensores y la acción del seleccionador.</p>
+      <div class="video">
+        <iframe src="https://www.youtube.com/embed/ID_DEL_VIDEO" title="Video de referencia del proceso" allowfullscreen></iframe>
+      </div>
+      <p class="small">Para insertar el video definitivo, reemplaza <code>ID_DEL_VIDEO</code> por el identificador del video de YouTube. Ejemplo: si el enlace es <code>https://www.youtube.com/watch?v=ABC123</code>, usa <code>https://www.youtube.com/embed/ABC123</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2>5. Mapeo de entradas y salidas</h2>
+      <p>Antes de ejecutar el programa, revisa el mapeo de símbolos. Cada nombre usado en ladder debe corresponder a una dirección física o lógica del PLC.</p>
+      <div class="imgbox">
+        <img src="2.PNG" alt="Mapeo de símbolos del programa PLC">
+        <div class="caption">Imagen 2. Mapeo de símbolos. Reemplaza el archivo <code>2.PNG</code> por la captura del mapeo.</div>
+      </div>
+
+      <table>
+        <thead><tr><th>Símbolo</th><th>Dirección</th><th>Tipo</th><th>Función en el proceso</th></tr></thead>
+        <tbody>
+          <tr><td><code>SensorReflectivo</code></td><td>M0</td><td>Entrada lógica</td><td>Detecta la caída inicial de la pieza y habilita la banda recta.</td></tr>
+          <tr><td><code>SensorInductivo</code></td><td>M1</td><td>Entrada lógica</td><td>Detecta piezas metálicas.</td></tr>
+          <tr><td><code>SensorCapacitivo</code></td><td>M2</td><td>Entrada lógica</td><td>Detecta presencia de pieza bajo el marco de sensores.</td></tr>
+          <tr><td><code>SensorGiro90</code></td><td>M3</td><td>Entrada lógica</td><td>Confirma que el seleccionador llegó a 90°.</td></tr>
+          <tr><td><code>Banda_Recta</code></td><td>Y0</td><td>Salida</td><td>Mueve la pieza desde el depósito hasta la zona de clasificación.</td></tr>
+          <tr><td><code>GirarMas90</code></td><td>Y1</td><td>Salida</td><td>Ordena el giro del seleccionador hacia la posición de desvío.</td></tr>
+          <tr><td><code>GirarMenos90</code></td><td>Y2</td><td>Salida</td><td>Ordena el retorno del seleccionador a su posición original.</td></tr>
+          <tr><td><code>BandaPiezasMetalicas</code></td><td>Y3</td><td>Salida</td><td>Activa la banda de salida para piezas metálicas.</td></tr>
+          <tr><td><code>BandasPiezasBaldosas</code></td><td>Y4</td><td>Salida</td><td>Activa la banda de salida para baldosas.</td></tr>
+          <tr><td><code>IndicadorPiezaBaldosa</code></td><td>Y5</td><td>Salida</td><td>Enciende la baliza correspondiente a baldosa.</td></tr>
+          <tr><td><code>IndicadorPiezaMetalica</code></td><td>Y6</td><td>Salida</td><td>Enciende la baliza correspondiente a pieza metálica.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>6. Secuencia esperada del proceso</h2>
+      <div class="step"><div class="num">1</div><div><strong>Inicio del ciclo.</strong> La pieza cae desde el depósito y activa <code>SensorReflectivo</code>. La salida <code>Banda_Recta</code> se enciende.</div></div>
+      <div class="step"><div class="num">2</div><div><strong>Transporte hacia el marco.</strong> La pieza avanza hasta pasar por los sensores inductivo y capacitivo.</div></div>
+      <div class="step"><div class="num">3</div><div><strong>Decisión de clasificación.</strong> Si se activa <code>SensorInductivo</code>, la pieza es metálica. Si se activa <code>SensorCapacitivo</code> pero no se confirma metal, se considera baldosa.</div></div>
+      <div class="step"><div class="num">4</div><div><strong>Ruta metálica.</strong> El programa aplica un retardo, gira el seleccionador a 90°, activa la banda de piezas metálicas y enciende su baliza.</div></div>
+      <div class="step"><div class="num">5</div><div><strong>Retorno del seleccionador.</strong> Cuando el sensor de giro confirma la posición de 90°, el sistema espera que la pieza salga, ordena el retorno y apaga las salidas asociadas.</div></div>
+      <div class="step"><div class="num">6</div><div><strong>Ruta baldosa.</strong> La pieza sigue derecho, se activa la banda de baldosas y su baliza. Luego de un retardo, se apagan las salidas del ciclo.</div></div>
+      <div class="note warning"><strong>Importante:</strong> los temporizadores no son decorativos. Se usan para sincronizar el programa con el tiempo real de avance de la pieza, el giro mecánico del seleccionador y la salida completa desde la banda.</div>
+    </section>
+
+    <section class="card">
+      <h2>7. Programa PLC entregado</h2>
+      <p>El programa ladder contiene redes numeradas. Debes revisar cada red y explicar qué condición evalúa, qué salida o marca modifica, y qué efecto físico produce en Factory I/O.</p>
+      <div class="imgbox">
+        <img src="3.PNG" alt="Programa ladder del PLC Delta SX2">
+        <div class="caption">Imagen 3. Programa ladder base. Reemplaza el archivo <code>3.PNG</code> por la captura del programa.</div>
+      </div>
+
+      <table>
+        <thead><tr><th>Red</th><th>Función esperada</th><th>Elementos principales</th></tr></thead>
+        <tbody>
+          <tr><td>Network 1</td><td>Activa la banda recta cuando cae una pieza.</td><td><code>SensorReflectivo</code>, <code>Banda_Recta</code></td></tr>
+          <tr><td>Network 2-4</td><td>Detecta pieza metálica, aplica retardo y activa ruta metálica.</td><td><code>SensorInductivo</code>, <code>M40</code>, <code>T2</code>, <code>GirarMas90</code>, <code>BandaPiezasMetalicas</code></td></tr>
+          <tr><td>Network 5-7</td><td>Detecta fin de giro, espera salida de la pieza y retorna el seleccionador.</td><td><code>SensorGiro90</code>, <code>M20</code>, <code>T0</code>, <code>GirarMenos90</code></td></tr>
+          <tr><td>Network 8-10</td><td>Diferencia lectura inductiva/capacitiva para clasificar baldosa.</td><td><code>SensorInductivo</code>, <code>SensorCapacitivo</code>, <code>M30</code></td></tr>
+          <tr><td>Network 11-12</td><td>Aplica retardo para salida de baldosa y apaga banda/baliza.</td><td><code>BandasPiezasBaldosas</code>, <code>T1</code>, <code>Banda_Recta</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>8. Puesta en marcha</h2>
+      <ol>
+        <li>Abre el proyecto de Factory I/O entregado.</li>
+        <li>Verifica que el driver de comunicación esté configurado según el archivo de KEPServerEX.</li>
+        <li>Abre el programa del PLC Delta SX2 en ISPSoft.</li>
+        <li>Revisa que los símbolos del programa coincidan con el mapeo de la guía.</li>
+        <li>Descarga el programa al PLC o ejecútalo según el modo indicado por el docente.</li>
+        <li>Inicia la simulación en Factory I/O.</li>
+        <li>Prueba al menos una pieza metálica y una baldosa.</li>
+        <li>Ajusta los temporizadores si la pieza no alcanza a llegar, salir o desviarse correctamente.</li>
+      </ol>
+      <div class="note danger"><strong>Criterio de seguridad lógica:</strong> evita que <code>GirarMas90</code> y <code>GirarMenos90</code> queden activos al mismo tiempo. También verifica que las bandas se apaguen al finalizar cada ciclo.</div>
+    </section>
+
+    <section class="card">
+      <h2>9. Análisis por redes</h2>
+      <p>Completa el análisis con tus propias palabras. No basta con escribir el nombre de los contactos o bobinas; debes explicar la relación entre programa y proceso físico.</p>
+      <table>
+        <thead><tr><th>Red</th><th>¿Qué condición se evalúa?</th><th>¿Qué acción genera?</th><th>¿Qué ocurre físicamente?</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td></td><td></td><td></td></tr>
+          <tr><td>2</td><td></td><td></td><td></td></tr>
+          <tr><td>3</td><td></td><td></td><td></td></tr>
+          <tr><td>4</td><td></td><td></td><td></td></tr>
+          <tr><td>5</td><td></td><td></td><td></td></tr>
+          <tr><td>6</td><td></td><td></td><td></td></tr>
+          <tr><td>7</td><td></td><td></td><td></td></tr>
+          <tr><td>8</td><td></td><td></td><td></td></tr>
+          <tr><td>9</td><td></td><td></td><td></td></tr>
+          <tr><td>10</td><td></td><td></td><td></td></tr>
+          <tr><td>11</td><td></td><td></td><td></td></tr>
+          <tr><td>12</td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>10. Pruebas obligatorias</h2>
+      <table>
+        <thead><tr><th>Prueba</th><th>Resultado esperado</th><th>Resultado observado</th><th>Corrección realizada</th></tr></thead>
+        <tbody>
+          <tr><td>Pieza metálica 1</td><td>Se detecta metal, gira el seleccionador, sale por ruta metálica.</td><td></td><td></td></tr>
+          <tr><td>Pieza metálica 2</td><td>Repite el ciclo sin quedar salidas activas.</td><td></td><td></td></tr>
+          <tr><td>Baldosa 1</td><td>No se activa el desvío, sigue derecho y sale por ruta de baldosas.</td><td></td><td></td></tr>
+          <tr><td>Baldosa 2</td><td>Repite el ciclo con apagado correcto de banda y baliza.</td><td></td><td></td></tr>
+          <tr><td>Prueba mixta</td><td>Una pieza metálica y una baldosa se clasifican correctamente en ciclos separados.</td><td></td><td></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>11. Preguntas de análisis</h2>
+      <p><strong>1.</strong> ¿Por qué el sensor reflectivo activa la banda recta al inicio del proceso?</p>
+      <div class="answer"></div>
+      <p><strong>2.</strong> ¿Qué diferencia lógica existe entre detectar una pieza metálica y detectar una baldosa?</p>
+      <div class="answer"></div>
+      <p><strong>3.</strong> ¿Para qué se usa el temporizador antes de girar el seleccionador?</p>
+      <div class="answer"></div>
+      <p><strong>4.</strong> ¿Qué problema podría ocurrir si el seleccionador vuelve demasiado rápido a su posición original?</p>
+      <div class="answer"></div>
+      <p><strong>5.</strong> ¿Qué salidas deben apagarse al terminar el ciclo de una pieza metálica?</p>
+      <div class="answer"></div>
+      <p><strong>6.</strong> ¿Qué salidas deben apagarse al terminar el ciclo de una baldosa?</p>
+      <div class="answer"></div>
+      <p><strong>7.</strong> ¿Qué ajustarías si la pieza metálica choca con el seleccionador o no alcanza a desviarse?</p>
+      <div class="answer"></div>
+    </section>
+
+    <section class="card">
+      <h2>12. Entrega</h2>
+      <p>Entrega un informe breve con capturas de la simulación funcionando, tabla de análisis por redes, resultados de pruebas y explicación de los ajustes realizados.</p>
+      <div class="checklist">
+        <label><input type="checkbox"> Proyecto Factory I/O ejecutado correctamente.</label>
+        <label><input type="checkbox"> Comunicación con KEPServerEX verificada.</label>
+        <label><input type="checkbox"> Programa PLC revisado y descargado o simulado.</label>
+        <label><input type="checkbox"> Clasificación de piezas metálicas validada.</label>
+        <label><input type="checkbox"> Clasificación de baldosas validada.</label>
+        <label><input type="checkbox"> Temporizadores ajustados y justificados.</label>
+        <label><input type="checkbox"> Análisis completo de cada red del programa.</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>13. Pauta de evaluación</h2>
+      <table>
+        <thead><tr><th>Criterio</th><th>Logrado</th><th>Medianamente logrado</th><th>No logrado</th></tr></thead>
+        <tbody>
+          <tr><td>Relaciona entradas y salidas con el proceso físico.</td><td>Identifica y explica correctamente sensores, actuadores y marcas.</td><td>Identifica la mayoría, pero con explicaciones incompletas.</td><td>No logra relacionar el programa con el proceso.</td></tr>
+          <tr><td>Comprende la secuencia de clasificación.</td><td>Explica correctamente ruta metálica, ruta baldosa y retorno del seleccionador.</td><td>Explica la secuencia general, pero omite condiciones relevantes.</td><td>No explica la secuencia o la confunde.</td></tr>
+          <tr><td>Ajusta temporizadores de forma justificada.</td><td>Ajusta tiempos según el movimiento real de las piezas y justifica los cambios.</td><td>Ajusta tiempos por ensayo, pero con justificación débil.</td><td>No ajusta o deja el proceso desincronizado.</td></tr>
+          <tr><td>Simula y valida el funcionamiento.</td><td>Prueba piezas metálicas y baldosas con resultados correctos.</td><td>Logra funcionamiento parcial o inestable.</td><td>No logra simular el proceso correctamente.</td></tr>
+          <tr><td>Documenta el análisis.</td><td>Entrega análisis claro, ordenado y con evidencias.</td><td>Entrega análisis incompleto o poco preciso.</td><td>No entrega evidencias suficientes.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
 
