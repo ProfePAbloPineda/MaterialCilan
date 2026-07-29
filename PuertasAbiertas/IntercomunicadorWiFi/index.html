@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Material de estudio sobre un intercomunicador Wi‑Fi full duplex con ESP32‑C3, KY-037, PWM y LM386.">
+  <title>Intercomunicador Wi‑Fi Full Duplex con ESP32‑C3</title>
+  <style>
+    :root{--bg:#0d1117;--surface:#151b23;--surface-2:#1b2430;--surface-3:#202c3a;--text:#e6edf3;--muted:#9aa8b7;--line:#2d3a49;--blue:#4aa3ff;--blue-soft:rgba(74,163,255,.14);--green:#44d3a8;--green-soft:rgba(68,211,168,.14);--orange:#ff9a62;--orange-soft:rgba(255,154,98,.14);--purple:#a98bff;--purple-soft:rgba(169,139,255,.14);--warning:#ffd166;--radius:18px;--shadow:0 18px 45px rgba(0,0,0,.25);--content-width:940px;--sidebar-width:290px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:86px}body{margin:0;color:var(--text);background:radial-gradient(circle at 15% 0%,rgba(74,163,255,.08),transparent 30%),radial-gradient(circle at 95% 10%,rgba(68,211,168,.06),transparent 26%),var(--bg);font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.75}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.reading-progress{position:fixed;inset:0 0 auto 0;height:4px;background:rgba(255,255,255,.05);z-index:1000}.reading-progress>span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .1s linear}.page-shell{display:grid;grid-template-columns:var(--sidebar-width) minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:30px 22px;background:rgba(15,20,27,.93);border-right:1px solid var(--line);backdrop-filter:blur(12px)}.brand{margin-bottom:26px;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(74,163,255,.11),rgba(68,211,168,.06))}.brand strong{display:block;font-size:1.05rem;line-height:1.35}.brand span{display:block;margin-top:8px;color:var(--muted);font-size:.83rem;line-height:1.45}.toc-title{margin:0 0 10px 8px;color:var(--muted);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.toc{display:grid;gap:4px}.toc a{display:block;padding:8px 11px;color:#bac5d0;border-radius:10px;font-size:.87rem;line-height:1.3;text-decoration:none;transition:background .15s ease,color .15s ease}.toc a:hover,.toc a.active{color:#fff;background:var(--blue-soft)}main{min-width:0;padding:54px 5vw 90px}.document{width:min(100%,var(--content-width));margin:0 auto}.hero{position:relative;overflow:hidden;padding:46px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(135deg,rgba(74,163,255,.16),rgba(68,211,168,.08) 48%,rgba(169,139,255,.08)),var(--surface);box-shadow:var(--shadow)}.hero::after{content:"";position:absolute;right:-80px;bottom:-110px;width:280px;height:280px;border-radius:50%;background:rgba(74,163,255,.08)}.eyebrow{margin:0 0 14px;color:var(--green);font-size:.78rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase}h1,h2,h3,h4{line-height:1.24;letter-spacing:-.02em}h1{max-width:800px;margin:0;font-size:clamp(2.2rem,5vw,4.25rem)}.hero .lead{max-width:760px;margin:22px 0 0;color:#bdc9d5;font-size:1.14rem}.hero-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:32px}.hero-chip{padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(8,13,18,.36)}.hero-chip strong{display:block;color:white;font-size:.9rem}.hero-chip span{display:block;margin-top:3px;color:var(--muted);font-size:.78rem;line-height:1.4}section{margin-top:62px}.section-heading{margin-bottom:24px}.section-number{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:32px;margin-bottom:12px;padding:0 11px;border-radius:999px;color:#06131a;background:var(--green);font-size:.8rem;font-weight:900}h2{margin:0;font-size:clamp(1.75rem,3vw,2.55rem)}h3{margin-top:36px;margin-bottom:12px;color:#f2f6fa;font-size:1.35rem}h4{margin-top:26px;margin-bottom:8px;color:var(--green);font-size:1.06rem}p{margin:0 0 18px}.card{padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:0 10px 25px rgba(0,0,0,.12)}.grid-2,.grid-3{display:grid;gap:18px;margin:24px 0}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.mini-card{padding:20px;border:1px solid var(--line);border-radius:15px;background:var(--surface-2)}.mini-card h4{margin-top:0}.callout{margin:26px 0;padding:20px 22px;border-left:4px solid var(--blue);border-radius:0 14px 14px 0;background:var(--blue-soft)}.callout.green{border-left-color:var(--green);background:var(--green-soft)}.callout.orange{border-left-color:var(--orange);background:var(--orange-soft)}.callout.purple{border-left-color:var(--purple);background:var(--purple-soft)}.callout.warning{border-left-color:var(--warning);background:rgba(255,209,102,.10)}.callout strong{color:white}ul,ol{margin:12px 0 20px;padding-left:25px}li{margin:7px 0}code{padding:.14em .38em;border:1px solid rgba(255,255,255,.08);border-radius:6px;color:#d8f7ee;background:rgba(68,211,168,.08);font-family:"Cascadia Code",Consolas,monospace;font-size:.92em}pre{overflow-x:auto;margin:20px 0;padding:22px;border:1px solid var(--line);border-radius:15px;color:#dce9f5;background:#0a0f14;font:15px/1.6 "Cascadia Code",Consolas,monospace;white-space:pre}.formula{margin:20px 0;padding:18px 22px;border:1px solid rgba(169,139,255,.25);border-radius:14px;background:var(--purple-soft);color:#eee9ff;font-family:"Cambria Math","Times New Roman",serif;font-size:1.08rem;text-align:center}.media-slot{margin:32px 0;padding:18px;border:1px dashed #496176;border-radius:var(--radius);background:rgba(74,163,255,.04)}.media-slot img{display:block;width:100%;max-height:620px;object-fit:contain;border-radius:12px;background:#0a0f14}.media-placeholder{display:none;min-height:220px;place-items:center;padding:28px;border-radius:12px;color:#8fa2b4;background:linear-gradient(135deg,rgba(74,163,255,.07),rgba(68,211,168,.04)),repeating-linear-gradient(-45deg,rgba(255,255,255,.025),rgba(255,255,255,.025) 10px,transparent 10px,transparent 20px);text-align:center}.media-placeholder strong{display:block;color:#d7e3ed;font-size:1.15rem}.media-slot figcaption{margin-top:12px;color:var(--muted);font-size:.85rem;line-height:1.5}.image-code{display:block;margin-top:8px;color:#7f91a2;font-family:Consolas,monospace;font-size:.78rem}.flow{display:grid;gap:10px;margin:22px 0}.flow-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}.flow-box{display:grid;place-items:center;min-height:88px;padding:12px;border:1px solid var(--line);border-radius:13px;background:var(--surface-2);text-align:center;font-size:.83rem;line-height:1.35}.flow-box.orange{background:var(--orange-soft);border-color:rgba(255,154,98,.25)}.flow-box.green{background:var(--green-soft);border-color:rgba(68,211,168,.25)}.flow-box.blue{background:var(--blue-soft);border-color:rgba(74,163,255,.25)}.flow-box.purple{background:var(--purple-soft);border-color:rgba(169,139,255,.25)}.comparison{width:100%;margin:24px 0;border-collapse:collapse;overflow:hidden;border-radius:14px;background:var(--surface)}.comparison th,.comparison td{padding:14px 16px;border:1px solid var(--line);vertical-align:top;text-align:left}.comparison th{color:white;background:var(--surface-3)}.glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}.term{padding:16px 18px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}.term strong{color:var(--green)}.questions{counter-reset:question;display:grid;gap:10px;margin-top:20px;padding:0;list-style:none}.questions li{counter-increment:question;position:relative;margin:0;padding:17px 18px 17px 58px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}.questions li::before{content:counter(question);position:absolute;left:16px;top:15px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;color:#07151c;background:var(--blue);font-size:.78rem;font-weight:900}.questions[start="21"]{counter-reset:question 20}.questions[start="31"]{counter-reset:question 30}.questions[start="41"]{counter-reset:question 40}.subsection-label{margin-top:34px;color:var(--orange);font-size:.82rem;font-weight:850;letter-spacing:.1em;text-transform:uppercase}footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem}.top-link{display:inline-flex;margin-top:18px;padding:9px 13px;border:1px solid var(--line);border-radius:10px;color:var(--text);background:var(--surface-2)}@media(max-width:1100px){.page-shell{display:block}.sidebar{position:relative;width:100%;height:auto;border-right:0;border-bottom:1px solid var(--line)}.toc{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding-top:36px}}@media(max-width:760px){body{font-size:16px}main{padding:26px 18px 70px}.sidebar{padding:20px 16px}.toc{grid-template-columns:1fr}.hero{padding:28px 22px}.hero-grid,.grid-2,.grid-3,.glossary,.flow-row{grid-template-columns:1fr}.card{padding:20px}}@media print{:root{--bg:#fff;--surface:#fff;--surface-2:#f6f8fa;--surface-3:#eef2f5;--text:#111;--muted:#444;--line:#bbb}body{background:#fff;color:#111;font-size:11pt}.reading-progress,.sidebar,.top-link{display:none!important}.page-shell{display:block}main{padding:0}.document{width:100%}.hero,.card,.mini-card,.term,.questions li,pre,.media-slot{box-shadow:none;break-inside:avoid}a{color:#111}}
+  </style>
+</head>
+<body>
+<div class="reading-progress"><span id="progressBar"></span></div>
+<div class="page-shell">
+<aside class="sidebar">
+  <div class="brand"><strong>Intercomunicador Wi‑Fi Full Duplex</strong><span>Material de estudio técnico basado en bloques funcionales. Sin programación del ESP32‑C3.</span></div>
+  <p class="toc-title">Contenido</p>
+  <nav class="toc" id="toc">
+    <a href="#inicio">Inicio</a><a href="#objetivo">1. Objetivo</a><a href="#arquitectura">2. Arquitectura</a><a href="#transmision">3. Transmisión</a><a href="#wifi">4. Wi‑Fi y UDP</a><a href="#recepcion">5. Recepción</a><a href="#pwm">6. PWM</a><a href="#filtro">7. Filtro</a><a href="#lm386">8. LM386</a><a href="#alimentacion">9. Alimentación</a><a href="#conversacion">10. Conversación</a><a href="#parametros">11. Parámetros</a><a href="#problemas">12. Problemas</a><a href="#verificacion">13. Verificación</a><a href="#glosario">14. Glosario</a><a href="#preguntas">15. Preguntas</a>
+  </nav>
+</aside>
+<main><article class="document">
+<header class="hero" id="inicio">
+  <p class="eyebrow">Material de estudio · electrónica y comunicaciones</p>
+  <h1>Intercomunicador Wi‑Fi full duplex con ESP32‑C3</h1>
+  <p class="lead">Análisis técnico por bloques funcionales de un sistema de voz bidireccional formado por módulo de micrófono KY-037, conversión ADC, transmisión UDP, reconstrucción PWM, filtro pasabajos y amplificador LM386.</p>
+  <div class="hero-grid"><div class="hero-chip"><strong>Entrada</strong><span>Micrófono de headset y preamplificador con AGC.</span></div><div class="hero-chip"><strong>Procesamiento</strong><span>Muestreo, memoria temporal y organización de datos.</span></div><div class="hero-chip"><strong>Transporte</strong><span>Dos flujos de voz simultáneos mediante Wi‑Fi y UDP.</span></div><div class="hero-chip"><strong>Salida</strong><span>PWM, filtro de reconstrucción, LM386 y auricular.</span></div></div>
+</header>
+<figure class="media-slot"><img src="1.png" alt="Diagrama general por bloques" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 1.png</strong>Diagrama general de bloques del intercomunicador.</div></div><figcaption>Figura 1. Arquitectura general del terminal transmisor y receptor.<span class="image-code">&lt;img src="1.png" alt="Diagrama general por bloques"&gt;</span></figcaption></figure>
+
+<section id="objetivo"><div class="section-heading"><span class="section-number">1</span><h2>Objetivo general del proyecto</h2></div><div class="card"><p>El proyecto consiste en construir dos terminales de intercomunicación capaces de transmitir y recibir voz mediante una red Wi‑Fi. Cada terminal estará compuesto por un auricular, un módulo de micrófono KY-037, un ESP32‑C3, un filtro de reconstrucción y un amplificador LM386.</p><p>El sistema debe funcionar en modalidad <strong>full duplex</strong>. Esto significa que los dos usuarios pueden hablar y escuchar al mismo tiempo, de manera semejante a una llamada telefónica. Cada terminal es transmisor y receptor simultáneamente.</p></div><div class="callout green"><strong>Idea central:</strong> la cadena mostrada en un diagrama simple representa solo un sentido de comunicación. En un sistema full duplex, la misma cadena existe también en sentido contrario.</div></section>
+
+<section id="arquitectura"><div class="section-heading"><span class="section-number">2</span><h2>Arquitectura funcional completa</h2></div><pre>TERMINAL A                                      TERMINAL B
+
+Micrófono A                                     Micrófono B
+     │                                               │
+     ▼                                               ▼
+KY-037 A                                        KY-037 B
+     │                                               │
+     ▼                                               ▼
+ADC ESP32-C3 A                                  ADC ESP32-C3 B
+     │                                               │
+     ▼                                               ▼
+Búfer y paquetes UDP                           Búfer y paquetes UDP
+     │                                               │
+     ├────────────── Wi‑Fi A → B ───────────────────►│
+     │                                               │
+     │◄───────────── Wi‑Fi B → A ────────────────────┤
+     │                                               │
+     ▼                                               ▼
+Búfer de recepción A                           Búfer de recepción B
+     │                                               │
+     ▼                                               ▼
+PWM A                                          PWM B
+     │                                               │
+     ▼                                               ▼
+Filtro A                                       Filtro B
+     │                                               │
+     ▼                                               ▼
+LM386 A                                        LM386 B
+     │                                               │
+     ▼                                               ▼
+Auricular A                                     Auricular B</pre><p>Un solo ESP32‑C3 debe realizar permanentemente dos trabajos: capturar y transmitir el micrófono local, y recibir y reproducir el audio remoto.</p><div class="grid-2"><div class="mini-card"><h4>Ruta local de transmisión</h4><p>La voz local se convierte en muestras, se organiza en paquetes y se envía hacia el otro terminal.</p></div><div class="mini-card"><h4>Ruta local de recepción</h4><p>Los paquetes remotos se ordenan, se convierten en PWM y se amplifican para el auricular.</p></div></div><div class="callout">Aunque la radio Wi‑Fi comparte el medio y transmite paquetes por turnos, la alternancia ocurre con suficiente rapidez para que, desde la perspectiva humana, ambos flujos de voz permanezcan activos.</div><figure class="media-slot"><img src="2.png" alt="Arquitectura full duplex" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 2.png</strong>Diagrama full duplex entre Terminal A and Terminal B.</div></div><figcaption>Figura 2. Dos rutas de audio simultáneas.<span class="image-code">&lt;img src="2.png" alt="Arquitectura full duplex"&gt;</span></figcaption></figure></section>
+
+<section id="transmision"><div class="section-heading"><span class="section-number">3</span><h2>Cadena de transmisión</h2></div><pre>Voz → módulo KY-037 → ADC → muestras → búfer
+→ paquetes UDP → Wi‑Fi</pre><h3>3.1 Micrófono del headset</h3><p>El micrófono es un transductor electroacústico. Convierte las variaciones de presión producidas por la voz en una pequeña señal eléctrica analógica. La membrana interna se mueve según el sonido y produce una tensión cuya forma representa aproximadamente la forma de onda acústica.</p><div class="grid-3"><div class="mini-card"><h4>Voz fuerte</h4><p>Produce una variación eléctrica mayor.</p></div><div class="mini-card"><h4>Voz suave</h4><p>Produce una variación eléctrica menor.</p></div><div class="mini-card"><h4>Silencio</h4><p>Permanece una señal muy pequeña junto con ruido residual.</p></div></div><p>La salida del micrófono suele ser de pocos milivoltios. Es demasiado pequeña para aprovechar directamente el rango del ADC, por lo que debe amplificarse antes de la conversión.</p><h4>Micrófono electret</h4><p>El módulo KY-037 incluye la cápsula de micrófono electret junto con la electrónica necesaria para su polarización y preamplificación básica en la misma placa.</p><h4>Ventaja del headset</h4><p>El micrófono permanece cerca de la boca y el auricular cerca del oído. Esto mejora la relación señal‑ruido y reduce la cantidad de sonido reproducido que vuelve a entrar al micrófono.</p><div class="callout warning">Una realimentación acústica excesiva puede producir eco, acople, silbidos, repetición de la voz remota o inestabilidad del control automático de ganancia.</div><h4>Posibles problemas</h4><ul><li>Polaridad incorrecta de una cápsula electret.</li><li>Cable demasiado largo o sin blindaje.</li><li>Conector TRRS cableado según otra norma.</li><li>Micrófono dinámico conectado a una entrada preparada para electret.</li><li>Captación de señales Wi‑Fi, PWM o ruido de alimentación.</li><li>Micrófono demasiado próximo al auricular.</li></ul><figure class="media-slot"><img src="3.png" alt="Micrófono electret" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 3.png</strong>Micrófono electret, polarización y señal de salida.</div></div><figcaption>Figura 3. Conversión de presión acústica en señal eléctrica.<span class="image-code">&lt;img src="3.png" alt="Micrófono electret"&gt;</span></figcaption></figure>
+<h3>3.2 Módulo de micrófono KY-037</h3><p>El KY-037 es un módulo sensor de sonido que incorpora un micrófono electret y un circuito de acondicionamiento básico. A diferencia de un chip especializado como el MAX9814, no cuenta con control automático de ganancia (AGC), sino que utiliza un potenciómetro analógico en placa para calibrar la sensibilidad de la salida analógica y el punto de disparo de la salida digital.</p><h4>Componentes clave del módulo</h4><div class="grid-3"><div class="mini-card"><h4>Micrófono Electret</h4><p>Cápsula que capta las variaciones de presión acústica de la voz.</p></div><div class="mini-card"><h4>Potenciómetro analógico</h4><p>Permite ajustar de forma manual la ganancia y calibrar el punto de reposo analógico.</p></div><div class="mini-card"><h4>Comparador LM393</h4><p>Compara el nivel de sonido con un umbral y entrega una salida digital (DO) alta o baja.</p></div></div><h4>Pines de conexión del módulo</h4><table class="comparison"><thead><tr><th>Pin</th><th>Descripción</th><th>Conexión en el sistema</th></tr></thead><tbody><tr><td>AO</td><td>Salida Analógica (Analog Output)</td><td>Conectada directamente al ADC del ESP32-C3 para capturar el audio.</td></tr><tr><td>GND</td><td>Masa o Tierra</td><td>Conectada a la masa general (GND) de la placa.</td></tr><tr><td>VCC</td><td>Alimentación (+3,3 V a +5 V)</td><td>Conectada a la línea de alimentación limpia del circuito.</td></tr><tr><td>DO</td><td>Salida Digital (Digital Output)</td><td>No se utiliza para la transmisión de voz continua.</td></tr></tbody></table><div class="callout orange"><strong>Ajuste manual de ganancia:</strong> Al no tener un control de ganancia automático, el volumen debe ajustarse cuidadosamente girando el potenciómetro físico. Si el volumen de la voz es muy alto y la ganancia es excesiva, se producirá distorsión por recorte (clipping) sin que el circuito pueda compensarlo.</div><h4>Polarización de la salida analógica</h4><p>El ADC del ESP32-C3 no puede medir tensiones negativas. El circuito del KY-037 entrega la señal de audio montada sobre un nivel de tensión continua, el cual se puede centrar en el rango del ADC usando el potenciómetro.</p><pre>Nivel de reposo (sin sonido): 1,65 V
+Pico de tensión positivo:    2,25 V
+Pico de tensión negativo:    1,05 V</pre><h4>Filtro antialias</h4><p>Antes del ADC conviene implementar un filtro pasabajos físico. Con una frecuencia de muestreo de 8 kHz, el límite de Nyquist es 4 kHz. Conviene comenzar a atenuar antes, aproximadamente entre 3 y 3,4 kHz.</p><pre>KY-037 (AO) → filtro pasabajos → ADC</pre><figure class="media-slot"><img src="4.png" alt="Módulo KY-037" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 4.png</strong>Esquema de conexiones y pines del módulo KY-037.</div></div><figcaption>Figura 4. Módulo de micrófono KY-037 y sus conexiones.<span class="image-code">&lt;img src="4.png" alt="Módulo KY-037"&gt;</span></figcaption></figure>
+<h3>3.3 Conversor analógico‑digital del ESP32‑C3</h3><p>El ADC convierte una tensión analógica en números. La señal analógica es continua, pero el microcontrolador la observa en instantes determinados. Cada observación es una muestra.</p><pre>Señal analógica:
+
+     /‾\      /‾\
+____/   \____/   \____
+
+Muestras:
+
+  •  •  •  •  •  •  •</pre><h4>Resolución</h4><div class="formula">2<sup>12</sup> = 4096 niveles</div><p>Los códigos se extienden desde <code>0</code> hasta <code>4095</code>.</p><h4>Frecuencia de muestreo</h4><table class="comparison"><thead><tr><th>Muestreo</th><th>Aplicación</th><th>Límite teórico</th></tr></thead><tbody><tr><td>8 kHz</td><td>Voz telefónica básica, menor flujo de datos</td><td>4 kHz</td></tr><tr><td>16 kHz</td><td>Mayor claridad, especialmente en consonantes</td><td>8 kHz</td></tr></tbody></table><h4>Cuantización</h4><p>El ADC redondea cada tensión al nivel digital más cercano. La diferencia entre el valor real y el nivel asignado produce ruido de cuantización. Una mayor resolución reduce ese error, pero no elimina el ruido analógico.</p><h4>Consideraciones eléctricas</h4><ul><li>Impedancia de la fuente analógica.</li><li>Condensador próximo al pin ADC.</li><li>Calidad de la alimentación de 3,3 V.</li><li>Separación entre señales analógicas y digitales.</li><li>Ruido producido durante la transmisión Wi‑Fi.</li><li>Ruido procedente del USB del computador.</li><li>Recorridos de masa y corrientes de potencia.</li></ul><figure class="media-slot"><img src="5.png" alt="Muestreo y cuantización" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 5.png</strong>Muestreo, cuantización y frecuencia de Nyquist.</div></div><figcaption>Figura 5. Conversión de la señal continua en una secuencia de números.<span class="image-code">&lt;img src="5.png" alt="Muestreo y cuantización"&gt;</span></figcaption></figure>
+<h3>3.4 Búfer de adquisición</h3><p>El ADC genera muestras individuales. La red funciona de manera más eficiente cuando se envían grupos de muestras. El búfer es una zona de memoria temporal donde se almacenan antes de formar un paquete.</p><pre>ADC → muestra 1
+ADC → muestra 2
+ADC → muestra 3
+...
+ADC → muestra 80
+             │
+             ▼
+       bloque de memoria</pre><h4>Razones para utilizar un búfer</h4><ul><li>Reduce la cantidad de paquetes pequeños.</li><li>Organiza la información.</li><li>Separa temporalmente la captura y la transmisión.</li><li>Permite preparar paquetes de tamaño conocido.</li><li>Ayuda a sostener una frecuencia de muestreo regular.</li></ul><h4>Tamaño y latencia</h4><pre>80 muestras  = 10 ms de audio a 8 kHz
+160 muestras = 20 ms de audio a 8 kHz
+320 muestras = 40 ms de audio a 8 kHz</pre><div class="callout purple">Un búfer grande tolera mejor las variaciones, pero aumenta el retardo. Un búfer pequeño disminuye la latencia, pero vuelve el sistema más sensible a interrupciones.</div><h4>Búfer circular</h4><pre>[0][1][2][3][4][5][6][7]
+ ↑                    │
+ └────────────────────┘</pre><p>Al alcanzar la última posición, el índice vuelve a la primera. Esto permite reutilizar continuamente la misma memoria.</p><h3>3.5 Preparación y empaquetado de datos</h3><pre>┌───────────────────────────┐
+│ Identificador del terminal│
+│ Número de secuencia       │
+│ Marca de tiempo           │
+│ Cantidad de muestras      │
+│ Formato de audio          │
+│ Datos de audio            │
+└───────────────────────────┘</pre><h4>Número de secuencia</h4><p>Permite detectar paquetes perdidos, duplicados o fuera de orden.</p><pre>Recibidos: 101, 102, 104, 105
+Falta:     103</pre><h4>Marca de tiempo</h4><p>Indica cuándo fueron capturadas las muestras y puede utilizarse para reconstruir el ritmo de reproducción y medir la latencia.</p><h4>Formato de muestra</h4><ul><li>Resolución: 8, 12 o 16 bits.</li><li>Con signo o sin signo.</li><li>Orden de bytes.</li><li>Cantidad de canales.</li><li>Frecuencia de muestreo.</li></ul><h4>Ejemplo de flujo de datos</h4><div class="formula">8000 muestras/s × 16 bits = 128 000 bit/s</div><div class="formula">128 000 bit/s = 16 000 bytes/s</div><div class="formula">80 muestras × 2 bytes = 160 bytes por bloque de 10 ms</div></section>
+
+<section id="wifi"><div class="section-heading"><span class="section-number">4</span><h2>Comunicación Wi‑Fi mediante UDP</h2></div><h3>4.1 Función del ESP32‑C3 en la red</h3><p>El ESP32‑C3 integra conectividad Wi‑Fi de 2,4 GHz y puede centralizar la captura, transmisión, recepción y reproducción del audio.</p><div class="grid-2"><div class="mini-card"><h4>Mediante un router</h4><pre>ESP32 A ──┐
+          ├── router Wi‑Fi
+ESP32 B ──┘</pre><p>Ambos terminales reciben una dirección IP dentro de la misma red.</p></div><div class="mini-card"><h4>Un ESP32 como punto de acceso</h4><pre>ESP32 A: punto de acceso
+ESP32 B: estación</pre><p>No requiere router, pero un terminal debe crear la red.</p></div></div><h3>4.2 UDP</h3><p>UDP es un protocolo basado en datagramas. Cada bloque se envía como un mensaje independiente entre una dirección IP y un puerto.</p><table class="comparison"><thead><tr><th>Ventajas</th><th>Limitaciones</th></tr></thead><tbody><tr><td>Baja sobrecarga.</td><td>No garantiza entrega.</td></tr><tr><td>No espera confirmaciones.</td><td>No garantiza orden.</td></tr><tr><td>No retransmite automáticamente audio antiguo.</td><td>Puede haber duplicados.</td></tr><tr><td>Permite controlar tamaño y ritmo.</td><td>No impone un tiempo máximo de llegada.</td></tr></tbody></table><h4>Por qué no siempre conviene retransmitir</h4><pre>Paquete perdido
+→ reemplazar por silencio o interpolación
+→ continuar con el siguiente paquete</pre><p>En audio en tiempo real, un fragmento que llega demasiado tarde pierde utilidad. La continuidad suele ser más importante que recuperar todos los datos.</p><h3>4.3 Flujo full duplex</h3><pre>Flujo 1: Terminal A → Terminal B
+Flujo 2: Terminal B → Terminal A</pre><div class="flow"><div class="flow-row"><div class="flow-box orange">Capturar ADC</div><div class="flow-box green">Formar paquetes</div><div class="flow-box blue">Transmitir</div><div class="flow-box blue">Recibir</div><div class="flow-box purple">Organizar paquetes</div><div class="flow-box orange">Reproducir</div></div></div><p>Aunque posteriormente se implementen con funciones, tareas, interrupciones o periféricos, son procesos funcionales diferentes y ninguno debería bloquear a los demás.</p><figure class="media-slot"><img src="6.png" alt="UDP full duplex" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 6.png</strong>Comunicación UDP y flujos A→B / B→A.</div></div><figcaption>Figura 6. Transporte de bloques de audio mediante la red.<span class="image-code">&lt;img src="6.png" alt="UDP full duplex"&gt;</span></figcaption></figure></section>
+
+<section id="recepcion"><div class="section-heading"><span class="section-number">5</span><h2>Cadena de recepción</h2></div><pre>Wi‑Fi → paquetes UDP → búfer de recepción → muestras
+→ PWM → filtro → LM386 → auricular</pre><h3>5.1 Recepción de paquetes</h3><p>El ESP32 escucha un puerto UDP y recibe los bloques enviados por el otro terminal.</p><ul><li>Verifica el tamaño.</li><li>Comprueba el formato.</li><li>Revisa el número de secuencia.</li><li>Determina la cantidad de muestras.</li><li>Evalúa si el paquete aún llegó a tiempo.</li></ul><h3>5.2 Búfer de fluctuación o jitter buffer</h3><p>La red no entrega todos los paquetes con el mismo retraso. Esta variación se denomina jitter.</p><pre>Paquete 1: tarda 3 ms
+Paquete 2: tarda 5 ms
+Paquete 3: tarda 18 ms
+Paquete 4: tarda 4 ms</pre><pre>Red irregular → jitter buffer → reproducción regular</pre><div class="grid-2"><div class="mini-card"><h4>Búfer mayor</h4><p>Mayor estabilidad y tolerancia, pero más latencia.</p></div><div class="mini-card"><h4>Búfer menor</h4><p>Menor latencia, pero más riesgo de interrupciones.</p></div></div><h4>Underflow</h4><p>El reproductor necesita una muestra, pero el búfer está vacío. Puede generar chasquidos, silencio o repetición.</p><h4>Overflow</h4><p>Llegan más datos de los que pueden almacenarse. Puede provocar sobrescritura, saltos y aumento progresivo del retardo.</p><h3>5.3 Tratamiento de pérdidas</h3><div class="grid-2"><div class="mini-card"><h4>Insertar silencio</h4><p>Es la estrategia más simple.</p></div><div class="mini-card"><h4>Repetir la última muestra</h4><p>Evita un salto brusco, pero puede producir un nivel artificial.</p></div><div class="mini-card"><h4>Repetir el último bloque</h4><p>Puede ocultar una pérdida breve, aunque genera una pequeña repetición.</p></div><div class="mini-card"><h4>Interpolar</h4><p>Calcula valores intermedios; es más complejo.</p></div></div><figure class="media-slot"><img src="7.png" alt="Jitter buffer" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 7.png</strong>Jitter, underflow, overflow y búfer receptor.</div></div><figcaption>Figura 7. Conversión de una llegada irregular en una reproducción regular.<span class="image-code">&lt;img src="7.png" alt="Jitter buffer"&gt;</span></figcaption></figure></section>
+
+<section id="pwm"><div class="section-heading"><span class="section-number">6</span><h2>Generación PWM</h2></div><h3>6.1 Qué es PWM</h3><p>PWM significa modulación por ancho de pulso. El pin cambia entre aproximadamente 0 V y 3,3 V. La frecuencia se mantiene casi constante y cambia el porcentaje del periodo en nivel alto.</p><pre>Duty bajo:
+__‾________‾________‾____
+
+Duty medio:
+__‾‾‾_____‾‾‾_____‾‾‾___
+
+Duty alto:
+_‾‾‾‾‾‾‾__‾‾‾‾‾‾‾_______</pre><pre>0 %   → salida siempre baja
+50 %  → mitad alta y mitad baja
+100 % → salida siempre alta</pre><div class="formula">V<sub>medio</sub> ≈ V<sub>CC</sub> × duty</div><table class="comparison"><thead><tr><th>Duty</th><th>Valor medio con 3,3 V</th></tr></thead><tbody><tr><td>25 %</td><td>0,825 V</td></tr><tr><td>50 %</td><td>1,65 V</td></tr><tr><td>75 %</td><td>2,475 V</td></tr></tbody></table><h3>6.2 Relación entre muestra y duty</h3><pre>ADC o muestra: 12 bits → 0 a 4095
+PWM:           11 bits → 0 a 2047</pre><pre>Muestra pequeña → duty bajo
+Muestra media   → duty cercano a 50 %
+Muestra grande  → duty alto</pre><p>La señal de audio no es la portadora de 39 kHz. La información está en la variación lenta del duty y del valor medio.</p><h3>6.3 Frecuencia portadora</h3><p>Una portadora cercana a 39 kHz queda fuera de la banda audible principal y permite conservar una resolución elevada.</p><div class="callout purple"><strong>Compromiso:</strong> una frecuencia mayor facilita el filtrado; una resolución mayor representa el audio con más niveles. El temporizador impide maximizar ambas simultáneamente.</div><figure class="media-slot"><img src="8.png" alt="Modulación PWM" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 8.png</strong>Duty cycle, portadora y valor medio.</div></div><figcaption>Figura 8. La información de audio queda representada por la variación del ancho de pulso.<span class="image-code">&lt;img src="8.png" alt="Modulación PWM"&gt;</span></figcaption></figure></section>
+
+<section id="filtro"><div class="section-heading"><span class="section-number">7</span><h2>Filtro de reconstrucción</h2></div><h3>7.1 Función</h3><p>La salida PWM contiene audio, portadora, armónicos, bandas laterales y transiciones digitales rápidas.</p><pre>PWM rectangular → filtro pasabajos → tensión analógica</pre><div class="grid-2"><div class="mini-card"><h4>Antes del filtro</h4><p>Pulsos rectangulares entre 0 y 3,3 V.</p></div><div class="mini-card"><h4>Después del filtro</h4><p>Tensión analógica más suave con audio sobre una componente continua.</p></div></div><h3>7.2 Frecuencia de corte</h3><p>Para audio muestreado a 8 kHz, una frecuencia de corte aproximada entre 3 y 3,4 kHz es razonable para voz.</p><table class="comparison"><thead><tr><th>Filtro</th><th>Pendiente</th><th>Uso</th></tr></thead><tbody><tr><td>Primer orden</td><td>20 dB/década</td><td>Filtrado simple.</td></tr><tr><td>Segundo orden</td><td>40 dB/década</td><td>Mayor rechazo de portadora.</td></tr></tbody></table><h3>7.3 Condensador de acoplamiento</h3><pre>Filtro → condensador de acoplamiento → volumen → LM386</pre><p>La salida filtrada conserva una continua cercana a 1,65 V. El condensador en serie la bloquea y deja pasar el audio.</p><figure class="media-slot"><img src="9.png" alt="Filtro de reconstrucción" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 9.png</strong>PWM antes del filtro y señal analógica después.</div></div><figcaption>Figura 9. Eliminación de la portadora y conservación de la banda de voz.<span class="image-code">&lt;img src="9.png" alt="Filtro de reconstrucción"&gt;</span></figcaption></figure></section>
+
+<section id="lm386"><div class="section-heading"><span class="section-number">8</span><h2>Amplificador LM386</h2></div><h3>8.1 Función</h3><p>La señal después del filtro puede tener una tensión adecuada, pero no necesariamente puede entregar la corriente requerida por un auricular o parlante. El LM386 es una etapa de potencia de audio mono.</p><div class="grid-2"><div class="mini-card"><h4>KY-037</h4><p>Captura el audio, preamplifica y provee salida analógica.</p></div><div class="mini-card"><h4>LM386</h4><p>Entrega corriente y potencia a la carga.</p></div></div><pre>Micrófono → KY-037 (AO) → nivel de señal analógica
+Filtro   → LM386   → potencia para auricular</pre><h3>8.2 Ganancia</h3><p>Para iniciar conviene dejar los pines 1 y 8 abiertos, con ganancia aproximada de 20. Aumentar la ganancia también amplifica ruido, zumbido y chasquidos.</p><h3>8.3 Desacoplamiento</h3><pre>100 nF → interferencias rápidas
+100 µF → variaciones lentas y demanda de corriente</pre><h3>8.4 Red Zobel</h3><pre>Salida ── 10 Ω ── 47 nF ── GND</pre><p>La red Zobel ayuda a estabilizar el amplificador. La resistencia y el condensador deben ir en serie.</p><h3>8.5 Auriculares</h3><p>El control de volumen es obligatorio para evitar niveles molestos, saturación y riesgo para el oído.</p><figure class="media-slot">
+  <svg viewBox="0 0 750 400" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="background:#151b23; border:1px solid #2d3a49; border-radius:18px; padding:20px; box-shadow: 0 10px 25px rgba(0,0,0,0.25);">
+    <style>
+      .schem-wire { fill: none; stroke: #4aa3ff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .schem-wire-gnd { fill: none; stroke: #5f748a; stroke-width: 2; }
+      .schem-comp { fill: #1b2430; stroke: #44d3a8; stroke-width: 2; }
+      .schem-text { fill: #e6edf3; font-family: "Cascadia Code", Consolas, monospace; font-size: 11px; }
+      .schem-text-val { fill: #9aa8b7; font-family: "Cascadia Code", Consolas, monospace; font-size: 10px; }
+      .schem-text-pin { fill: #ff9a62; font-family: Inter, sans-serif; font-size: 10px; font-weight: 850; }
+      .chip-body { fill: #202c3a; stroke: #e6edf3; stroke-width: 2; rx: 6; }
+    </style>
+    <defs>
+      <g id="gnd">
+        <path d="M 0 0 L 0 10 M -10 10 L 10 10 M -6 14 L 6 14 M -2 18 L 2 18" class="schem-wire-gnd" />
+      </g>
+      <g id="cap">
+        <path d="M 0 0 L 0 8 M -10 8 L 10 8 M -10 12 L 10 12 M 0 12 L 0 20" stroke="#44d3a8" stroke-width="2" fill="none" />
+      </g>
+      <g id="cap-pol">
+        <path d="M 0 0 L 0 8 M -10 8 L 10 8 M -10 12 C -5 14 5 14 10 12 M 0 12 L 0 20" stroke="#44d3a8" stroke-width="2" fill="none" />
+        <text x="3" y="6" style="fill:#44d3a8; font-size:9px; font-weight:bold;">+</text>
+      </g>
+      <g id="res">
+        <path d="M 0 0 L 0 5 L -5 7.5 L 5 12.5 L -5 17.5 L 5 22.5 L -5 27.5 L 0 30 L 0 35" stroke="#44d3a8" stroke-width="2" fill="none" />
+      </g>
+      <g id="pot">
+        <path d="M 0 0 L 0 10 L -5 12.5 L 5 17.5 L -5 22.5 L 5 27.5 L -5 32.5 L 0 35 L 0 45" stroke="#44d3a8" stroke-width="2" fill="none" />
+        <path d="M -15 22.5 L -8 22.5 M -8 22.5 L -10 20 M -8 22.5 L -10 25" stroke="#ff9a62" stroke-width="1.5" fill="none" />
+      </g>
+    </defs>
+    <g transform="translate(300, 100)">
+      <rect class="chip-body" width="120" height="180" />
+      <text x="60" y="30" class="schem-text" style="font-size:14px; font-weight:bold; text-anchor:middle; fill:#ff9a62;">LM386</text>
+      <text x="60" y="45" class="schem-text" style="font-size:8px; text-anchor:middle; fill:#9aa8b7;">AMPLIFICADOR</text>
+      <text x="10" y="73" class="schem-text-pin">1</text>
+      <text x="22" y="73" class="schem-text" style="font-size:9px; fill:#9aa8b7;">GAIN</text>
+      <text x="10" y="103" class="schem-text-pin">2</text>
+      <text x="22" y="103" class="schem-text" style="font-size:9px; fill:#9aa8b7;">INPUT-</text>
+      <text x="10" y="133" class="schem-text-pin">3</text>
+      <text x="22" y="133" class="schem-text" style="font-size:9px; fill:#9aa8b7;">INPUT+</text>
+      <text x="10" y="163" class="schem-text-pin">4</text>
+      <text x="22" y="163" class="schem-text" style="font-size:9px; fill:#9aa8b7;">GND</text>
+      <text x="105" y="73" class="schem-text-pin">8</text>
+      <text x="75" y="73" class="schem-text" style="font-size:9px; fill:#9aa8b7; text-anchor:end;">GAIN</text>
+      <text x="105" y="103" class="schem-text-pin">7</text>
+      <text x="75" y="103" class="schem-text" style="font-size:9px; fill:#9aa8b7; text-anchor:end;">BYPASS</text>
+      <text x="105" y="133" class="schem-text-pin">6</text>
+      <text x="75" y="133" class="schem-text" style="font-size:9px; fill:#9aa8b7; text-anchor:end;">VS (VCC)</text>
+      <text x="105" y="163" class="schem-text-pin">5</text>
+      <text x="75" y="163" class="schem-text" style="font-size:9px; fill:#9aa8b7; text-anchor:end;">VOUT</text>
+    </g>
+    <!-- PIN 1 to PIN 8 Gain loop -->
+    <path d="M 300 170 L 260 170 L 260 50 L 460 50 L 460 170 L 420 170" class="schem-wire" />
+    <use href="#res" x="310" y="50" transform="rotate(90, 310, 50)" />
+    <text x="310" y="30" class="schem-text" style="text-anchor:middle;">1 kΩ</text>
+    <use href="#cap-pol" x="400" y="50" transform="rotate(90, 400, 50)" />
+    <text x="400" y="30" class="schem-text" style="text-anchor:middle;">10 µF</text>
+
+    <!-- PIN 2 to GND -->
+    <path d="M 300 200 L 250 200 L 250 250" class="schem-wire" />
+    <use href="#gnd" x="250" y="250" />
+
+    <!-- PIN 3 to Potentiometer (Volume) -->
+    <path d="M 300 230 L 145 230 L 145 207.5" class="schem-wire" />
+    <use href="#pot" x="160" y="185" />
+    <text x="180" y="180" class="schem-text">Pot 10 kΩ</text>
+    <text x="180" y="195" class="schem-text" style="font-size:8px; fill:#9aa8b7;">VOLUMEN</text>
+    <path d="M 160 185 L 160 150 L 80 150" class="schem-wire" />
+    <text x="80" y="142" class="schem-text" style="fill:#4aa3ff;">Entrada Audio</text>
+    <text x="80" y="162" class="schem-text-val">(Desde filtro)</text>
+    <path d="M 160 230 L 160 250" class="schem-wire" />
+    <use href="#gnd" x="160" y="250" />
+
+    <!-- PIN 4 to GND -->
+    <path d="M 300 260 L 270 260 L 270 300" class="schem-wire" />
+    <use href="#gnd" x="270" y="300" />
+
+    <!-- PIN 7 to GND via 10uF (stays above Pin 6 line) -->
+    <path d="M 420 200 L 460 200 L 460 220" class="schem-wire" />
+    <use href="#cap-pol" x="460" y="220" />
+    <text x="485" y="235" class="schem-text-val">10 µF</text>
+    <path d="M 460 240 L 460 250" class="schem-wire" />
+    <use href="#gnd" x="460" y="250" />
+
+    <!-- PIN 6 to VCC (+5V) - routed down to Y=285 to avoid Pin 7 bypass capacitor -->
+    <path d="M 420 230 L 435 230 L 435 285 L 560 285" class="schem-wire" />
+    <path d="M 500 285 L 500 295" class="schem-wire" />
+    <use href="#cap" x="500" y="295" />
+    <text x="525" y="310" class="schem-text-val">100 nF</text>
+    <path d="M 500 315 L 500 325" class="schem-wire" />
+    <path d="M 540 285 L 540 295" class="schem-wire" />
+    <use href="#cap-pol" x="540" y="295" />
+    <text x="565" y="310" class="schem-text-val">100 µF</text>
+    <path d="M 540 315 L 540 325 L 500 325" class="schem-wire" />
+    <use href="#gnd" x="500" y="325" />
+    <path d="M 560 285 L 610 285" class="schem-wire" />
+    <text x="615" y="289" class="schem-text" style="fill:#ff9a62; font-weight:bold;">+Vcc (5V)</text>
+
+    <!-- PIN 5 to Zobel & Output - routed down to Y=320 to avoid Pin 6 capacitors and fit within Y=400 canvas -->
+    <path d="M 420 260 L 425 260 L 425 320 L 580 320" class="schem-wire" />
+    <path d="M 480 320 L 480 330" class="schem-wire" />
+    <use href="#res" x="480" y="330" />
+    <text x="500" y="350" class="schem-text-val">10 Ω</text>
+    <use href="#cap" x="480" y="365" />
+    <text x="505" y="380" class="schem-text-val">47 nF</text>
+    <path d="M 480 385 L 480 390" class="schem-wire" />
+    <!-- Ground connection for Zobel -->
+    <use href="#gnd" x="480" y="390" />
+
+    <path d="M 480 320 L 610 320" class="schem-wire" />
+    <use href="#cap-pol" x="610" y="310" transform="rotate(90, 610, 320)" />
+    <text x="610" y="350" class="schem-text-val" style="text-anchor:middle;">220 µF</text>
+    <path d="M 620 320 L 660 320" class="schem-wire" />
+    <text x="665" y="315" class="schem-text" style="fill:#44d3a8; font-weight:bold;">Auricular</text>
+    <text x="665" y="330" class="schem-text-val">(Salida de Audio)</text>
+  </svg>
+  <figcaption>Figura 10. Etapa de potencia de audio.</figcaption>
+</figure></section>
+
+<section id="alimentacion"><div class="section-heading"><span class="section-number">9</span><h2>Bloque de alimentación</h2></div><pre>Batería o fuente
+       │
+       ├── ESP32‑C3
+       ├── KY-037
+       ├── filtro activo
+       └── LM386</pre><h3>9.1 Importancia</h3><p>El ESP32 transmite por radio y presenta variaciones rápidas de consumo. Una fuente, cableado o desacoplamiento insuficiente puede introducir ruido y caídas de tensión.</p><ul><li>Alimentación del módulo de micrófono.</li><li>Referencia del ADC.</li><li>Masa común.</li><li>Alimentación del LM386.</li><li>Acoplamiento electromagnético.</li><li>Cable USB del computador.</li></ul><h3>9.2 Separación funcional</h3><div class="grid-3"><div class="mini-card"><h4>Digital</h4><p>ESP32‑C3 y radio Wi‑Fi.</p></div><div class="mini-card"><h4>Analógica</h4><p>KY-037, referencia y filtros.</p></div><div class="mini-card"><h4>Potencia</h4><p>LM386 y auricular.</p></div></div><h3>9.3 Masa en estrella</h3><pre>                  ┌── GND ESP32
+Punto común GND ──┼── GND KY-037
+                  ├── GND filtro
+                  └── GND LM386</pre><p>El retorno del LM386 no debe circular por el mismo tramo que sirve de referencia al ADC o micrófono.</p><h3>9.4 Desacoplamiento local</h3><pre>ESP32:   100 nF + capacidad de reserva
+KY-037:   100 nF o desacoplamiento local en su pin VCC
+LM386:   100 nF + 100 µF</pre><h3>9.5 TP4056</h3><p>El TP4056 es un cargador para una celda de ion‑litio. No es por sí solo una fuente regulada.</p><pre>USB 5 V → TP4056 → batería 18650
+                         │
+                         ▼
+                 regulador o convertidor
+                         │
+                         ▼
+                      circuito</pre><div class="callout warning">El regulador posterior debe seleccionarse considerando eficiencia, ruido y capacidad para soportar los picos de corriente del Wi‑Fi y de la etapa de audio.</div><figure class="media-slot"><img src="11.png" alt="Alimentación y masa en estrella" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';"><div class="media-placeholder"><div><strong>Espacio reservado para 11.png</strong>Distribución de alimentación, TP4056 y masa en estrella.</div></div><figcaption>Figura 11. Separación de retornos digitales, analógicos y de potencia.<span class="image-code">&lt;img src="11.png" alt="Alimentación y masa en estrella"&gt;</span></figcaption></figure></section>
+
+<section id="conversacion"><div class="section-heading"><span class="section-number">10</span><h2>Funcionamiento completo de una conversación</h2></div><div class="card"><ol><li>La voz mueve la membrana del micrófono en el KY-037 A.</li><li>El KY-037 preamplifica la señal de audio analógica internamente.</li><li>El potenciómetro del KY-037 calibra el nivel de reposo de la señal.</li><li>El filtro antialias limita las frecuencias altas.</li><li>El ADC toma muestras a intervalos regulares.</li><li>Las muestras se guardan en memoria.</li><li>El ESP32 forma un paquete UDP.</li><li>El paquete se transmite por Wi‑Fi.</li><li>El ESP32 B recibe el paquete.</li><li>El bloque se coloca en el jitter buffer.</li><li>Las muestras se leen a frecuencia constante.</li><li>Cada muestra modifica el duty del PWM.</li><li>El filtro elimina la portadora PWM.</li><li>El condensador bloquea la componente continua.</li><li>El LM386 aumenta la potencia.</li><li>El auricular B reproduce la voz.</li></ol></div><div class="callout green">Al mismo tiempo ocurre el proceso equivalente desde B hacia A. Esa simultaneidad funcional es lo que convierte al sistema en full duplex.</div></section>
+
+<section id="parametros"><div class="section-heading"><span class="section-number">11</span><h2>Parámetros principales del sistema</h2></div><div class="grid-2"><div class="mini-card"><h4>Frecuencia de muestreo</h4><pre>8 kHz  → menor volumen de datos
+16 kHz → mejor claridad</pre></div><div class="mini-card"><h4>Resolución</h4><pre>8 bits  → 256 niveles
+12 bits → 4096 niveles
+16 bits → 65 536 niveles</pre></div><div class="mini-card"><h4>Tamaño de paquete</h4><pre>Pequeño → menor latencia
+Grande  → mayor eficiencia</pre></div><div class="mini-card"><h4>Jitter buffer</h4><pre>Pequeño → rápido
+Grande  → estable</pre></div><div class="mini-card"><h4>Ganancia de entrada</h4><p>Debe aprovechar el ADC sin saturarlo.</p></div><div class="mini-card"><h4>Ganancia de salida</h4><p>Debe entregar volumen sin amplificar demasiado el ruido.</p></div><div class="mini-card"><h4>Frecuencia de corte</h4><p>Debe conservar la voz y reducir frecuencias no deseadas.</p></div><div class="mini-card"><h4>Latencia total</h4><pre>Captura + paquete + red
++ jitter buffer + reproducción</pre></div></div></section>
+
+<section id="problemas"><div class="section-heading"><span class="section-number">12</span><h2>Problemas técnicos esperables</h2></div><div class="grid-2"><div class="mini-card"><h4>Saturación y clipping</h4><p>Los picos quedan recortados.</p></div><div class="mini-card"><h4>Ruido de alimentación</h4><p>Zumbidos, silbidos o pulsos.</p></div><div class="mini-card"><h4>Aliasing</h4><p>Frecuencias altas reaparecen dentro de la banda audible.</p></div><div class="mini-card"><h4>Pérdida de paquetes</h4><p>Cortes, chasquidos o silencios.</p></div><div class="mini-card"><h4>Jitter</h4><p>Reproducción irregular.</p></div><div class="mini-card"><h4>Underflow</h4><p>El búfer queda vacío.</p></div><div class="mini-card"><h4>Overflow</h4><p>El búfer recibe más datos de los que admite.</p></div><div class="mini-card"><h4>Eco</h4><p>La voz recibida vuelve a transmitirse.</p></div><div class="mini-card"><h4>Acople</h4><p>Realimentación positiva y pitido sostenido.</p></div><div class="mini-card"><h4>Ajuste de ganancia incorrecto</h4><p>Distorsión o volumen bajo por mala calibración del potenciómetro en el KY-037.</p></div><div class="mini-card"><h4>Saturación del LM386</h4><p>Se supera la capacidad de la etapa de salida.</p></div></div></section>
+
+<section id="verificacion"><div class="section-heading"><span class="section-number">13</span><h2>Verificación por bloques</h2></div><div class="card"><h3>Prueba del ADC</h3><p>Aplicar una tensión continua conocida y observar promedio, mínimo, máximo y variación.</p><h3>Prueba del búfer</h3><p>Reemplazar el ADC por una muestra digital constante.</p><h3>Prueba del PWM</h3><p>Generar duty fijo al 50 %.</p><h3>Prueba del filtro</h3><pre>Antes del filtro: pulsos PWM
+Después: tensión continua o audio suave</pre><h3>Prueba del LM386</h3><p>Inyectar una señal analógica conocida con volumen reducido.</p><h3>Prueba de red</h3><p>Enviar números de secuencia sin audio y registrar paquetes enviados, recibidos, perdidos, orden y tiempos.</p><h3>Prueba extremo a extremo</h3><p>Transmitir una señal conocida y comparar entrada y salida.</p><h3>Prueba full duplex</h3><p>Hablar simultáneamente en ambos terminales y comprobar continuidad, latencia y estabilidad.</p></div><figure class="media-slot">
+  <svg viewBox="0 0 800 100" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg" style="background:#151b23; border:1px solid #2d3a49; border-radius:18px; padding:15px 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
+    <style>
+      .node-rect { fill: #1b2430; stroke: #2d3a49; stroke-width: 1.5; rx: 12; transition: all 0.3s ease; }
+      .node-rect:hover { stroke: #44d3a8; fill: #202c3a; filter: drop-shadow(0 0 4px rgba(68,211,168,0.25)); }
+      .node-text-num { fill: #44d3a8; font-family: Inter, system-ui, sans-serif; font-size: 15px; font-weight: 900; }
+      .node-text-title { fill: #f2f6fa; font-family: Inter, system-ui, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: -0.01em; }
+      .node-text-desc { fill: #9aa8b7; font-family: Inter, system-ui, sans-serif; font-size: 8px; }
+      .flow-arrow { fill: none; stroke: #4aa3ff; stroke-width: 1.5; stroke-dasharray: 3 3; marker-end: url(#arrow-head); }
+    </style>
+    <defs>
+      <marker id="arrow-head" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M 0 2.5 L 5 5 L 0 7.5 z" fill="#4aa3ff" />
+      </marker>
+    </defs>
+    <g transform="translate(10, 15)">
+      <rect class="node-rect" width="98" height="70" />
+      <text x="10" y="24" class="node-text-num">01</text>
+      <text x="10" y="44" class="node-text-title">Prueba ADC</text>
+      <text x="10" y="58" class="node-text-desc">Tensión continua</text>
+    </g>
+    <path d="M 112 50 L 119 50" class="flow-arrow" />
+    <g transform="translate(122, 15)">
+      <rect class="node-rect" width="98" height="70" />
+      <text x="10" y="24" class="node-text-num">02</text>
+      <text x="10" y="44" class="node-text-title">Prueba Búfer</text>
+      <text x="10" y="58" class="node-text-desc">Muestra constante</text>
+    </g>
+    <path d="M 224 50 L 231 50" class="flow-arrow" />
+    <g transform="translate(234, 15)">
+      <rect class="node-rect" width="98" height="70" />
+      <text x="10" y="24" class="node-text-num">03</text>
+      <text x="10" y="44" class="node-text-title">Prueba PWM</text>
+      <text x="10" y="58" class="node-text-desc">Duty fijo al 50%</text>
+    </g>
+    <path d="M 336 50 L 343 50" class="flow-arrow" />
+    <g transform="translate(346, 15)">
+      <rect class="node-rect" width="98" height="70" />
+      <text x="10" y="24" class="node-text-num">04</text>
+      <text x="10" y="44" class="node-text-title">Prueba Filtro</text>
+      <text x="10" y="58" class="node-text-desc">Salida continua</text>
+    </g>
+    <path d="M 448 50 L 455 50" class="flow-arrow" />
+    <g transform="translate(458, 15)">
+      <rect class="node-rect" width="98" height="70" />
+      <text x="10" y="24" class="node-text-num">05</text>
+      <text x="10" y="44" class="node-text-title">Prueba LM386</text>
+      <text x="10" y="58" class="node-text-desc">Tono analógico</text>
+    </g>
+    <path d="M 560 50 L 567 50" class="flow-arrow" />
+    <g transform="translate(570, 15)">
+      <rect class="node-rect" width="98" height="70" />
+      <text x="10" y="24" class="node-text-num">06</text>
+      <text x="10" y="44" class="node-text-title">Prueba de Red</text>
+      <text x="10" y="58" class="node-text-desc">Secuencia sin audio</text>
+    </g>
+    <path d="M 672 50 L 679 50" class="flow-arrow" />
+    <g transform="translate(682, 15)">
+      <rect class="node-rect" width="98" height="70" style="stroke: #ff9a62;" />
+      <text x="10" y="24" class="node-text-num" style="fill: #ff9a62;">07</text>
+      <text x="10" y="44" class="node-text-title">Prueba Final</text>
+      <text x="10" y="58" class="node-text-desc">Lazo completo</text>
+    </g>
+  </svg>
+  <figcaption>Figura 12. Diagnóstico gradual para evitar mezclar causas de falla.</figcaption>
+</figure></section>
+
+<section id="glosario"><div class="section-heading"><span class="section-number">14</span><h2>Glosario de términos</h2></div><div class="glossary">
+<div class="term"><strong>ADC:</strong> conversor analógico‑digital.</div><div class="term"><strong>KY-037:</strong> módulo sensor de micrófono electret con salida analógica y digital.</div><div class="term"><strong>Aliasing:</strong> frecuencias falsas por muestreo insuficiente.</div><div class="term"><strong>Amplificador de potencia:</strong> etapa que entrega corriente a una carga.</div><div class="term"><strong>Ancho de banda:</strong> intervalo de frecuencias procesable.</div><div class="term"><strong>Ataque:</strong> tiempo de reducción de ganancia del AGC.</div><div class="term"><strong>Auricular:</strong> transductor eléctrico‑acústico.</div><div class="term"><strong>Banda lateral:</strong> componente alrededor de una portadora.</div><div class="term"><strong>Búfer:</strong> zona temporal de memoria.</div><div class="term"><strong>Búfer circular:</strong> memoria cuyos índices vuelven al inicio.</div><div class="term"><strong>Clipping:</strong> recorte por superar el rango.</div><div class="term"><strong>Cuantización:</strong> asignación a niveles digitales.</div><div class="term"><strong>DAC:</strong> conversor digital‑analógico.</div><div class="term"><strong>Datagrama:</strong> mensaje independiente UDP.</div><div class="term"><strong>Decibelio:</strong> unidad logarítmica de relación.</div><div class="term"><strong>Desacoplamiento:</strong> técnicas contra ruido de alimentación.</div><div class="term"><strong>Duty cycle:</strong> porcentaje de periodo PWM en alto.</div><div class="term"><strong>Full duplex:</strong> transmisión y recepción simultáneas.</div><div class="term"><strong>Frecuencia de corte:</strong> inicio de atenuación significativa.</div><div class="term"><strong>Frecuencia de muestreo:</strong> muestras por segundo.</div><div class="term"><strong>Headset:</strong> auricular y micrófono.</div><div class="term"><strong>Impedancia:</strong> oposición a una señal variable.</div><div class="term"><strong>Jitter:</strong> variación temporal.</div><div class="term"><strong>Jitter buffer:</strong> memoria que absorbe variaciones de red.</div><div class="term"><strong>Latencia:</strong> retardo total de comunicación.</div><div class="term"><strong>LM386:</strong> amplificador de potencia mono.</div><div class="term"><strong>KY-037:</strong> módulo sensor de micrófono electret con salida analógica y digital.</div><div class="term"><strong>Micrófono electret:</strong> cápsula con transistor y polarización.</div><div class="term"><strong>Muestra:</strong> valor digital de un instante.</div><div class="term"><strong>Nyquist:</strong> criterio de frecuencia mínima de muestreo.</div><div class="term"><strong>Paquete:</strong> conjunto organizado de datos.</div><div class="term"><strong>Preamplificador:</strong> etapa que eleva señales pequeñas.</div><div class="term"><strong>Portadora PWM:</strong> frecuencia rápida que transporta el audio.</div><div class="term"><strong>PWM:</strong> modulación por ancho de pulso.</div><div class="term"><strong>Liberación:</strong> recuperación de ganancia del AGC.</div><div class="term"><strong>Resolución:</strong> cantidad de niveles posibles.</div><div class="term"><strong>Ruido de cuantización:</strong> error por redondeo digital.</div><div class="term"><strong>Saturación:</strong> superación del rango de un circuito.</div><div class="term"><strong>Señal analógica:</strong> señal continua.</div><div class="term"><strong>Señal digital:</strong> señal discreta.</div><div class="term"><strong>SNR:</strong> relación señal‑ruido.</div><div class="term"><strong>Transductor:</strong> dispositivo que transforma energía.</div><div class="term"><strong>UDP:</strong> protocolo sin garantía automática de entrega.</div><div class="term"><strong>Underflow:</strong> búfer vacío.</div><div class="term"><strong>Overflow:</strong> búfer sobrecargado.</div><div class="term"><strong>VREF:</strong> tensión de referencia.</div><div class="term"><strong>Wi‑Fi:</strong> red inalámbrica.</div><div class="term"><strong>Zobel:</strong> red RC de estabilidad.</div>
+</div></section>
+
+<section id="preguntas"><div class="section-heading"><span class="section-number">15</span><h2>Preguntas de comprensión</h2></div><p class="subsection-label">Comprensión directa</p><ol class="questions"><li>¿Cuál es la diferencia entre un sistema half duplex y uno full duplex?</li><li>¿Por qué el diagrama original representa solamente una dirección de comunicación?</li><li>¿Qué bloques debe contener cada terminal?</li><li>¿Qué transformación realiza el micrófono?</li><li>¿Por qué no se conecta normalmente el micrófono directamente al ADC?</li><li>¿Qué pines y componentes principales tiene el módulo KY-037?</li><li>¿Cómo se calibra la sensibilidad analógica en el KY-037?</li><li>¿Para qué sirve el comparador LM393 en el KY-037?</li><li>¿Qué sucede si la ganancia del KY-037 se ajusta demasiado alta?</li><li>¿Por qué la señal del ADC necesita polarización?</li><li>¿Qué representa un valor ADC cercano al punto medio?</li><li>¿Cuántos niveles representa un ADC de 12 bits?</li><li>¿Qué es una muestra?</li><li>¿Qué determina la frecuencia de muestreo?</li><li>¿Qué frecuencia máxima teórica representa un muestreo de 8 kHz?</li><li>¿Cuál es la función del filtro antialias?</li><li>¿Por qué se utiliza un búfer antes de transmitir?</li><li>¿Qué ventaja proporciona un búfer circular?</li><li>¿Por qué un paquete grande aumenta la latencia?</li><li>¿Qué información puede incluir una cabecera de audio?</li></ol><p class="subsection-label">Comunicación y red</p><ol class="questions" start="21"><li>¿Qué función cumple el número de secuencia?</li><li>¿Qué es una marca de tiempo?</li><li>¿Por qué UDP resulta útil para audio en tiempo real?</li><li>¿Qué garantías no proporciona UDP?</li><li>¿Por qué puede ser perjudicial retransmitir un paquete demasiado tarde?</li><li>¿Qué es el jitter?</li><li>¿Cómo funciona un jitter buffer?</li><li>¿Qué diferencia existe entre underflow y overflow?</li><li>¿Qué estrategia sencilla puede utilizarse al perder un paquete?</li><li>¿Por qué ambos flujos full duplex deben tratarse por separado?</li></ol><p class="subsection-label">Reconstrucción y salida</p><ol class="questions" start="31"><li>¿Qué parámetro del PWM representa el audio?</li><li>¿Qué tensión media se espera con duty de 50 % y 3,3 V?</li><li>¿Por qué la frecuencia PWM debe superar la banda de voz?</li><li>¿Cuál es la función del filtro de reconstrucción?</li><li>¿Por qué la salida filtrada conserva una continua?</li><li>¿Qué función cumple el condensador de acoplamiento?</li><li>¿Cuál es la diferencia entre el KY-037 y el LM386?</li><li>¿Por qué no conviene usar inicialmente la máxima ganancia del LM386?</li><li>¿Cuál es la función de la red Zobel?</li><li>¿Por qué se necesita control de volumen?</li></ol><p class="subsection-label">Análisis y aplicación</p><ol class="questions" start="41"><li>¿Qué ocurre si una señal de 7 kHz se muestrea a 8 kHz sin filtro antialias?</li><li>Si un paquete contiene 160 muestras a 8 kHz, ¿cuántos milisegundos representa?</li><li>Si cada muestra ocupa dos bytes, ¿cuántos bytes contiene?</li><li>¿Qué efecto tiene duplicar la frecuencia de muestreo?</li><li>¿Qué ventaja y desventaja tiene aumentar el jitter buffer?</li><li>¿Qué ocurre si el índice de lectura avanza más rápido que el de escritura?</li><li>¿Por qué el USB del computador puede introducir ruido?</li><li>¿Por qué el retorno del LM386 no debe circular por la masa del micrófono?</li><li>¿Cómo determinar si el ruido proviene del ADC o del preamplificador?</li><li>¿Qué prueba verifica el filtro PWM sin audio?</li><li>¿Por qué un duty fijo de 50 % debería producir silencio después del acoplamiento?</li><li>¿Qué puede producir un pitido sostenido entre auricular y micrófono?</li><li>¿Por qué un headset reduce el acople?</li><li>¿Qué bloques influyen en la latencia total?</li><li>¿Por qué una mayor ganancia no implica mejor calidad?</li><li>¿Qué ocurre si el ADC recibe una tensión superior a su rango?</li><li>¿Qué datos deberían registrarse para evaluar la red?</li><li>¿Cómo distinguir pérdida de paquetes de ruido analógico?</li><li>¿Qué ocurre si los terminales usan frecuencias de muestreo distintas?</li><li>¿Qué condiciones deben cumplirse para considerar funcional el prototipo?</li></ol></section>
+
+<footer><p>Las imágenes deben guardarse en la misma carpeta del HTML usando los nombres <code>1.png</code>, <code>2.png</code>, <code>3.png</code>, etc.</p><a class="top-link" href="#inicio">Volver al inicio</a></footer>
+</article></main></div>
+<script>
+const progressBar=document.getElementById('progressBar');const tocLinks=[...document.querySelectorAll('.toc a')];const sections=[...document.querySelectorAll('header[id],section[id]')];function updateProgress(){const s=document.documentElement.scrollTop||document.body.scrollTop;const m=document.documentElement.scrollHeight-document.documentElement.clientHeight;progressBar.style.width=(m>0?s/m*100:0)+'%'}const observer=new IntersectionObserver(entries=>{const v=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(!v)return;tocLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+v.target.id))},{rootMargin:'-20% 0px -68% 0px',threshold:[.05,.2,.5]});sections.forEach(s=>observer.observe(s));window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+</script>
+</body>
+</html>
