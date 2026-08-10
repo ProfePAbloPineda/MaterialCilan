@@ -1,1 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡MIRA ARRIBA! - Descubre el Universo</title>
+    <link rel="stylesheet" href="presentation.css">
+</head>
+<body>
+    <!-- Twinkling stars background -->
+    <div class="stars-bg"></div>
+
+    <!-- Presentation wrapper -->
+    <div class="deck-container">
+        
+        <!-- SLIDE 1: PORTADA -->
+        <section class="slide active" id="slide-1" data-tts="¡Mira arriba! Descubre el Universo. Charla de Astronomía y Jornada de Observación con Telescopio. Para estudiantes de primero y segundo medio. No se necesita saber nada previo, ¡solo ganas de explorar! Organizan: Profesor Pablo Pineda y Profesora Gabriela Rodríguez. Martes 11 de agosto a las 15 horas en el Auditorio del Colegio Industrial Las Nieves.">
+            <div class="slide-header">
+                <div class="slide-category">Club de Astronomía</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+            
+            <div class="closing-container">
+                <h1 class="welcome-title">¡MIRA ARRIBA!</h1>
+                <div class="welcome-subtitle">Descubre el Universo</div>
+                <p class="welcome-desc">Charla de Astronomía + Jornada de Observación con Telescopio</p>
+                
+                <div class="welcome-details">
+                    <div class="detail-item"><strong>Fecha:</strong> Martes 11 de agosto, 15:00 h</div>
+                    <div class="detail-item"><strong>Lugar:</strong> Auditorio, Colegio Industrial Las Nieves</div>
+                </div>
+                <p style="margin-top: 20px; font-size: 1rem; color: var(--accent-blue);">
+                    Para estudiantes de 1° y 2° medio · ¡No se necesita saber nada previo, solo ganas de explorar!
+                </p>
+            </div>
+
+            <div class="slide-footer">
+                <span>Organizan: Prof. Pablo Pineda · Prof. Gabriela Rodríguez</span>
+                <span>Diapositiva 1 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: HOJA DE RUTA -->
+        <section class="slide" id="slide-2" data-tts="Hoja de ruta. ¿Qué vamos a explorar hoy? Primero: Conceptos básicos de la astronomía. Segundo: El Sistema Solar y sus planetas. Tercero: Estrellas, galaxias y el universo. Cuarto: Fenómenos astronómicos observables. Quinto: El cielo de Chile esta noche. Sexto: Nuestro telescopio y cómo usarlo. Séptimo: Plan de la jornada de observación. Haz clic en cualquier tarjeta para saltar a esa sección.">
+            <div class="slide-header">
+                <div class="slide-category">Introducción</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <h2>HOJA DE RUTA</h2>
+            <h3 style="margin-top: -10px; margin-bottom: 10px; color: var(--text-muted);">¿Qué vamos a explorar?</h3>
+            
+            <div class="roadmap-grid">
+                <div class="roadmap-card" onclick="goToSlide(3)">
+                    <span class="roadmap-num">01</span>
+                    <span class="roadmap-title">Conceptos Básicos de Astronomía</span>
+                </div>
+                <div class="roadmap-card" onclick="goToSlide(4)">
+                    <span class="roadmap-num">02</span>
+                    <span class="roadmap-title">El Sistema Solar y sus planetas</span>
+                </div>
+                <div class="roadmap-card" onclick="goToSlide(6)">
+                    <span class="roadmap-num">03</span>
+                    <span class="roadmap-title">Estrellas, galaxias y el universo</span>
+                </div>
+                <div class="roadmap-card" onclick="goToSlide(8)">
+                    <span class="roadmap-num">04</span>
+                    <span class="roadmap-title">Fenómenos astronómicos observables</span>
+                </div>
+                <div class="roadmap-card" onclick="goToSlide(9)">
+                    <span class="roadmap-num">05</span>
+                    <span class="roadmap-title">El cielo de Chile esta noche (agosto 2026)</span>
+                </div>
+                <div class="roadmap-card" onclick="goToSlide(10)">
+                    <span class="roadmap-num">06</span>
+                    <span class="roadmap-title">Nuestro telescopio: partes y uso</span>
+                </div>
+                <div class="roadmap-card" onclick="goToSlide(12)">
+                    <span class="roadmap-num">07</span>
+                    <span class="roadmap-title">Plan de la jornada de observación</span>
+                </div>
+                <div class="roadmap-card" style="background: rgba(255, 255, 255, 0.01); border-style: dashed; cursor: default;">
+                    <span class="roadmap-num" style="color: rgba(255,255,255,0.05);">✓</span>
+                    <span class="roadmap-title" style="color: var(--text-muted);">¡Listos para partir!</span>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>Colegio Industrial Las Nieves</span>
+                <span>Diapositiva 2 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: CONCEPTOS BÁSICOS -->
+        <section class="slide" id="slide-3" data-tts="Conceptos básicos. ¿Qué es la astronomía? Es la ciencia que estudia los astros: estrellas, planetas, lunas, cometas, galaxias y todo lo que existe fuera de la atmósfera terrestre. Observa, mide y busca explicar cómo se forman, se mueven y evolucionan. Algunas ramas principales son: la Astrofísica, que estudia la física de las estrellas y galaxias; la Cosmología, dedicada al origen y la evolución del universo; y la Astronomía de observación, que es la que haremos nosotros hoy. A la derecha puedes ver un video del telescopio en acción.">
+            <div class="slide-header">
+                <div class="slide-category">01 · Conceptos Básicos</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="basic-concepts-text flex-col">
+                    <h2>¿Qué es la astronomía?</h2>
+                    <p>Es la ciencia que estudia los astros: estrellas, planetas, lunas, cometas, galaxias y todo lo que existe fuera de la atmósfera terrestre. Observa, mide y busca explicar cómo se forman, se mueven y evolucionan.</p>
+                    
+                    <h3 style="margin-top: 10px;">Algunas ramas</h3>
+                    <div class="concept-list">
+                        <div class="concept-item">
+                            <strong>Astrofísica:</strong> La física de las estrellas y galaxias.
+                        </div>
+                        <div class="concept-item">
+                            <strong>Cosmología:</strong> El origen y la evolución del universo.
+                        </div>
+                        <div class="concept-item">
+                            <strong>Astronomía de observación:</strong> La que haremos nosotros hoy.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-wrapper">
+                    <!-- Paranal Sunset loop from ESO -->
+                    <video autoplay loop muted playsinline>
+                        <source src="videos/vlt_sunset.mp4" type="video/mp4">
+                        Tu navegador no soporta el tag de video.
+                    </video>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span class="slide-credit">Crédito de video: ESO / F. Char</span>
+                <span>Diapositiva 3 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: EL SISTEMA SOLAR -->
+        <section class="slide" id="slide-4" data-tts="El Sistema Solar. El Sol y todo lo que gira a su alrededor por gravedad: ocho planetas, sus lunas, planetas enanos, asteroides y cometas. El Sol concentra más del noventa y nueve por ciento de toda la masa del sistema. El orden de los planetas desde el Sol es: Mercurio, Venus, Tierra, Marte, Júpiter, Saturno, Urano y Neptuno. Un truco útil para recordar el orden es la frase: Mi Vecina Tiene Muchos Juguetes Sin Numerar, usando cada letra inicial. A la derecha puedes ver el simulador de órbitas. Haz clic en los planetas para ver cómo giran.">
+            <div class="slide-header">
+                <div class="slide-category">02 · Nuestro Vecindario</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="flex-col">
+                    <h2>El Sistema Solar</h2>
+                    <p>El Sol y todo lo que gira a su alrededor por gravedad: 8 planetas, sus lunas, planetas enanos, asteroides y cometas. El Sol concentra más del 99% de toda la masa del sistema.</p>
+                    
+                    <h3 style="margin-top: 10px;">Orden desde el Sol</h3>
+                    <p style="font-size: 1.15rem; color: var(--accent-blue); font-weight: 600;">
+                        Mercurio · Venus · Tierra · Marte · Júpiter · Saturno · Urano · Neptuno
+                    </p>
+                    
+                    <div class="concept-item" style="border-color: var(--accent-yellow); margin-top: 10px;">
+                        <strong>Truco para recordar el orden:</strong><br>
+                        Cada inicial de: "<strong>M</strong>i <strong>V</strong>ecina <strong>T</strong>iene <strong>M</strong>uchos <strong>J</strong>uguetes <strong>S</strong>in <strong>N</strong>umerar".
+                    </div>
+                </div>
+                
+                <div class="orrery-container">
+                    <div class="orrery-controls">
+                        <button class="btn-action" id="btn-pause-orrery" onclick="toggleOrrerySpeed()">Pausar Órbitas</button>
+                    </div>
+                    
+                    <div class="sun-center" id="orrery-sun"></div>
+                    
+                    <!-- Concentric orbits -->
+                    <div class="orbit-line orbit-mercury"><div class="planet-node planet-mercury" data-name="Mercurio" data-desc="El planeta más cercano al Sol. Es rocoso y sin atmósfera sustancial."></div></div>
+                    <div class="orbit-line orbit-venus"><div class="planet-node planet-venus" data-name="Venus" data-desc="El planeta más caliente debido a un intenso efecto invernadero."></div></div>
+                    <div class="orbit-line orbit-earth"><div class="planet-node planet-earth" data-name="Tierra" data-desc="Nuestro hogar, el único lugar conocido que alberga vida."></div></div>
+                    <div class="orbit-line orbit-mars"><div class="planet-node planet-mars" data-name="Marte" data-desc="El planeta rojo, posee el volcán más grande del Sistema Solar."></div></div>
+                    <div class="orbit-line orbit-jupiter"><div class="planet-node planet-jupiter" data-name="Júpiter" data-desc="El planeta más grande, un gigante gaseoso con tormentas colosales."></div></div>
+                    <div class="orbit-line orbit-saturn"><div class="planet-node planet-saturn" data-name="Saturno" data-desc="Famoso por sus anillos brillantes formados de roca y hielo."></div></div>
+
+                    <div class="orrery-info" id="orrery-info-display">
+                        Hacer clic en un planeta para ver su información.
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>Simulador de Orrería Concéntrica Escala Dinámica</span>
+                <span>Diapositiva 4 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: DOS GRANDES FAMILIAS -->
+        <section class="slide" id="slide-5" data-tts="Dos grandes familias de planetas. Se dividen en planetas rocosos y gigantes gaseosos y helados. Los planetas rocosos son interiores: Mercurio, el más pequeño; Venus, el más caliente con atmósfera de dióxido de carbono; Tierra, el único con vida; y Marte, el planeta rojo con volcanes gigantes. Los gigantes gaseosos y helados son exteriores: Júpiter, el gigante con la gran mancha roja; Saturno, famoso por sus anillos; Urano, que gira acostado sobre su eje; y Neptuno, el más ventoso de todos. Coloca el puntero sobre cualquier planeta a la derecha para ver cómo se agranda.">
+            <div class="slide-header">
+                <div class="slide-category">02 · Nuestro Vecindario</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <h2>Dos grandes familias de planetas</h2>
+            
+            <div class="families-container">
+                <!-- Rocky family -->
+                <div class="family-box rocky-border">
+                    <div class="family-title" style="color: var(--accent-orange);">Planetas Rocosos</div>
+                    <p style="font-size: 0.95rem; margin-top: -5px; color: var(--text-muted);">Cercanos al Sol, superficies sólidas de roca y metal, alta densidad.</p>
+                    
+                    <div class="family-planets-flex">
+                        <div class="family-planet-card" data-pname="Mercurio" data-pdesc="El más pequeño y cercano al Sol. Sin atmósfera protectora, con cráteres.">
+                            <img src="images/mercury.jpg" alt="Mercurio">
+                            <span>Mercurio</span>
+                        </div>
+                        <div class="family-planet-card" data-pname="Venus" data-pdesc="El más caliente del sistema por efecto invernadero de CO₂. Gira al revés.">
+                            <img src="images/venus.jpg" alt="Venus">
+                            <span>Venus</span>
+                        </div>
+                        <div class="family-planet-card" data-pname="Tierra" data-pdesc="Nuestra biosfera activa, con agua líquida y atmósfera rica en oxígeno.">
+                            <img src="images/earth.jpg" alt="Tierra">
+                            <span>Tierra</span>
+                        </div>
+                        <div class="family-planet-card" data-pname="Marte" data-pdesc="El planeta rojo, posee el Monte Olimpo (volcán gigante) y cauces secos de agua.">
+                            <img src="images/mars.jpg" alt="Marte">
+                            <span>Marte</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gas family -->
+                <div class="family-box gaseous-border">
+                    <div class="family-title" style="color: var(--accent-blue);">Gigantes Gaseosos y Helados</div>
+                    <p style="font-size: 0.95rem; margin-top: -5px; color: var(--text-muted);">Lejanos al Sol, inmensas atmósferas de hidrógeno y helio, anillos y lunas múltiples.</p>
+                    
+                    <div class="family-planets-flex">
+                        <div class="family-planet-card" data-pname="Júpiter" data-pdesc="El más masivo, compuesto mayormente de gas. Gran Mancha Roja (tormenta centenaria).">
+                            <img src="images/jupiter.jpg" alt="Júpiter">
+                            <span>Júpiter</span>
+                        </div>
+                        <div class="family-planet-card" data-pname="Saturno" data-pdesc="Señor de los anillos compuestos de billones de trozos de hielo, polvo y roca.">
+                            <img src="images/saturn.jpg" alt="Saturno">
+                            <span>Saturno</span>
+                        </div>
+                        <div class="family-planet-card" data-pname="Urano" data-pdesc="Gigante helado inclinado más de 97 grados, rodando horizontal sobre su órbita.">
+                            <img src="images/uranus.jpg" alt="Urano">
+                            <span>Urano</span>
+                        </div>
+                        <div class="family-planet-card" data-pname="Neptuno" data-pdesc="Planeta más lejano y ventoso, vientos supersónicos de metano y amoníaco.">
+                            <img src="images/neptune.jpg" alt="Neptuno">
+                            <span>Neptuno</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic text box below -->
+            <div id="planet-family-info" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 12px 20px; border-radius: 12px; font-size: 0.95rem; text-align: center; margin-top: 10px;">
+                Coloca el puntero o haz clic sobre un planeta para ver su escala e información comparativa.
+            </div>
+
+            <div class="slide-footer">
+                <span class="slide-credit">Crédito de imágenes: NASA / JPL / ESA</span>
+                <span>Diapositiva 5 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: ESTRELLAS CICLO -->
+        <section class="slide" id="slide-6" data-tts="Estrellas: nacimiento, vida y muerte. Una estrella es una esfera de gas, principalmente hidrógeno, tan grande que la gravedad enciende reacciones nucleares en su centro. El Sol es nuestra estrella más cercana. El ciclo de vida tiene cinco etapas principales: Primera: Nebulosa, que es una nube de gas y polvo que colapsa por gravedad. Segunda: Protoestrella, donde el núcleo se calienta y comienza a brillar. Tercera: Secuencia principal, en la que fusiona hidrógeno de forma estable. Cuarta: Gigante roja, que se expande al agotar el combustible. Y Quinta, el Final, donde se convierte en enana blanca, o explota como supernova dejando una estrella de neutrones o un agujero negro. Haz clic en las etapas de la izquierda para ver su animación y detalles.">
+            <div class="slide-header">
+                <div class="slide-category">03 · Más allá del Sistema Solar</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <h2>Estrellas: nacimiento, vida y muerte</h2>
+            
+            <div class="star-lifecycle-grid">
+                <div class="star-timeline">
+                    <div class="timeline-step active" onclick="activateStarStep(1)" id="star-step-1" 
+                         data-title="1. Nebulosa Estelar" 
+                         data-desc="Nube gigante de gas de hidrógeno y polvo interestelar. Por perturbaciones gravitatorias, colapsa en grumos de alta densidad que inician la formación estelar." 
+                         data-img="images/nebulosa.jpg" 
+                         data-color="#00d2ff" 
+                         data-srcname="NASA / ESA / Hubble (Pillars of Creation)">
+                        <div class="timeline-badge">1</div>
+                        <div class="timeline-step-content">
+                            <h4>Nebulosa</h4>
+                            <p>Nube de gas y polvo que colapsa por gravedad</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-step" onclick="activateStarStep(2)" id="star-step-2" 
+                         data-title="2. Protoestrella" 
+                         data-desc="Grumo denso caliente. La energía potencial liberada calienta el núcleo a millones de grados hasta empezar a emitir radiación infrarroja." 
+                         data-img="images/protoestrella.jpg" 
+                         data-color="#ff7b00" 
+                         data-srcname="NASA / ESA / Hubble (Stellar Jet)">
+                        <div class="timeline-badge">2</div>
+                        <div class="timeline-step-content">
+                            <h4>Protoestrella</h4>
+                            <p>El núcleo se calienta y comienza a brillar</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" onclick="activateStarStep(3)" id="star-step-3" 
+                         data-title="3. Secuencia Principal" 
+                         data-desc="La fase más larga de la vida de una estrella. El equilibrio perfecto entre el colapso gravitatorio hacia adentro y la presión de fusión nuclear hacia afuera." 
+                         data-img="images/sun.jpg" 
+                         data-color="#ffd166" 
+                         data-srcname="NASA / SDO (El Sol)">
+                        <div class="timeline-badge">3</div>
+                        <div class="timeline-step-content">
+                            <h4>Secuencia principal</h4>
+                            <p>Fusiona hidrógeno de forma estable (como nuestro Sol)</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" onclick="activateStarStep(4)" id="star-step-4" 
+                         data-title="4. Gigante Roja" 
+                         data-desc="Al agotar el hidrógeno en el núcleo, este se contrae y calienta, haciendo que las capas exteriores se hinchen y enfríen, tiñiéndose de rojo." 
+                         data-img="images/gigante_roja.jpg" 
+                         data-color="#ef4444" 
+                         data-srcname="ESO / ALMA (Betelgeuse)">
+                        <div class="timeline-badge">4</div>
+                        <div class="timeline-step-content">
+                            <h4>Gigante roja</h4>
+                            <p>Se expande masivamente al agotar el núcleo</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" onclick="activateStarStep(5)" id="star-step-5" 
+                         data-title="5. Muerte Estelar (Supernova)" 
+                         data-desc="Las estrellas masivas estallan como supernovas, dispersando metales pesados en el espacio y dejando agujeros negros o estrellas de neutrones." 
+                         data-img="images/final_supernova.jpg" 
+                         data-color="#9d4edd" 
+                         data-srcname="NASA / ESA / Hubble (Crab Nebula)">
+                        <div class="timeline-badge">5</div>
+                        <div class="timeline-step-content">
+                            <h4>Final del Ciclo</h4>
+                            <p>Enana blanca, o supernova y agujero negro</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Visual card -->
+                <div class="star-visual-card">
+                    <img id="star-visual-img" src="images/nebulosa.jpg" alt="Stellar evolution stage">
+                    <div class="star-visual-title" id="star-visual-title">1. Nebulosa Estelar</div>
+                    <p style="font-size: 0.95rem; color: var(--text-muted);" id="star-visual-desc">Nube gigante de gas de hidrógeno y polvo interestelar. Por perturbaciones gravitatorias, colapsa en grumos de alta densidad que inician la formación estelar.</p>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span id="star-slide-credit" class="slide-credit">Crédito de imagen: NASA / ESA / Hubble (Pillars of Creation)</span>
+                <span>Diapositiva 6 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: GALAXIAS Y EL UNIVERSO -->
+        <section class="slide" id="slide-7" data-tts="Galaxias y el universo. Una galaxia es un enorme conjunto de estrellas, gas, polvo y materia oscura unido por la gravedad. El universo observable contiene cientos de miles de millones de galaxias. Nuestra casa es la Vía Láctea, una galaxia de tipo espiral que contiene entre cien mil y cuatrocientos mil millones de estrellas. Nuestro Sol es solo una estrella corriente entre todas ellas. Desde Chile, alejados de la contaminación lumínica, se observa a simple vista como una franja lechosa muy brillante en el cielo nocturno del invierno. Coloca el puntero sobre la imagen de la derecha para ver la Vía Láctea sobre el radiotelescopio alma en Atacama.">
+            <div class="slide-header">
+                <div class="slide-category">03 · Más allá del Sistema Solar</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="flex-col">
+                    <h2>Galaxias y el universo</h2>
+                    <p>Una galaxia es un enorme conjunto de estrellas, gas, polvo y materia oscura unido por gravedad. El universo observable contiene cientos de miles de millones de galaxias.</p>
+                    
+                    <h3 style="margin-top: 10px;">Nuestra casa: la Vía Láctea</h3>
+                    <div class="concept-list">
+                        <div class="concept-item" style="border-color: var(--accent-blue);">
+                            Galaxia espiral barrada con <strong>100 mil–400 mil millones</strong> de estrellas.
+                        </div>
+                        <div class="concept-item" style="border-color: var(--accent-purple);">
+                            El Sol es solo una pequeña estrella corriente ubicada en el Brazo de Orión.
+                        </div>
+                        <div class="concept-item" style="border-color: var(--accent-yellow);">
+                            Desde los cielos oscuros de Chile se ve como una franja brillante que cruza el cenit en las noches de invierno.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="zoom-img-wrapper">
+                    <!-- High res Milky Way over ALMA from ESO -->
+                    <img class="zoom-img" src="images/milkyway.jpg" alt="Vía Láctea sobre ALMA en Atacama">
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span class="slide-credit">Crédito de imagen: ESO / B. Tafreshi (ALMA Antennas and Milky Way)</span>
+                <span>Diapositiva 7 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: FENÓMENOS OBSERVABLES -->
+        <section class="slide" id="slide-8" data-tts="Fenómenos astronómicos observables. Hay cuatro fenómenos principales que podemos ver a simple vista o con binoculares. Primero: las Fases de la Luna, cuyo aspecto cambia según su posición respecto al Sol y la Tierra en un ciclo de veintinueve coma cinco días. Segundo: las lluvias de meteoros, conocidas como estrellas fugaces, que ocurren cuando la Tierra cruza el rastro de polvo de un cometa, como las Perseidas de agosto. Tercero: las conjunciones planetarias, cuando dos o más planetas se ven muy alineados y cercanos entre sí en el cielo. Y Cuarto: los Eclipses, ya sean solares, cuando la Luna tapa al Sol, o lunares, cuando la Tierra proyecta su sombra sobre la Luna. Coloca el puntero sobre las tarjetas para ver sus fotos ampliadas.">
+            <div class="slide-header">
+                <div class="slide-category">04 · Lo que podemos ver</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <h2>Fenómenos astronómicos observables</h2>
+
+            <div class="phenomena-grid">
+                <!-- Moon phases -->
+                <div class="phenomenon-card">
+                    <img class="phenomenon-img" src="images/moon.jpg" alt="Luna Llena">
+                    <span class="phenomenon-badge">1. Satélite</span>
+                    <h4 style="font-family:var(--font-title); margin-bottom:5px;">Fases de la Luna</h4>
+                    <p class="phenomenon-desc">El aspecto de la Luna cambia según su posición respecto al Sol y la Tierra, en un ciclo de ~29,5 días.</p>
+                </div>
+
+                <!-- Meteor shower -->
+                <div class="phenomenon-card">
+                    <img class="phenomenon-img" src="images/meteoros.jpg" alt="Meteoros">
+                    <span class="phenomenon-badge" style="background:rgba(255,123,0,0.1); color:var(--accent-orange);">2. Atmósfera</span>
+                    <h4 style="font-family:var(--font-title); margin-bottom:5px;">Lluvias de Meteoros</h4>
+                    <p class="phenomenon-desc">"Estrellas fugaces" cuando la Tierra atraviesa el rastro de polvo de un cometa. Ej.: las Perseidas de agosto.</p>
+                </div>
+
+                <!-- Conjunctions -->
+                <div class="phenomenon-card">
+                    <img class="phenomenon-img" src="images/conjuncion.jpg" alt="Alineación planetas">
+                    <span class="phenomenon-badge" style="background:rgba(157,78,221,0.1); color:var(--accent-purple);">3. Órbita</span>
+                    <h4 style="font-family:var(--font-title); margin-bottom:5px;">Conjunciones</h4>
+                    <p class="phenomenon-desc">Dos o más planetas se ven muy cercanos entre sí en el cielo nocturno, alineados desde nuestra perspectiva.</p>
+                </div>
+
+                <!-- Eclipses -->
+                <div class="phenomenon-card">
+                    <img class="phenomenon-img" src="images/eclipse.jpg" alt="Eclipse solar">
+                    <span class="phenomenon-badge" style="background:rgba(239,68,68,0.1); color:var(--accent-red);">4. Sombra</span>
+                    <h4 style="font-family:var(--font-title); margin-bottom:5px;">Eclipses</h4>
+                    <p class="phenomenon-desc">Solares (la Luna bloquea al Sol) o lunares (la sombra de la Tierra se proyecta cubriendo la Luna llena).</p>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span class="slide-credit">Imágenes de Dominio Público / Wikimedia Commons</span>
+                <span>Diapositiva 8 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: EL CIELO DE CHILE -->
+        <section class="slide" id="slide-9" data-tts="El cielo de Chile esta noche de agosto de dos mil veintiséis. Estamos en invierno austral, con noches largas, aire frío y seco, ideales para observar. Es una de las mejores épocas del año. Las constelaciones protagonistas hoy son: la Cruz del Sur y Centauro, bien altas en el cielo al anochecer; Escorpión y Sagitario, donde apunta el brillante centro de la Vía Láctea; y las Nubes de Magallanes, galaxias satélites visibles todo el año solo desde el hemisferio sur. Los planetas visibles son: Venus, muy brillante al atardecer hacia el oeste; Saturno, visible gran parte de la noche; y Marte, bajo hacia la madrugada. A la derecha puedes ver el mapa del cielo interactivo. Pasa el cursor por las constelaciones para ver sus nombres y trazos estelares.">
+            <div class="slide-header">
+                <div class="slide-category">05 · Preparando la Observación</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="flex-col">
+                    <h2>El cielo de Chile — agosto 2026</h2>
+                    <p>Invierno austral: noches largas, aire frío y seco, y cielos muy transparentes. Una de las mejores épocas para la observación astronómica desde territorio chileno.</p>
+                    
+                    <h3 style="margin-top: 5px;">Objetivos esta noche</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-muted);">
+                        <strong>Constelaciones:</strong> Cruz del Sur (Crux) y Centauro (muy altas); Escorpión y Sagitario (apuntan al centro galáctico); Nubes de Magallanes (exclusivas del sur).<br>
+                        <strong>Planetas:</strong> Venus (brillante en el oeste al atardecer), Saturno (toda la noche) y Marte (de madrugada).
+                    </p>
+                    
+                    <div class="concept-item" style="border-color: var(--accent-blue); padding: 8px 15px; margin-top: 5px;">
+                        <span style="font-size: 0.85rem;"><strong>Nota:</strong> Confirmar posiciones exactas en aplicaciones móviles (Stellarium o Star Walk) antes de salir al patio.</span>
+                    </div>
+                </div>
+
+                <div class="sky-map-container">
+                    <!-- Loop of ALMA timelapse playing behind the sky SVG map overlay -->
+                    <div style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0.35;">
+                        <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
+                            <source src="videos/alma_milkyway.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    
+                    <div class="sky-map-label">Santiago, 11 de Agosto, 21:00 h</div>
+                    <div class="sky-map-directions">
+                        <span class="sky-dir sky-dir-n">N</span>
+                        <span class="sky-dir sky-dir-s">S</span>
+                        <span class="sky-dir sky-dir-e">E</span>
+                        <span class="sky-dir sky-dir-w">O</span>
+                    </div>
+                    
+                    <!-- SVG Interactive Star Map -->
+                    <svg class="sky-svg" viewBox="0 0 200 200">
+                        <!-- Milky Way band background -->
+                        <path d="M40,200 Q70,120 120,80 T180,0" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="35" filter="blur(8px)" />
+                        
+                        <!-- Southern Cross (Crux) -->
+                        <g class="const-group" id="const-crux">
+                            <line class="const-line" x1="100" y1="130" x2="100" y2="150" />
+                            <line class="const-line" x1="90" y1="140" x2="110" y2="140" />
+                            <circle class="star-dot" cx="100" cy="130" r="2.5" />
+                            <circle class="star-dot" cx="100" cy="150" r="3" />
+                            <circle class="star-dot" cx="90" cy="140" r="2.5" />
+                            <circle class="star-dot" cx="110" cy="140" r="2" />
+                            <circle class="star-dot" cx="107" cy="146" r="1" />
+                            <text x="115" y="137" class="const-label">Cruz del Sur (Crux)</text>
+                        </g>
+
+                        <!-- Centaurus (pointers) -->
+                        <g class="const-group" id="const-centaurus">
+                            <line class="const-line" x1="125" y1="135" x2="135" y2="145" />
+                            <circle class="star-dot" cx="125" cy="135" r="3.5" fill="#ffd166" />
+                            <circle class="star-dot" cx="135" cy="145" r="3" />
+                            <text x="140" y="142" class="const-label">α & β Centauri</text>
+                        </g>
+
+                        <!-- Scorpius (Antares) -->
+                        <g class="const-group" id="const-scorpius">
+                            <path d="M50,80 Q45,65 55,55 T65,65 Q70,75 80,75" fill="none" class="const-line" />
+                            <circle class="star-dot" cx="50" cy="80" r="2.5" />
+                            <circle class="star-dot" cx="45" cy="65" r="2" />
+                            <circle class="star-dot" cx="55" cy="55" r="3.5" fill="#ef4444" /> <!-- Antares -->
+                            <circle class="star-dot" cx="65" cy="65" r="2" />
+                            <circle class="star-dot" cx="70" cy="75" r="2" />
+                            <circle class="star-dot" cx="80" cy="75" r="1.5" />
+                            <text x="35" y="50" class="const-label">Escorpión</text>
+                        </g>
+
+                        <!-- Planets active -->
+                        <g class="sky-planet" style="color:var(--accent-orange);" onclick="showPlanetStatus('Saturno')">
+                            <circle cx="150" cy="60" r="5" fill="var(--accent-yellow)" />
+                            <text x="145" y="52">Saturno</text>
+                        </g>
+                        
+                        <g class="sky-planet" style="color:var(--accent-red);" onclick="showPlanetStatus('Marte')">
+                            <circle cx="170" cy="160" r="3.5" fill="var(--accent-red)" />
+                            <text x="165" y="172">Marte</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span class="slide-credit">Fondo de video: ESO / NAOJ (ALMA antennas timelapse)</span>
+                <span>Diapositiva 9 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: NUESTRO TELESCOPIO (PARTES) -->
+        <section class="slide" id="slide-10" data-tts="Nuestro telescopio y sus partes principales. El telescopio tiene cinco componentes clave que capturan la luz y magnifican la imagen. Primero: el Tubo óptico, que capta y concentra la luz de los astros. Segundo: la Montura y el trípode, que sostienen y permiten orientar el equipo con estabilidad. Tercero: el Buscador, una mira pequeña acoplada con poco aumento para ubicar los objetos rápidamente. Cuarto: los Oculares, lentes desmontables que se cambian en el enfocador para variar el aumento de la imagen. Y Quinto: el Enfocador, un mecanismo de ruedas que ajusta la nitidez de la imagen al mover el ocular hacia adelante y hacia atrás. Pasa el cursor por los puntos azules del telescopio a la izquierda para ver el nombre y detalle de cada parte.">
+            <div class="slide-header">
+                <div class="slide-category">06 · Nuestra Herramienta</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="telescope-container">
+                    <!-- Interactive SVG Vector Telescope Diagram -->
+                    <svg class="telescope-svg" viewBox="0 0 200 200">
+                        <!-- Background tripod stand -->
+                        <line x1="80" y1="120" x2="50" y2="185" stroke="#4b5563" stroke-width="4" stroke-linecap="round" />
+                        <line x1="80" y1="120" x2="110" y2="185" stroke="#4b5563" stroke-width="4" stroke-linecap="round" />
+                        <line x1="80" y1="120" x2="80" y2="190" stroke="#374151" stroke-width="3" stroke-linecap="round" />
+                        
+                        <!-- Mount -->
+                        <circle cx="80" cy="120" r="10" fill="#1f2937" stroke="#9ca3af" stroke-width="1.5" />
+                        <rect x="75" y="105" width="10" height="15" fill="#374151" rx="2" />
+                        
+                        <!-- Main Optical Tube (Refractor) -->
+                        <g transform="rotate(-30, 80, 110)">
+                            <!-- Tube body -->
+                            <polygon points="30,105 150,107 150,113 30,115" fill="#ffffff" stroke="#1f2937" stroke-width="1" />
+                            <!-- Dew shield / front cap -->
+                            <rect x="25" y="103" width="15" height="14" fill="#1e3a8a" stroke="#1f2937" stroke-width="1" />
+                            <!-- Lens element -->
+                            <path d="M26,104 C28,107 28,113 26,116" stroke="#00d2ff" stroke-width="2" fill="none" />
+                            
+                            <!-- Diagonal mirror and focuser unit -->
+                            <rect x="145" y="106" width="12" height="8" fill="#1f2937" />
+                            <polygon points="157,106 165,112 157,118" fill="#1f2937" />
+                            <!-- Focus knobs -->
+                            <circle cx="149" cy="116" r="3" fill="#9ca3af" />
+                            
+                            <!-- Eyepiece (Ocular) -->
+                            <rect x="159" y="96" width="6" height="12" fill="#4b5563" transform="rotate(45, 159, 96)" />
+                            
+                            <!-- Finderscope (Buscador) -->
+                            <rect x="90" y="93" width="30" height="4" fill="#1f2937" />
+                            <rect x="86" y="92" width="6" height="6" fill="#1e3a8a" />
+                            <rect x="118" y="92" width="4" height="6" fill="#1e3a8a" />
+                            <line x1="100" y1="97" x2="100" y2="105" stroke="#1f2937" stroke-width="2" />
+                        </g>
+
+                        <!-- Hotspots for parts -->
+                        <!-- 1. Tubo óptico -->
+                        <g class="hotspot" onclick="selectTelescopePart('tubo')" transform="translate(68, 92)">
+                            <circle class="hotspot-ring" cx="0" cy="0" r="10" />
+                            <circle class="hotspot-center" cx="0" cy="0" r="4" />
+                        </g>
+                        <!-- 2. Montura -->
+                        <g class="hotspot" onclick="selectTelescopePart('montura')" transform="translate(80, 115)">
+                            <circle class="hotspot-ring" cx="0" cy="0" r="10" />
+                            <circle class="hotspot-center" cx="0" cy="0" r="4" />
+                        </g>
+                        <!-- 3. Buscador -->
+                        <g class="hotspot" onclick="selectTelescopePart('buscador')" transform="translate(100, 75)">
+                            <circle class="hotspot-ring" cx="0" cy="0" r="10" />
+                            <circle class="hotspot-center" cx="0" cy="0" r="4" />
+                        </g>
+                        <!-- 4. Ocular -->
+                        <g class="hotspot" onclick="selectTelescopePart('ocular')" transform="translate(145, 93)">
+                            <circle class="hotspot-ring" cx="0" cy="0" r="10" />
+                            <circle class="hotspot-center" cx="0" cy="0" r="4" />
+                        </g>
+                        <!-- 5. Enfocador -->
+                        <g class="hotspot" onclick="selectTelescopePart('enfocador')" transform="translate(133, 118)">
+                            <circle class="hotspot-ring" cx="0" cy="0" r="10" />
+                            <circle class="hotspot-center" cx="0" cy="0" r="4" />
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Detail Panel -->
+                <div class="telescope-info-panel" id="telescope-part-info">
+                    <div class="part-title" id="part-title">Partes del Telescopio</div>
+                    <p style="font-size: 1rem; line-height: 1.6;" id="part-desc">Pasa el cursor o haz clic en los círculos azules parpadeantes para identificar las partes del telescopio del colegio y entender su funcionamiento.</p>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>Esquema Interactivo de Telescopio Refractor Altacimutal</span>
+                <span>Diapositiva 10 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: CÓMO APUNTAR Y ENFOCAR (SIMULADOR) -->
+        <section class="slide" id="slide-11" data-tts="Cómo apuntar y enfocar. Sigue estos cinco pasos sencillos. Primero: Nivelar y armar. Ubica el trípode en una superficie firme, nivelada y lejos de luces directas. Segundo: Ubicar con el buscador. Apunta primero usando la mira del buscador a un objeto brillante como la Luna, Venus o Saturno. Tercero: Empezar con poco aumento. Usa siempre el ocular de mayor número de milímetros para encontrar el objeto con facilidad en un campo visual amplio. Cuarto: Enfocar con calma. Gira suavemente el enfocador de a poco hasta que el objeto borroso se vea nítido. A la derecha tienes el simulador: arrastra la barra de enfoque para nitidizar la imagen de Saturno. Y Quinto: Subir el aumento. Cambia entonces a un ocular más potente para observar los detalles finos.">
+            <div class="slide-header">
+                <div class="slide-category">06 · Nuestra Herramienta</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="flex-col">
+                    <h2>Cómo apuntar y enfocar</h2>
+                    
+                    <div class="plan-list">
+                        <div class="plan-item">
+                            <span class="plan-badge">1</span>
+                            <p style="font-size: 0.95rem;"><strong>Nivelar y armar:</strong> Trípode en suelo firme, lejos de focos directos de luz.</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge">2</span>
+                            <p style="font-size: 0.95rem;"><strong>Alinear el buscador:</strong> Apunta a un objeto brillante visible (Luna o planetas).</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge">3</span>
+                            <p style="font-size: 0.95rem;"><strong>Poco aumento primero:</strong> Usa el ocular más grande (ej: 25 mm) para buscar.</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge">4</span>
+                            <p style="font-size: 0.95rem;"><strong>Enfocar con calma:</strong> Rueda suavemente el enfocador hasta ver bordes nítidos.</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge">5</span>
+                            <p style="font-size: 0.95rem;"><strong>Subir aumento:</strong> Recién ahí cambia a un ocular de más detalle (ej: 10 mm).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="focus-simulator-box">
+                    <h3 style="margin-bottom: 5px;">Simulador de Enfoque Óptico</h3>
+                    <div class="focus-viewscreen">
+                        <img class="focus-image" id="saturn-focus-img" src="images/saturn.jpg" alt="Saturno enfocado" style="filter: blur(15px);">
+                    </div>
+                    
+                    <div class="slider-container">
+                        <input type="range" class="focus-slider" id="focus-slider" min="0" max="30" value="0" oninput="adjustFocusSim(this.value)">
+                        <div style="display:flex; justify-content:space-between; width:100%; font-size:0.8rem; color:var(--text-muted);">
+                            <span>Girar Izq</span>
+                            <span>Girar Der</span>
+                        </div>
+                    </div>
+                    
+                    <div class="focus-status status-blur" id="focus-status">Telescopio Desenfocado</div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>Simulador Didáctico de Enfoque con Filtro Gaussiano Dinámico</span>
+                <span>Diapositiva 11 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: PLAN DE LA JORNADA DE OBSERVACIÓN -->
+        <section class="slide" id="slide-12" data-tts="Plan de la jornada de observación. Este es el orden sugerido de observación astronómica esta noche. Primero: La Luna, si está visible, que es el objetivo más fácil y espectacular. Segundo: Venus, muy brillante al principio, ideal para partir practicando el apuntado. Tercero: Saturno, el plato fuerte, para admirar sus anillos nítidos. Cuarto: Cruz del Sur y Centauro, a simple vista o binoculares. Quinto: La Vía Láctea invernal, alejados de las luces para apreciar la franja galáctica. Nos organizaremos en grupos pequeños con turnos ordenados. Cada grupo tendrá un cuaderno de bitácora y una persona guía que cambiará con cada objetivo. Recuerda llevar ropa muy abrigada de invierno, linterna con filtro de luz roja y binoculares si tienes.">
+            <div class="slide-header">
+                <div class="slide-category">07 · Jornada de Observación</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="flex-col">
+                    <h2>Plan de la noche</h2>
+                    <h3 style="margin-top: -10px; margin-bottom: 5px;">Orden sugerido de observación</h3>
+                    
+                    <div class="plan-list">
+                        <div class="plan-item">
+                            <span class="plan-badge" style="background-color: var(--accent-yellow);">1</span>
+                            <p style="font-size: 0.95rem;"><strong>Luna (si está visible):</strong> El objetivo más fácil, con cráteres y mares definidos.</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge" style="background-color: var(--accent-orange);">2</span>
+                            <p style="font-size: 0.95rem;"><strong>Venus:</strong> Gran brillo, ideal para afinar el centrado del buscador.</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge" style="background-color: var(--accent-blue);">3</span>
+                            <p style="font-size: 0.95rem;"><strong>Saturno:</strong> Sus majestuosos anillos son el punto alto de la jornada.</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge" style="background-color: var(--accent-purple);">4</span>
+                            <p style="font-size: 0.95rem;"><strong>Constelaciones del Cenit:</strong> Cruz del Sur y Centauro (simple vista).</p>
+                        </div>
+                        <div class="plan-item">
+                            <span class="plan-badge" style="background-color: var(--accent-green);">5</span>
+                            <p style="font-size: 0.95rem;"><strong>Vía Láctea:</strong> Recorrido libre, lejos de focos molestos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-col" style="justify-content: space-around; height: 100%;">
+                    <div class="concept-item" style="border-color: var(--accent-purple); padding: 15px 20px;">
+                        <strong>Organización de estudiantes:</strong>
+                        <ul style="margin-left: 20px; margin-top: 5px; font-size: 0.9rem; line-height: 1.5; font-weight: 300;">
+                            <li>Grupos pequeños con turnos ordenados por telescopio.</li>
+                            <li>Un cuaderno de bitácora por grupo para registrar hora y detalles.</li>
+                            <li>Una persona guía por turno, alternando en cada objetivo.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bring-grid">
+                        <div class="bring-card">
+                            <span class="bring-icon">❄️</span>
+                            <strong>Ropa abrigada</strong>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Mucho frío de noche</span>
+                        </div>
+                        <div class="bring-card">
+                            <span class="bring-icon" style="color:var(--accent-red)">🔴</span>
+                            <strong>Linterna roja</strong>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Cuida la visión oscura</span>
+                        </div>
+                        <div class="bring-card">
+                            <span class="bring-icon">🔭</span>
+                            <strong>Binoculares</strong>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">Si están disponibles</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>Coordinación de la Jornada en Patio del Colegio</span>
+                <span>Diapositiva 12 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: ANTES DE SALIR (SEGURIDAD Y BUENAS PRÁCTICAS) -->
+        <section class="slide" id="slide-13" data-tts="Antes de salir. Medidas esenciales de seguridad y buenas prácticas. Primera, de máxima importancia: Nunca mirar al Sol. Jamás apuntes el telescopio o binoculares al Sol sin un filtro solar certificado. El daño en la retina es instantáneo, grave e irreversible. Segunda: Adaptar la vista. Espera de veinte a treinta minutos en completa oscuridad para que la pupila se dilate, evitando usar pantallas de celulares o linternas de luz blanca. Tercera: Cuidar el equipo. Transporta siempre el telescopio con ambas manos, nunca toques las lentes con los dedos y protégelo de la humedad del invierno. Y Cuarta: Trabajar en grupo. Mantente acompañado en el patio, respeta los turnos y sigue siempre las instrucciones de los profesores Pablo y Gabriela.">
+            <div class="slide-header">
+                <div class="slide-category" style="color:var(--accent-red); text-shadow:0 0 10px rgba(239,68,68,0.3)">¡ IMPORTANTE !</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <h2>Seguridad y Buenas Prácticas</h2>
+
+            <div class="safety-grid">
+                <!-- Critical Danger: Sun -->
+                <div class="safety-card safety-card-danger">
+                    <span class="safety-icon">⚠️</span>
+                    <div class="safety-text">
+                        <h4 style="color:var(--accent-red)">NUNCA MIRAR AL SOL</h4>
+                        <p>Jamás apuntar el telescopio o binoculares al Sol sin filtro solar certificado: <strong>daño ocular ciego instantáneo, grave e irreversible.</strong></p>
+                    </div>
+                </div>
+
+                <!-- Vision adaptation -->
+                <div class="safety-card safety-card-warn">
+                    <span class="safety-icon" style="color:var(--accent-orange)">👁️</span>
+                    <div class="safety-text">
+                        <h4>Adaptar la vista</h4>
+                        <p>Espera 20–30 minutos en oscuridad para que los ojos se adapten. Evita encender pantallas de teléfonos y luces blancas directas.</p>
+                    </div>
+                </div>
+
+                <!-- Care of equipment -->
+                <div class="safety-card safety-card-info">
+                    <span class="safety-icon" style="color:var(--accent-blue)">🛡️</span>
+                    <div class="safety-text">
+                        <h4>Cuidar el equipo</h4>
+                        <p>Transporta el trípode y el tubo con ambas manos. Nunca toques las ópticas de vidrio y guarda el equipo protegido del frío y la humedad.</p>
+                    </div>
+                </div>
+
+                <!-- Group teamwork -->
+                <div class="safety-card safety-card-team">
+                    <span class="safety-icon" style="color:var(--accent-green)">🤝</span>
+                    <div class="safety-text">
+                        <h4>Trabajar en grupo</h4>
+                        <p>Mantenerse siempre acompañados, respetar los turnos en el ocular y seguir estrictamente las indicaciones de los profesores.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>Normas de Seguridad para la Actividad de Observación</span>
+                <span>Diapositiva 13 / 14</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 14: CIERRE -->
+        <section class="slide" id="slide-14" data-tts="¡Ahora a explorar! Muchas gracias por asistir a la charla. Quedamos atentos a sus preguntas y dudas. Nos vemos en el patio en la jornada de observación astronómica nocturna del Colegio Industrial Las Nieves. Organizan el Profesor Pablo Pineda y la Profesora Gabriela Rodríguez. Agradecemos los créditos de imágenes de la NASA, la Agencia Espacial Europea, el Observatorio Europeo Austral, y NOIRLab de Chile. ¡Que tengan cielos despejados!">
+            <div class="slide-header">
+                <div class="slide-category">¡Fin de la Presentación!</div>
+                <div class="slide-audio-controls">
+                    <button class="btn-action btn-tts" onclick="speakCurrentSlide()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        Escuchar
+                    </button>
+                </div>
+            </div>
+
+            <div class="closing-container">
+                <h1 class="closing-title">¡Ahora a explorar!</h1>
+                <p class="closing-subtitle" style="margin-top: 10px;">Preguntas, dudas y ganas de mirar el cielo — este es el momento.</p>
+                
+                <h3 style="margin-top: 30px; color: var(--accent-blue);">Nos vemos en la jornada de observación</h3>
+                <p style="font-size: 1.15rem; font-weight: 300;">Colegio Industrial Las Nieves</p>
+                <p style="font-size: 1rem; color: var(--text-muted); margin-top: 5px;">Prof. Pablo Pineda · Prof. Gabriela Rodríguez</p>
+                
+                <!-- Small credits list for resources -->
+                <div class="closing-sources">
+                    <span class="closing-source-item"><strong>Fuentes de medios:</strong></span>
+                    <span class="closing-source-item">images.nasa.gov (NASA)</span>
+                    <span class="closing-source-item">esahubble.org (ESA/Hubble)</span>
+                    <span class="closing-source-item">eso.org (ESO Chile)</span>
+                    <span class="closing-source-item">noirlab.edu (NOIRLab Atacama)</span>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>¡Cielos despejados! Club de Astronomía 2026</span>
+                <span>Diapositiva 14 / 14</span>
+            </div>
+        </section>
+
+        <!-- FLOATING NAVIGATION PANEL -->
+        <div class="deck-navigation">
+            <button class="nav-btn" id="btn-prev" onclick="prevSlide()" title="Diapositiva Anterior" disabled>◀</button>
+            <span class="nav-progress" id="slide-progress">1 / 14</span>
+            <button class="nav-btn" id="btn-next" onclick="nextSlide()" title="Siguiente Diapositiva">▶</button>
+            <div style="width:1px; height:20px; background:rgba(255,255,255,0.15); margin: 0 5px;"></div>
+            <button class="ambient-toggle" id="btn-ambient" onclick="toggleAmbientMusic()" title="Sonido ambiente cósmico">🌌</button>
+        </div>
+
+    </div>
+
+    <!-- Load the JavaScript logic -->
+    <script src="presentation.js"></script>
+</body>
+</html>
 
