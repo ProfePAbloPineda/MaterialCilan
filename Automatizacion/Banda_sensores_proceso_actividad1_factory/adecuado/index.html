@@ -130,6 +130,27 @@
       font-size: 0.92rem;
     }
 
+    .video {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      margin: 18px 0 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #111827;
+      box-shadow: 0 8px 24px rgba(31, 41, 55, 0.12);
+    }
+
+    .video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -181,6 +202,7 @@
       .page { margin: 0; box-shadow: none; border-radius: 0; }
       header, main, footer { padding-left: 34px; padding-right: 34px; }
       section { break-inside: avoid; }
+      .video { display: none; }
     }
 
     @media (max-width: 760px) {
@@ -215,6 +237,21 @@
           <li>Direcciones de entradas y salidas asociadas al proceso.</li>
         </ul>
         <div class="image-slot"><img src="1.PNG" alt="Imagen 1: vista general de la planta en Factory I/O" /><div class="caption">Imagen 1. Vista general de la planta entregada en Factory I/O.</div></div>
+      </section>
+
+      <section>
+        <h2>Video de referencia</h2>
+        <p>Observa el video antes de comenzar la programación. Identifica el recorrido de las piezas, la respuesta de los sensores, el funcionamiento de las bandas transportadoras y la condición que activa la alarma.</p>
+        <div class="video">
+          <iframe
+            src="https://www.youtube.com/embed/RRNQw2AaOtc?rel=0"
+            title="Video de referencia de la planta automatizada"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
       </section>
 
       <section>
@@ -363,4 +400,3 @@
   </div>
 </body>
 </html>
-
