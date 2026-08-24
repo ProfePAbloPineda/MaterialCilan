@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de análisis - display de 7 segmentos multiplexado</title>
+<style>
+:root{--azul:#114b78;--celeste:#eaf5ff;--verde:#277447;--verde-claro:#eaf7ef;--amarillo:#fff5cc;--rojo:#a8392e;--tinta:#183247;--borde:#b8c8d4}
+*{box-sizing:border-box}body{margin:0;background:#edf2f5;color:var(--tinta);font:17px/1.55 Arial,sans-serif}.hoja{max-width:1000px;margin:24px auto;background:#fff;padding:38px 48px;box-shadow:0 4px 24px #18324722}h1{color:var(--azul);font-size:34px;line-height:1.15;margin:0 0 8px}h2{color:var(--azul);border-bottom:3px solid #80bce8;padding-bottom:6px;margin-top:38px}h3{color:#245f88}.sub{font-size:20px;color:#48677d}.datos,.tabla{width:100%;border-collapse:collapse;margin:16px 0}.datos td,.tabla th,.tabla td{border:1px solid var(--borde);padding:9px;vertical-align:top}.tabla th{background:var(--azul);color:#fff;text-align:left}.caja{border-left:6px solid var(--azul);background:var(--celeste);padding:14px 18px;margin:18px 0;border-radius:7px}.exito{border-color:var(--verde);background:var(--verde-claro)}.alerta{border-color:#d39d12;background:var(--amarillo)}.paso{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:start;margin:17px 0}.num{width:42px;height:42px;border-radius:50%;background:var(--azul);color:white;display:grid;place-items:center;font-weight:bold;font-size:21px}.respuesta{min-height:64px;border:1.5px dashed #7891a3;border-radius:6px;margin:8px 0 18px;padding:10px;background:#fcfdfe}.corta{min-height:40px}.circuito,.flujo{display:block;max-width:100%;height:auto;margin:18px auto;border:1px solid var(--borde);border-radius:8px}.flujo{max-height:1000px}.boton{display:inline-block;padding:13px 20px;background:var(--verde);color:#fff;text-decoration:none;border-radius:7px;font-weight:bold}.segmentos{font-family:Consolas,monospace;font-size:18px}.check{font-size:21px}.rubrica td:nth-child(2),.rubrica th:nth-child(2){width:90px;text-align:center}.pie{text-align:center;color:#5f7687;margin-top:35px;font-size:14px}.salto{break-before:page}.solo-docente{border:2px solid var(--rojo);padding:15px;border-radius:8px}@media print{body{background:#fff}.hoja{box-shadow:none;margin:0;max-width:none;padding:18mm}.boton{color:#000;border:1px solid #000}.salto{break-before:page}}
+@page{size:A4;margin:13mm 14mm 14mm}
+@media print{
+ body{background:#fff;font-size:11.5pt;line-height:1.4}
+ .hoja{box-shadow:none;margin:0;max-width:none;padding:0}
+ h1{font-size:25pt}h2{font-size:18pt;margin-top:22px}h3{font-size:14pt}
+ h1,h2,h3{break-after:avoid-page}
+ p{orphans:3;widows:3}
+ .boton{color:#000;background:#fff;border:1px solid #000;padding:8px 12px}
+ .salto{break-before:page}
+ .caja,.paso,.respuesta,img,tr{break-inside:avoid-page}
+ table{break-inside:auto}
+ thead{display:table-header-group}
+ .circuito{max-height:142mm;object-fit:contain}
+ .flujo{max-height:225mm;object-fit:contain}
+ .respuesta{min-height:18mm}.respuesta.corta{min-height:10mm}
+ .solo-docente{break-before:page}
+ .pie{display:none}
+}
+</style>
+</head>
+<body><main class="hoja">
+<h1>Analiza un contador con dos displays</h1>
+<p class="sub">Arduino Uno · display de 7 segmentos · multiplexación · detección de fallas</p>
+<table class="datos"><tr><td><strong>Nombre:</strong> __________________________________</td><td><strong>Fecha:</strong> __________________</td></tr><tr><td><strong>Curso:</strong> ___________________________________</td><td><strong>Tiempo:</strong> 90 minutos</td></tr></table>
+
+<section><h2>1. ¿Qué hace el sistema?</h2>
+<p>El Arduino muestra un número de dos cifras. Los dos displays comparten las siete líneas de segmentos. El programa enciende un display y después el otro con mucha rapidez. A esto se le llama <strong>multiplexación</strong>.</p>
+<div class="caja alerta"><strong>Regla de esta actividad:</strong> no cambies el programa. Primero observa, prueba y explica lo que realmente hace.</div>
+<p><a class="boton" href="https://www.tinkercad.com/things/2GvBaOz9BZT-magnificent-jarv/editel?returnTo=https%3A%2F%2Fwww.tinkercad.com%2Fdashboard" target="_blank" rel="noopener">Abrir circuito en Tinkercad</a></p>
+<p><strong>Enlace directo:</strong><br><a href="https://www.tinkercad.com/things/2GvBaOz9BZT-magnificent-jarv/editel?returnTo=https%3A%2F%2Fwww.tinkercad.com%2Fdashboard" target="_blank" rel="noopener">https://www.tinkercad.com/things/2GvBaOz9BZT-magnificent-jarv/editel</a></p>
+</section>
+
+<section><h2>2. Observa el circuito</h2>
+<img class="circuito" src="circuito.PNG" alt="Circuito Arduino Uno con dos displays de 7 segmentos, dos transistores y dos pulsadores">
+<div class="paso"><div class="num">1</div><div><strong>Ubica el Arduino, los dos displays, los dos transistores y los dos pulsadores.</strong><div class="respuesta corta">Escribe cuántos componentes encontraste: __________________________________________</div></div></div>
+<div class="paso"><div class="num">2</div><div><strong>Sigue los cables desde Arduino.</strong> Usa esta tabla para comprobar las conexiones.</div></div>
+<table class="tabla"><thead><tr><th>Señal</th><th>Pin Arduino</th><th>Función</th></tr></thead><tbody>
+<tr><td>a, b, c, d, e, f, g</td><td>3, 4, 5, 6, 7, 8, 9</td><td>Encienden los siete segmentos.</td></tr>
+<tr><td>U</td><td>10</td><td>Selecciona el display de unidades.</td></tr>
+<tr><td>D</td><td>11</td><td>Selecciona el display de decenas.</td></tr>
+<tr><td>boton1</td><td>A0</td><td>Selecciona el conteo descendente.</td></tr>
+<tr><td>boton2</td><td>A1</td><td>Selecciona el conteo ascendente.</td></tr>
+</tbody></table>
+<p><strong>Pregunta 1 (2 puntos).</strong> ¿Por qué los dos displays pueden compartir los pines 3 al 9?</p><div class="respuesta"></div>
+</section>
+
+<section><h2>3. Comprende las partes principales</h2>
+<table class="tabla"><thead><tr><th>Parte</th><th>Qué debes reconocer</th></tr></thead><tbody>
+<tr><td><code>setup()</code></td><td>Se ejecuta una vez. Configura la comunicación serial y los pines.</td></tr>
+<tr><td><code>loop()</code></td><td>Se repite mientras Arduino esté encendido.</td></tr>
+<tr><td><code>bus(numero)</code></td><td>Decide qué segmentos se encienden para formar un dígito de 0 a 9.</td></tr>
+<tr><td><code>UpDown</code></td><td>Guarda el sentido: 0 suma y 1 resta.</td></tr>
+<tr><td><code>contador</code></td><td>Guarda el número que cambia.</td></tr>
+<tr><td><code>decena</code> y <code>unidad</code></td><td>Separan las dos cifras que se muestran.</td></tr>
+</tbody></table>
+<p><strong>Pregunta 2 (2 puntos).</strong> Completa:</p>
+<div class="respuesta">Si <code>contador = 47</code>, entonces <code>decena = ______</code> y <code>unidad = ______</code>.</div>
+<p><strong>Pregunta 3 (2 puntos).</strong> En la función <code>bus()</code>, ¿qué segmentos se encienden para formar el número 1?</p><div class="respuesta corta"></div>
+</section>
+
+<section class="salto"><h2>4. Sigue el flujo del programa</h2>
+<p>Lee el diagrama desde arriba. Sigue las flechas y vuelve al inicio de <code>loop()</code>.</p>
+<img class="flujo" src="flujo_codigo_contador.svg" alt="Diagrama de flujo del programa del contador multiplexado">
+<div class="caja"><strong>Idea clave:</strong> cada recorrido normal del <code>loop()</code> incluye cuatro esperas de 10 ms. Por eso, 31 recorridos tardan aproximadamente 1.240 ms, es decir, cerca de 1,24 segundos.</div>
+<p><strong>Pregunta 4 (3 puntos).</strong> Ordena de 1 a 4:</p>
+<table class="tabla"><tbody><tr><td>___ Mostrar decena</td><td>___ Leer botones</td></tr><tr><td>___ Aumentar la variable <code>tiempo</code></td><td>___ Mostrar unidad</td></tr></tbody></table>
+<p><strong>Pregunta 5 (3 puntos).</strong> Explica con tus palabras por qué parece que ambos displays están encendidos al mismo tiempo.</p><div class="respuesta"></div>
+</section>
+
+<section><h2>5. Prueba el programa sin modificarlo</h2>
+<div class="paso"><div class="num">1</div><div>Abre <a href="https://www.tinkercad.com/things/2GvBaOz9BZT-magnificent-jarv/editel?returnTo=https%3A%2F%2Fwww.tinkercad.com%2Fdashboard" target="_blank" rel="noopener"><strong>el circuito en Tinkercad</strong></a> y selecciona <strong>Iniciar simulación</strong>.</div></div>
+<div class="paso"><div class="num">2</div><div>Espera cinco cambios del contador. No pulses ningún botón.</div></div>
+<div class="paso"><div class="num">3</div><div>Pulsa y suelta <strong>boton1</strong>. Observa por cuatro segundos.</div></div>
+<div class="paso"><div class="num">4</div><div>Pulsa y suelta <strong>boton2</strong>. Observa por cuatro segundos.</div></div>
+<div class="paso"><div class="num">5</div><div>Mantén un botón pulsado durante dos segundos. Observa los displays.</div></div>
+<table class="tabla"><thead><tr><th>Prueba</th><th>Predicción antes de probar</th><th>Resultado observado</th></tr></thead><tbody>
+<tr><td>Inicio sin pulsar</td><td></td><td></td></tr><tr><td>Pulsar boton1</td><td></td><td></td></tr><tr><td>Pulsar boton2</td><td></td><td></td></tr><tr><td>Mantener un botón</td><td></td><td></td></tr>
+</tbody></table>
+<p><strong>Pregunta 6 (3 puntos).</strong> ¿Los botones aumentan o disminuyen inmediatamente el número, o solamente seleccionan el sentido? Escribe una evidencia de tu prueba.</p><div class="respuesta"></div>
+<p><strong>Pregunta 7 (3 puntos).</strong> ¿Qué ocurre con los displays mientras mantienes un botón pulsado? Relaciona tu observación con el bloque <code>while</code>.</p><div class="respuesta"></div>
+</section>
+
+<section class="salto"><h2>6. Detecta fallas o comportamientos especiales</h2>
+<div class="caja alerta"><strong>Detectar una falla no significa corregir el código.</strong> En esta actividad debes reproducirla, describirla y señalar la parte del programa relacionada.</div>
+<table class="tabla"><thead><tr><th>Prueba</th><th>Qué observar</th><th>Registro</th></tr></thead><tbody>
+<tr><td>Cambio de 09 a 10</td><td>Orden correcto de decena y unidad.</td><td>________________________</td></tr>
+<tr><td>Conteo ascendente cerca de 99</td><td>Qué aparece antes de volver a números bajos.</td><td>________________________</td></tr>
+<tr><td>Conteo descendente cerca de 00</td><td>Qué aparece antes de volver a 99.</td><td>________________________</td></tr>
+<tr><td>Análisis hipotético: imaginar <code>scan = 100</code>, sin editar el programa</td><td>Predecir si aparecería parpadeo visible.</td><td>________________________</td></tr>
+</tbody></table>
+<p><strong>Pregunta 8 (4 puntos).</strong> El programa calcula <code>decena</code> y <code>unidad</code> antes de corregir un valor mayor que 99 o menor que 0. ¿Qué problema puede producir este orden?</p><div class="respuesta"></div>
+<p><strong>Pregunta 9 (3 puntos).</strong> Si se aumenta <code>scan</code>, ¿el contador cambia más rápido o más lento? Justifica usando las esperas del programa.</p><div class="respuesta"></div>
+<p><strong>Pregunta 10 (3 puntos).</strong> Escribe una falla posible de cableado y una comprobación concreta.</p><div class="respuesta"></div>
+</section>
+
+<section><h2>7. Cierre de la actividad</h2>
+<p><strong>Explica el sistema en cuatro ideas.</strong></p>
+<ol><li>Qué información guarda <code>contador</code>.</li><li>Cómo se separan decena y unidad.</li><li>Cómo se selecciona cada display.</li><li>Cómo los botones cambian el sentido.</li></ol>
+<div class="respuesta" style="min-height:150px"></div>
+<h3>Autoevaluación</h3>
+<p class="check">Marca una opción en cada fila: □ Sí &nbsp;&nbsp; □ Con ayuda &nbsp;&nbsp; □ Todavía no</p>
+<table class="tabla"><tbody><tr><td>Puedo ubicar los componentes del circuito.</td><td>□ Sí &nbsp; □ Con ayuda &nbsp; □ No</td></tr><tr><td>Puedo explicar la multiplexación.</td><td>□ Sí &nbsp; □ Con ayuda &nbsp; □ No</td></tr><tr><td>Puedo identificar el sentido de cada botón.</td><td>□ Sí &nbsp; □ Con ayuda &nbsp; □ No</td></tr><tr><td>Puedo relacionar una observación con una línea del programa.</td><td>□ Sí &nbsp; □ Con ayuda &nbsp; □ No</td></tr></tbody></table>
+</section>
+
+<section class="salto solo-docente"><h2>8. Pauta de evaluación para el profesor</h2>
+<table class="tabla rubrica"><thead><tr><th>Criterio</th><th>Puntaje</th><th>Indicador</th></tr></thead><tbody>
+<tr><td>Reconoce circuito y pines</td><td>4</td><td>Identifica displays, selección U/D y bus a-g.</td></tr>
+<tr><td>Comprende variables y función bus()</td><td>4</td><td>Separa correctamente decena/unidad y reconoce segmentos.</td></tr>
+<tr><td>Comprende el flujo y la multiplexación</td><td>6</td><td>Ordena la secuencia y explica la alternancia rápida.</td></tr>
+<tr><td>Realiza pruebas y registra evidencia</td><td>6</td><td>Describe el efecto real de ambos botones y del while.</td></tr>
+<tr><td>Detecta comportamientos especiales</td><td>6</td><td>Relaciona límites y scan con el orden y los retardos.</td></tr>
+<tr><td>Comunica una explicación final</td><td>4</td><td>Explica el sistema con cuatro ideas técnicas claras.</td></tr>
+<tr><th>Total</th><th>30</th><th>Logro sugerido: 18 puntos (60 %).</th></tr>
+</tbody></table>
+<h3>Respuestas esperadas, en forma breve</h3>
+<ol><li>Comparten el bus a-g porque U y D habilitan un display a la vez.</li><li>Decena 4 y unidad 7.</li><li>Segmentos b y c.</li><li>Leer botones, mostrar unidad, mostrar decena, aumentar tiempo.</li><li>Persistencia visual producida por alternancia rápida.</li><li>Los botones seleccionan el sentido; el conteo ocurre cuando <code>tiempo &gt; 30</code>.</li><li>El <code>while</code> detiene el avance hasta soltar; la multiplexación deja de refrescarse.</li><li>Puede intentarse mostrar -1 o 10 como dígito, valores no contemplados por <code>switch</code>, antes del reinicio.</li><li>Más lento, porque cada recorrido acumula más milisegundos.</li><li>Aceptar respuestas verificables: GND ausente, transistor invertido, segmento mal conectado o pulsador flotante.</li></ol>
+<div class="caja exito"><strong>Ajuste pedagógico:</strong> se puede leer cada consigna en voz alta, permitir respuestas orales antes de escribir y evaluar una sección a la vez. No se debe penalizar la extensión de la respuesta si la idea técnica es correcta.</div>
+</section>
+<p class="pie">Guía preparada para análisis en clase. El programa original no se modifica.</p>
+</main></body></html>
+
