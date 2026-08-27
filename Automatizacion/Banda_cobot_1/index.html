@@ -1,1 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guía de Laboratorio · Banda transportadora con clasificación y rechazo</title>
+  <style>
+    :root{
+      --bg:#f4f7f9; --paper:#ffffff; --text:#1f2933; --muted:#5c6b76;
+      --primary:#0f5f73; --primary2:#164e63; --accent:#dff3f5; --line:#d8e1e6;
+      --ok:#e9f7ef; --warn:#fff6df; --danger:#fdecec;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+    .hero{background:linear-gradient(135deg,var(--primary2),var(--primary));color:white;padding:36px 20px 30px}
+    .hero .wrap{max-width:1100px;margin:auto}
+    .eyebrow{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;opacity:.9;font-weight:700}
+    h1{font-size:clamp(2rem,4vw,3.1rem);line-height:1.08;margin:.35rem 0 .65rem}
+    .lead{max-width:900px;font-size:1.08rem;margin:0;opacity:.96}
+    main{max-width:1100px;margin:24px auto 60px;padding:0 18px}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px;margin:18px 0;box-shadow:0 4px 16px rgba(31,41,51,.05)}
+    h2{font-size:1.5rem;margin:0 0 14px;color:var(--primary2);border-bottom:2px solid var(--accent);padding-bottom:8px}
+    h3{font-size:1.08rem;margin:18px 0 8px;color:#274955}
+    p{margin:.55rem 0 1rem}
+    .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .card{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fbfdfe}
+    .card strong{display:block;color:var(--primary);margin-bottom:5px}
+    .note,.warning,.tip{border-left:5px solid var(--primary);background:var(--accent);padding:13px 15px;border-radius:7px;margin:14px 0}
+    .warning{border-left-color:#b7791f;background:var(--warn)}
+    .tip{border-left-color:#2f855a;background:var(--ok)}
+    table{width:100%;border-collapse:collapse;margin:12px 0 6px;font-size:.95rem}
+    th,td{border:1px solid var(--line);padding:9px 10px;vertical-align:top;text-align:left}
+    th{background:#eaf3f5;color:#173f4a}
+    code{background:#eef3f5;padding:.08rem .32rem;border-radius:4px;font-family:Consolas,monospace}
+    .media{border:2px dashed #9eb5bf;border-radius:12px;padding:14px;background:#f9fcfd;text-align:center;margin:14px 0}
+    .media img{max-width:100%;height:auto;border-radius:8px;display:block;margin:auto}
+    .media figcaption{font-size:.9rem;color:var(--muted);margin-top:8px}
+    video{width:100%;max-height:600px;background:#111;border-radius:10px}
+    .video-fallback{padding:30px;color:var(--muted)}
+    .downloads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .download{display:block;text-decoration:none;border:1px solid var(--line);background:#f7fbfc;color:var(--primary2);padding:13px;border-radius:9px;font-weight:700}
+    .download small{display:block;font-weight:400;color:var(--muted);margin-top:4px}
+    ol.steps li{margin:.45rem 0}
+    .seq{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:start;margin:10px 0}
+    .n{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:white;font-weight:bold}
+    .blank{min-height:54px;background:repeating-linear-gradient(to bottom,#fff 0,#fff 25px,#d9e1e5 26px);border:1px solid var(--line);border-radius:7px}
+    .checklist label{display:block;margin:8px 0}
+    .footer{color:var(--muted);font-size:.88rem;text-align:center;margin-top:26px}
+    @media(max-width:800px){.cards,.downloads{grid-template-columns:1fr}section{padding:18px}}
+    @media print{body{background:white}.hero{background:white!important;color:black;border-bottom:2px solid #555}.hero,.hero *{color:black!important}main{max-width:none;margin:0;padding:0}section{box-shadow:none;break-inside:avoid;border-radius:0}.download{color:black}.no-print{display:none!important}}
+  </style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Laboratorio PLC Delta SX2 · Factory I/O · KEPServerEX</div>
+    <h1>Banda transportadora con clasificación y rechazo de piezas</h1>
+    <p class="lead">En esta actividad debes interpretar el funcionamiento de un proceso automatizado, diseñar desde cero la lógica de control en lenguaje Ladder y comprobar su comportamiento mediante Factory I/O. El programa Ladder no se entrega: su desarrollo forma parte central del trabajo.</p>
+  </div>
+</header>
+
+<main>
+<section id="objetivo">
+  <h2>1. Objetivo de la actividad</h2>
+  <p>Diseñar, programar y validar en un PLC Delta SX2 el control de una banda transportadora capaz de alimentar piezas mediante un cilindro neumático, identificar materiales metálicos mediante sensores inductivos y capacitivos, rechazar las piezas metálicas mediante un segundo cilindro y detener el transporte de las piezas no metálicas cuando alcancen el final del proceso.</p>
+  <div class="cards">
+    <div class="card"><strong>Analizar</strong>Identificar sensores, actuadores, estados del proceso, condiciones de transición y restricciones de funcionamiento.</div>
+    <div class="card"><strong>Programar</strong>Desarrollar en ISPSoft la lógica Ladder necesaria para controlar el proceso, utilizando obligatoriamente los símbolos entregados.</div>
+    <div class="card"><strong>Validar</strong>Comprobar mediante Factory I/O que el programa complete ciclos consecutivos con piezas metálicas y no metálicas.</div>
+  </div>
+</section>
+
+<section id="archivos">
+  <h2>2. Archivos entregados</h2>
+  <p>Todos los archivos de esta actividad deben mantenerse en la <strong>misma carpeta que este archivo <code>index.html</code></strong>. Los enlaces siguientes utilizan rutas relativas, por lo que no requieren modificar el código si se conservan los nombres indicados.</p>
+  <div class="downloads no-print">
+    <a class="download" href="Banda_clasificacion.factoryio" download>Proyecto Factory I/O<small><code>Banda_clasificacion.factoryio</code></small></a>
+    <a class="download" href="Banda_clasificacion_KEPServer.opf" download>Configuración KEPServerEX<small><code>Banda_clasificacion_KEPServer.opf</code></small></a>
+    <a class="download" href="Banda_clasificacion_ISPSoft.dvp" download>Proyecto base ISPSoft<small><code>Banda_clasificacion_ISPSoft.dvp</code></small></a>
+  </div>
+  <table>
+    <thead><tr><th>Archivo</th><th>Uso en la actividad</th></tr></thead>
+    <tbody>
+      <tr><td>Proyecto Factory I/O</td><td>Contiene la escena del proceso: banda, cilindros, sensores, panel de mando y piezas.</td></tr>
+      <tr><td>Configuración KEPServerEX</td><td>Permite comunicar Factory I/O con el PLC Delta SX2 mediante las variables configuradas.</td></tr>
+      <tr><td>Proyecto base ISPSoft</td><td>Contiene la configuración y los símbolos obligatorios. <strong>No contiene la solución Ladder.</strong></td></tr>
+      <tr><td>Guía de laboratorio</td><td>Define el funcionamiento requerido, las pruebas y la evidencia que debe entregar el estudiante.</td></tr>
+    </tbody>
+  </table>
+  <div class="warning"><strong>Importante:</strong> no se deben cambiar los nombres ni las direcciones de las variables entregadas. Se pueden crear marcas internas y temporizadores adicionales cuando sean necesarios.</div>
+</section>
+
+<section id="vista">
+  <h2>3. Vista general del proceso</h2>
+  <p>La instalación está compuesta por una banda transportadora, dos cilindros neumáticos de simple efecto, dos portales de detección, sensores de posición de cilindro, botonera de mando y señalización.</p>
+  <figure class="media">
+    <img src="1_proceso.jpg" alt="Vista general del proceso en Factory I/O" onerror="this.style.display='none';this.nextElementSibling.innerHTML='Espacio reservado para la imagen del proceso. Coloca el archivo <code>1_proceso.jpg</code> en la misma carpeta que index.html.'">
+    <figcaption>Imagen 1. Vista general del proceso en Factory I/O. Archivo local esperado: <code>1_proceso.jpg</code>.</figcaption>
+  </figure>
+  <p>La pieza cae en la zona inicial. El cilindro 1 la empuja hacia la cinta y se pone en marcha el motor. La pieza atraviesa un primer portal equipado con un sensor capacitivo y un sensor inductivo. Si se identifica como metálica, debe ser rechazada mediante el cilindro 2. Si no es metálica, continúa hasta el segundo portal, donde un sensor capacitivo detecta su llegada y provoca la detención de la banda.</p>
+</section>
+
+<section id="video">
+  <h2>4. Video de referencia</h2>
+  <p>Observa el video antes de programar. Debes identificar la secuencia real de movimientos, el instante de actuación de cada sensor y el comportamiento esperado de los cilindros y de la banda.</p>
+  <div class="media">
+    <video controls preload="metadata">
+      <source src="video_proceso.mp4" type="video/mp4">
+      Tu navegador no puede reproducir el video HTML5.
+    </video>
+    <div class="video-fallback">Archivo esperado: <code>video_proceso.mp4</code>, ubicado en la misma carpeta que <code>index.html</code>.</div>
+  </div>
+  <div class="note">Para incorporar tu video no debes editar el HTML: copia el archivo a esta carpeta y nómbralo <code>video_proceso.mp4</code>.</div>
+</section>
+
+<section id="mapeo">
+  <h2>5. Mapeo de entradas y salidas</h2>
+  <p>Antes de comenzar el programa, revisa el mapeo de símbolos. Estos identificadores se deben utilizar exactamente con los nombres y direcciones indicados.</p>
+  <figure class="media">
+    <img src="2_mapeo.jpg" alt="Mapeo de símbolos del programa ISPSoft" onerror="this.style.display='none';this.nextElementSibling.innerHTML='Espacio reservado para la captura del mapeo. Coloca el archivo <code>2_mapeo.jpg</code> en la misma carpeta que index.html.'">
+    <figcaption>Imagen 2. Símbolos obligatorios del proyecto ISPSoft. Archivo local esperado: <code>2_mapeo.jpg</code>.</figcaption>
+  </figure>
+  <table>
+    <thead><tr><th>Símbolo</th><th>Dirección</th><th>Tipo</th><th>Función en el proceso</th></tr></thead>
+    <tbody>
+      <tr><td><code>Sensor_capacitivo_1</code></td><td>M0</td><td>BOOL</td><td>Detecta presencia de pieza en el primer portal.</td></tr>
+      <tr><td><code>Sensor_capacitivo_2</code></td><td>M1</td><td>BOOL</td><td>Detecta la llegada de la pieza al segundo portal/final de la banda.</td></tr>
+      <tr><td><code>Sensor_inductivo_1</code></td><td>M2</td><td>BOOL</td><td>Identifica una pieza metálica en el primer portal.</td></tr>
+      <tr><td><code>Sensor_c1_atras</code></td><td>M3</td><td>BOOL</td><td>Confirma que el cilindro 1 se encuentra retraído.</td></tr>
+      <tr><td><code>Sensor_c1_adelante</code></td><td>M4</td><td>BOOL</td><td>Confirma que el cilindro 1 se encuentra extendido.</td></tr>
+      <tr><td><code>Sensor_c2_atras</code></td><td>M5</td><td>BOOL</td><td>Confirma que el cilindro 2 se encuentra retraído.</td></tr>
+      <tr><td><code>Sensor_c2_adelante</code></td><td>M6</td><td>BOOL</td><td>Confirma que el cilindro 2 se encuentra extendido.</td></tr>
+      <tr><td><code>Boton_inicio</code></td><td>M7</td><td>BOOL</td><td>Orden de puesta en marcha del sistema.</td></tr>
+      <tr><td><code>Boton_parada</code></td><td>M8</td><td>BOOL</td><td>Orden de parada del sistema.</td></tr>
+      <tr><td><code>Cilindro1</code></td><td>Y0</td><td>BOOL</td><td>Accionamiento del cilindro encargado de introducir la pieza a la banda.</td></tr>
+      <tr><td><code>Cilindro2</code></td><td>Y1</td><td>BOOL</td><td>Accionamiento del cilindro encargado del rechazo de piezas metálicas.</td></tr>
+      <tr><td><code>Motor_banda</code></td><td>Y2</td><td>BOOL</td><td>Motor de la cinta transportadora.</td></tr>
+      <tr><td><code>Luz_inicio</code></td><td>Y3</td><td>BOOL</td><td>Indicador luminoso de sistema en marcha.</td></tr>
+      <tr><td><code>Luz_parada</code></td><td>Y4</td><td>BOOL</td><td>Indicador luminoso de sistema detenido.</td></tr>
+      <tr><td><code>Baliza_funcionamiento</code></td><td>Y5</td><td>BOOL</td><td>Baliza de señalización durante el funcionamiento.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="secuencia">
+  <h2>6. Secuencia esperada del proceso</h2>
+  <div class="seq"><div class="n">1</div><div><h3>Estado inicial</h3><p>La banda permanece detenida y los actuadores se encuentran en una condición segura. El sistema espera una orden de inicio.</p></div></div>
+  <div class="seq"><div class="n">2</div><div><h3>Puesta en marcha</h3><p>Al presionar <code>Boton_inicio</code>, el sistema debe quedar habilitado para funcionar y mantener esa condición aunque el pulsador sea liberado. La señalización debe indicar el estado de marcha.</p></div></div>
+  <div class="seq"><div class="n">3</div><div><h3>Alimentación de la pieza</h3><p>El cilindro 1 introduce una pieza a la cinta. El programa debe considerar <code>Sensor_c1_atras</code> y <code>Sensor_c1_adelante</code> para comprobar su movimiento y evitar una nueva alimentación antes de completar la anterior.</p></div></div>
+  <div class="seq"><div class="n">4</div><div><h3>Transporte</h3><p>Una vez incorporada la pieza, <code>Motor_banda</code> debe activarse para trasladarla hacia los portales de detección.</p></div></div>
+  <div class="seq"><div class="n">5</div><div><h3>Identificación en el primer portal</h3><p><code>Sensor_capacitivo_1</code> informa presencia de pieza y <code>Sensor_inductivo_1</code> permite determinar si corresponde a material metálico.</p></div></div>
+  <div class="seq"><div class="n">6</div><div><h3>Ruta de pieza metálica</h3><p>Si la pieza es metálica, debe continuar hasta la zona de rechazo. En el momento adecuado se acciona <code>Cilindro2</code> y la pieza es expulsada lateralmente. El movimiento debe comprobarse mediante <code>Sensor_c2_atras</code> y <code>Sensor_c2_adelante</code>.</p></div></div>
+  <div class="seq"><div class="n">7</div><div><h3>Ruta de pieza no metálica</h3><p>Si la pieza no es metálica, el cilindro 2 no debe actuar. La pieza continúa por la cinta hasta que <code>Sensor_capacitivo_2</code> detecta su llegada al final del proceso y se detiene la banda.</p></div></div>
+  <div class="seq"><div class="n">8</div><div><h3>Fin de ciclo</h3><p>El sistema debe quedar preparado para procesar una nueva pieza sin reiniciar el PLC ni Factory I/O.</p></div></div>
+  <div class="seq"><div class="n">9</div><div><h3>Parada</h3><p>Al presionar <code>Boton_parada</code>, el proceso debe pasar a una condición segura y la señalización debe indicar que el sistema se encuentra detenido.</p></div></div>
+</section>
+
+<section id="diseno">
+  <h2>7. Diseño previo de la solución</h2>
+  <p>Antes de escribir el Ladder, completa la siguiente tabla. Describe con tus propias palabras qué debe ocurrir en cada etapa y qué condición permite avanzar a la siguiente.</p>
+  <table>
+    <thead><tr><th>Etapa</th><th>Condición de entrada</th><th>Acción requerida</th><th>Condición para avanzar</th></tr></thead>
+    <tbody>
+      <tr><td>0. Sistema detenido</td><td style="height:58px"></td><td></td><td></td></tr>
+      <tr><td>1. Inicio</td><td style="height:58px"></td><td></td><td></td></tr>
+      <tr><td>2. Alimentación</td><td style="height:58px"></td><td></td><td></td></tr>
+      <tr><td>3. Transporte</td><td style="height:58px"></td><td></td><td></td></tr>
+      <tr><td>4. Identificación</td><td style="height:58px"></td><td></td><td></td></tr>
+      <tr><td>5A. Rechazo metálico</td><td style="height:58px"></td><td></td><td></td></tr>
+      <tr><td>5B. Transporte no metálico</td><td style="height:58px"></td><td></td><td></td></tr>
+      <tr><td>6. Fin de ciclo</td><td style="height:58px"></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="ladder">
+  <h2>8. Desarrollo del programa Ladder</h2>
+  <p>El programa Ladder debe ser diseñado por el estudiante. No existe una única solución válida, pero el programa debe cumplir íntegramente la especificación funcional.</p>
+  <div class="warning"><strong>No se entrega el Ladder.</strong> El diseño de la secuencia, las marcas internas, enclavamientos, temporizadores y condiciones de transición forman parte de la actividad.</div>
+  <h3>Requisitos mínimos</h3>
+  <ul>
+    <li>Utilizar exactamente los símbolos entregados para sensores, pulsadores y salidas.</li>
+    <li>Implementar marcha y parada del sistema.</li>
+    <li>Evitar movimientos incompatibles y activaciones repetidas no deseadas.</li>
+    <li>Considerar la posición real de ambos cilindros mediante sus sensores.</li>
+    <li>Diferenciar correctamente entre pieza metálica y pieza no metálica.</li>
+    <li>Completar un ciclo antes de iniciar el siguiente.</li>
+    <li>Utilizar temporizadores únicamente cuando el proceso físico lo requiera.</li>
+    <li>Dejar las salidas en condición segura ante una parada.</li>
+  </ul>
+  <p>Las marcas internas y temporizadores adicionales quedan a criterio del estudiante. Si se utilizan, deben incorporar nombres o comentarios que permitan comprender su función.</p>
+  <figure class="media">
+    <div style="min-height:260px;display:grid;place-items:center;color:#5c6b76">Espacio reservado para una captura del Ladder desarrollado por el estudiante.</div>
+    <figcaption>Imagen 3. Evidencia del programa Ladder final.</figcaption>
+  </figure>
+</section>
+
+<section id="puesta">
+  <h2>9. Puesta en marcha</h2>
+  <ol class="steps">
+    <li>Abre el proyecto de Factory I/O entregado.</li>
+    <li>Abre KEPServerEX y verifica la configuración de comunicación.</li>
+    <li>Abre el proyecto base en ISPSoft.</li>
+    <li>Comprueba que los símbolos coincidan con el mapeo de esta guía.</li>
+    <li>Desarrolla el programa Ladder.</li>
+    <li>Compila y corrige los errores de programación.</li>
+    <li>Descarga el programa al PLC Delta SX2.</li>
+    <li>Inicia Factory I/O y ejecuta el proceso.</li>
+    <li>Prueba inicialmente el sistema paso a paso.</li>
+    <li>Prueba una pieza metálica y una pieza no metálica.</li>
+    <li>Realiza ciclos consecutivos y corrige errores de secuencia, enclavamiento o temporización.</li>
+  </ol>
+  <div class="tip"><strong>Criterio de validación:</strong> no basta con que el sistema funcione una sola vez. Debe repetir correctamente el ciclo con distintos tipos de piezas sin reiniciar el PLC o la simulación.</div>
+</section>
+
+<section id="pruebas">
+  <h2>10. Pruebas obligatorias</h2>
+  <table>
+    <thead><tr><th>Prueba</th><th>Resultado esperado</th><th>Resultado observado</th><th>Corrección realizada</th></tr></thead>
+    <tbody>
+      <tr><td>Inicio del sistema</td><td>El sistema queda habilitado y correctamente señalizado.</td><td></td><td></td></tr>
+      <tr><td>Alimentación</td><td>El cilindro 1 introduce una sola pieza y completa su movimiento.</td><td></td><td></td></tr>
+      <tr><td>Pieza metálica</td><td>Es identificada y expulsada mediante el cilindro 2.</td><td></td><td></td></tr>
+      <tr><td>Pieza no metálica</td><td>No se activa el rechazo y la pieza continúa hasta el segundo portal.</td><td></td><td></td></tr>
+      <tr><td>Fin pieza no metálica</td><td>El sensor capacitivo 2 detecta la pieza y la banda se detiene.</td><td></td><td></td></tr>
+      <tr><td>Segundo ciclo metálico</td><td>El sistema vuelve a procesar correctamente una pieza metálica.</td><td></td><td></td></tr>
+      <tr><td>Segundo ciclo no metálico</td><td>El sistema vuelve a procesar correctamente una pieza no metálica.</td><td></td><td></td></tr>
+      <tr><td>Parada</td><td>El botón de parada lleva el proceso a una condición segura.</td><td></td><td></td></tr>
+      <tr><td>Sensor mantenido activo</td><td>No se generan movimientos repetidos ni ciclos adicionales incorrectos.</td><td></td><td></td></tr>
+      <tr><td>Ciclos alternados</td><td>Metal / no metal / metal funcionan consecutivamente sin reiniciar.</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="preguntas">
+  <h2>11. Preguntas de análisis</h2>
+  <ol>
+    <li>¿Por qué no basta con utilizar solamente el sensor capacitivo del primer portal para identificar el tipo de material?</li>
+    <li>¿Qué información entrega el sensor inductivo que no entrega el sensor capacitivo?</li>
+    <li>¿Por qué es necesario conocer las posiciones adelante y atrás de cada cilindro?</li>
+    <li>¿Qué problema puede ocurrir si el cilindro 1 intenta alimentar una segunda pieza antes de terminar el ciclo anterior?</li>
+    <li>¿Cómo evita tu programa que el cilindro 2 actúe sobre una pieza no metálica?</li>
+    <li>¿Qué condición utiliza tu programa para determinar que una pieza no metálica llegó al final del proceso?</li>
+    <li>¿Qué inconveniente tendría controlar un cilindro únicamente mediante un temporizador e ignorar sus sensores de posición?</li>
+    <li>¿Qué salidas deben quedar desactivadas al presionar <code>Boton_parada</code>?</li>
+    <li>Identifica al menos dos condiciones incorrectas que tu programa debe impedir.</li>
+    <li>Explica qué parte de tu programa determina que el ciclo terminó y puede comenzar uno nuevo.</li>
+  </ol>
+  <h3>Espacio para observaciones</h3>
+  <div class="blank"></div>
+  <div class="blank" style="margin-top:8px"></div>
+</section>
+
+<section id="evidencias">
+  <h2>12. Evidencias y entrega</h2>
+  <p>La entrega debe demostrar tanto el funcionamiento físico de la simulación como la lógica diseñada por el estudiante.</p>
+  <div class="checklist">
+    <label>☐ Proyecto Factory I/O ejecutado correctamente.</label>
+    <label>☐ Comunicación con KEPServerEX verificada.</label>
+    <label>☐ Programa Ladder desarrollado y descargado al PLC.</label>
+    <label>☐ Tabla de diseño previo completada.</label>
+    <label>☐ Captura completa del programa Ladder.</label>
+    <label>☐ Explicación de marcas internas y temporizadores utilizados.</label>
+    <label>☐ Captura online del PLC mostrando al menos una etapa activa.</label>
+    <label>☐ Evidencia de clasificación de una pieza metálica.</label>
+    <label>☐ Evidencia del recorrido de una pieza no metálica.</label>
+    <label>☐ Tabla de pruebas obligatorias completada.</label>
+    <label>☐ Preguntas de análisis respondidas.</label>
+  </div>
+  <div class="warning"><strong>Condición de aprobación funcional:</strong> el sistema debe completar ciclos consecutivos de piezas metálicas y no metálicas sin necesidad de reiniciar el PLC, KEPServerEX o Factory I/O.</div>
+</section>
+
+<section id="pauta">
+  <h2>13. Pauta de evaluación</h2>
+  <table>
+    <thead><tr><th>Criterio</th><th>Logrado</th><th>Medianamente logrado</th><th>No logrado</th></tr></thead>
+    <tbody>
+      <tr><td>Interpreta el proceso y el mapeo.</td><td>Relaciona correctamente sensores, actuadores y etapas físicas.</td><td>Presenta algunas relaciones incompletas o errores menores.</td><td>No logra relacionar correctamente las variables con el proceso.</td></tr>
+      <tr><td>Diseña la secuencia de control.</td><td>Define estados y transiciones coherentes antes de programar.</td><td>La secuencia general es correcta, pero presenta omisiones.</td><td>No existe una secuencia clara o presenta contradicciones.</td></tr>
+      <tr><td>Implementa el programa Ladder.</td><td>La lógica es ordenada, legible y cumple la especificación.</td><td>Funciona parcialmente o presenta errores de estructura.</td><td>No logra implementar la lógica requerida.</td></tr>
+      <tr><td>Controla los cilindros de forma correcta.</td><td>Utiliza adecuadamente los sensores de posición y evita repeticiones.</td><td>El control funciona, pero presenta inestabilidad o dependencia excesiva de tiempos.</td><td>Los cilindros no completan correctamente sus movimientos.</td></tr>
+      <tr><td>Clasifica las piezas.</td><td>Diferencia y procesa correctamente piezas metálicas y no metálicas.</td><td>Clasifica correctamente solo en algunas condiciones.</td><td>No diferencia correctamente los materiales.</td></tr>
+      <tr><td>Gestiona marcha y parada.</td><td>El sistema arranca, mantiene marcha y se detiene de forma segura.</td><td>La función existe, pero presenta estados incorrectos.</td><td>No implementa adecuadamente inicio o parada.</td></tr>
+      <tr><td>Valida ciclos consecutivos.</td><td>Completa múltiples ciclos alternados sin reinicio.</td><td>Funciona solo algunos ciclos o requiere intervención.</td><td>Solo completa un ciclo o queda bloqueado.</td></tr>
+      <tr><td>Documenta y justifica.</td><td>Entrega evidencias, pruebas y explicaciones claras.</td><td>La evidencia es parcial o poco justificada.</td><td>No entrega evidencia suficiente.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<p class="footer">Guía de laboratorio · Automatización con PLC Delta SX2, KEPServerEX y Factory I/O.</p>
+</main>
+</body>
+</html>
 
