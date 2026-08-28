@@ -36,8 +36,9 @@
     .media{border:2px dashed #9eb5bf;border-radius:12px;padding:14px;background:#f9fcfd;text-align:center;margin:14px 0}
     .media img{max-width:100%;height:auto;border-radius:8px;display:block;margin:auto}
     .media figcaption{font-size:.9rem;color:var(--muted);margin-top:8px}
-    video{width:100%;max-height:600px;background:#111;border-radius:10px}
-    .video-fallback{padding:30px;color:var(--muted)}
+    .video-wrap{position:relative;width:100%;padding-top:56.25%;background:#111;border-radius:10px;overflow:hidden}
+    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video-fallback{padding:12px 0 0;color:var(--muted)}
     .downloads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
     .download{display:block;text-decoration:none;border:1px solid var(--line);background:#f7fbfc;color:var(--primary2);padding:13px;border-radius:9px;font-weight:700}
     .download small{display:block;font-weight:400;color:var(--muted);margin-top:4px}
@@ -105,13 +106,18 @@
   <h2>4. Video de referencia</h2>
   <p>Observa el video antes de programar. Debes identificar la secuencia real de movimientos, el instante de actuación de cada sensor y el comportamiento esperado de los cilindros y de la banda.</p>
   <div class="media">
-    <video controls preload="metadata">
-      <source src="video_proceso.mp4" type="video/mp4">
-      Tu navegador no puede reproducir el video HTML5.
-    </video>
-    <div class="video-fallback">Archivo esperado: <code>video_proceso.mp4</code>, ubicado en la misma carpeta que <code>index.html</code>.</div>
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/UsaoA0LQ6H0"
+        title="Video de referencia del proceso de clasificación"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="video-fallback">El video se reproduce directamente desde YouTube, por lo que no es necesario almacenar un archivo de video en GitHub.</div>
   </div>
-  <div class="note">Para incorporar tu video no debes editar el HTML: copia el archivo a esta carpeta y nómbralo <code>video_proceso.mp4</code>.</div>
+  <div class="note">Video de referencia: <a href="https://youtu.be/UsaoA0LQ6H0" target="_blank" rel="noopener">abrir en YouTube</a>.</div>
 </section>
 
 <section id="mapeo">
@@ -292,4 +298,3 @@
 </main>
 </body>
 </html>
-
