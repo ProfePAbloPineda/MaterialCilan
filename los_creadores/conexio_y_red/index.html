@@ -1,1 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Estudio - Red de Comunicación del Robot</title>
+<style>
+:root{
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --ink:#1f2937;
+  --muted:#5f6b7a;
+  --accent:#0f5f9a;
+  --accent2:#1b7f63;
+  --warning:#a86400;
+  --danger:#a33131;
+  --line:#d7dee6;
+  --code:#16202b;
+  --soft:#edf4fa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.65;
+}
+header{
+  background:linear-gradient(135deg,#143e59,#0f5f9a);
+  color:white;
+  padding:48px 20px 38px;
+}
+header .wrap{max-width:1100px;margin:auto}
+header h1{font-size:clamp(2rem,4vw,3.2rem);margin:0 0 10px}
+header p{max-width:850px;font-size:1.08rem;margin:0;opacity:.94}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.badge{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:.9rem;
+}
+nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+}
+nav .wrap{
+  max-width:1100px;margin:auto;
+  display:flex;gap:18px;overflow:auto;
+  padding:11px 18px;
+}
+nav a{color:var(--accent);text-decoration:none;white-space:nowrap;font-weight:700;font-size:.92rem}
+main{max-width:1100px;margin:28px auto 70px;padding:0 18px}
+section{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px;
+  margin:0 0 24px;
+  box-shadow:0 5px 18px rgba(31,41,55,.04);
+}
+h2{color:#173f59;margin-top:0;border-bottom:2px solid #e7edf2;padding-bottom:9px}
+h3{color:#214f6d;margin-top:26px}
+h4{margin-bottom:5px}
+.lead{font-size:1.06rem}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.card{
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:18px;
+  background:#fbfcfd;
+}
+.card h3,.card h4{margin-top:0}
+.note,.important,.example,.activity{
+  padding:16px 18px;
+  border-radius:10px;
+  margin:18px 0;
+}
+.note{background:#eef6fb;border-left:5px solid var(--accent)}
+.important{background:#fff6e8;border-left:5px solid var(--warning)}
+.example{background:#eef8f4;border-left:5px solid var(--accent2)}
+.activity{background:#f5f1fb;border-left:5px solid #6c4aa0}
+pre{
+  background:var(--code);
+  color:#edf4f8;
+  padding:18px;
+  border-radius:10px;
+  overflow:auto;
+  line-height:1.45;
+  font-family:Consolas, Monaco, monospace;
+}
+code{
+  font-family:Consolas, Monaco, monospace;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:16px 0;
+  font-size:.97rem;
+}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:#edf3f7}
+tr:nth-child(even) td{background:#fbfcfd}
+.figure{
+  margin:22px auto;
+  text-align:center;
+}
+.figure img{
+  max-width:100%;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:white;
+}
+.figure figcaption{
+  color:var(--muted);
+  font-size:.9rem;
+  margin-top:7px;
+}
+.placeholder{
+  min-height:240px;
+  border:2px dashed #a9b7c3;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#687684;
+  background:#f8fafb;
+  padding:20px;
+}
+.flow{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  margin:22px 0;
+}
+.flow span{
+  padding:11px 14px;
+  background:#eef4f8;
+  border:1px solid #cdd8e1;
+  border-radius:8px;
+  font-weight:700;
+}
+.flow b{color:#677786}
+.steps{counter-reset:item;padding-left:0}
+.steps li{
+  list-style:none;
+  position:relative;
+  margin:14px 0;
+  padding:14px 14px 14px 52px;
+  background:#fafbfd;
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+.steps li::before{
+  counter-increment:item;
+  content:counter(item);
+  position:absolute;
+  left:13px;top:12px;
+  width:27px;height:27px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
+}
+.timeline{
+  border-left:4px solid #9eb6c8;
+  margin:20px 0 20px 16px;
+  padding-left:22px;
+}
+.timeline .event{
+  position:relative;
+  margin:18px 0;
+}
+.timeline .event::before{
+  content:"";
+  width:13px;height:13px;
+  border-radius:50%;
+  background:var(--accent);
+  position:absolute;
+  left:-30px;top:6px;
+}
+.cmd{
+  display:inline-block;
+  font-family:Consolas, monospace;
+  background:#17222d;color:#fff;
+  padding:3px 8px;border-radius:5px;
+  font-weight:700;
+}
+footer{
+  text-align:center;
+  color:#66717c;
+  padding:25px;
+  font-size:.9rem;
+}
+@media(max-width:650px){
+  section{padding:20px}
+  table{font-size:.9rem}
+}
+@media print{
+  nav{display:none}
+  body{background:white}
+  section{box-shadow:none;break-inside:avoid}
+  header{background:white;color:black;border-bottom:2px solid #444}
+}
+</style>
+<script>
+function imgFallback(img, label){
+  const p=document.createElement('div');
+  p.className='placeholder';
+  p.innerHTML='<div><strong>'+label+'</strong><br><small>Guarda la imagen en la misma carpeta que este HTML.</small></div>';
+  img.replaceWith(p);
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Red de Comunicación del Robot</h1>
+    <p>Guía de estudio para comprender cómo un controlador maestro puede coordinar cinco Arduino Nano mediante una red serial TTL simple, modular y escalable.</p>
+    <div class="badges">
+      <span class="badge">ESP32-S3 maestro</span>
+      <span class="badge">5 Arduino Nano</span>
+      <span class="badge">UART TTL</span>
+      <span class="badge">Control distribuido</span>
+      <span class="badge">Movimientos coordinados</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#idea">Idea central</a>
+    <a href="#arquitectura">Arquitectura</a>
+    <a href="#conexion">Conexiones</a>
+    <a href="#protocolo">Protocolo</a>
+    <a href="#coordinacion">Coordinación</a>
+    <a href="#programacion">Programación</a>
+    <a href="#actividades">Actividades</a>
+  </div>
+</nav>
+
+<main>
+
+<section id="idea">
+  <h2>1. Idea central: un cerebro y cinco módulos autónomos</h2>
+  <p class="lead">El robot no será controlado completamente por un único microcontrolador. El trabajo se distribuirá entre un <strong>ESP32-S3 maestro</strong> y cinco <strong>Arduino Nano esclavos</strong>.</p>
+
+  <div class="note">
+    <strong>Principio fundamental:</strong> el maestro decide <em>qué movimiento debe realizarse</em>; cada esclavo decide <em>cómo realizar físicamente ese movimiento</em>.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Maestro</h3>
+      <p>Recibe o genera órdenes de alto nivel y las distribuye por la red.</p>
+      <p>Ejemplo: <strong>“Levantar brazo derecho”</strong>.</p>
+    </div>
+    <div class="card">
+      <h3>Esclavo</h3>
+      <p>Controla los servomotores de una zona específica del robot.</p>
+      <p>Ejemplo: hombro, codo y muñeca del brazo derecho.</p>
+    </div>
+    <div class="card">
+      <h3>Red</h3>
+      <p>Transporta pequeños comandos identificados por una dirección y una acción.</p>
+      <p>Ejemplo: <span class="cmd">5B</span>.</p>
+    </div>
+  </div>
+
+  <figure class="figure">
+    <img src="1.png" alt="Arquitectura general del robot" onerror="imgFallback(this,'Imagen 1: Arquitectura general del robot')">
+    <figcaption>Imagen 1. Arquitectura general: ESP32-S3 maestro y cinco Arduino Nano.</figcaption>
+  </figure>
+</section>
+
+<section id="arquitectura">
+  <h2>2. Distribución funcional de los controladores</h2>
+
+  <table>
+    <thead>
+      <tr><th>Dirección</th><th>Controlador</th><th>Zona del robot</th><th>Ejemplos de funciones</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Nano 1</td><td>Cara</td><td>Sonrisa, sorpresa, enojo, posición neutral</td></tr>
+      <tr><td>2</td><td>Nano 2</td><td>Mano izquierda</td><td>Abrir, cerrar, señalar, pulgar arriba</td></tr>
+      <tr><td>3</td><td>Nano 3</td><td>Mano derecha</td><td>Abrir, cerrar, señalar, saludar</td></tr>
+      <tr><td>4</td><td>Nano 4</td><td>Brazo izquierdo</td><td>Levantar, extender, flexionar, reposo</td></tr>
+      <tr><td>5</td><td>Nano 5</td><td>Brazo derecho</td><td>Levantar, extender, flexionar, saludo</td></tr>
+      <tr><td>0</td><td>Todos</td><td>Broadcast</td><td>HOME, STOP u otras órdenes globales</td></tr>
+    </tbody>
+  </table>
+
+  <h3>¿Por qué dividir el robot?</h3>
+  <p>Una mano puede tener cinco servos. Un brazo puede tener varios grados de libertad. La cara puede requerir varios mecanismos. Si el ESP32 controlara directamente todos los servos, tendría que conocer los ángulos, velocidades, límites y secuencias de cada parte.</p>
+
+  <div class="example">
+    <strong>En lugar de:</strong>
+    <pre>Servo hombro = 42°
+Servo codo   = 86°
+Servo muñeca = 118°</pre>
+
+    <strong>El maestro envía:</strong>
+    <pre>5B</pre>
+    <p>El Nano 5 sabe internamente qué ángulos y velocidades corresponden al movimiento <strong>B</strong>.</p>
+  </div>
+</section>
+
+<section id="conexion">
+  <h2>3. Conexión de la red serial TTL</h2>
+
+  <p>La primera versión utilizará una comunicación <strong>unidireccional</strong>:</p>
+
+  <div class="flow">
+    <span>ESP32-S3</span><b>→</b><span>UART TX</span><b>→</b><span>5 receptores</span>
+  </div>
+
+  <p>Todos los Arduino reciben los mismos datos. Cada uno analiza la dirección y decide si la orden le corresponde.</p>
+
+  <pre>ESP32-S3 TX
+      │
+      └── resistencia serie 470 Ω a 1 kΩ
+                  │
+                  ├──────── RX Nano 1
+                  ├──────── RX Nano 2
+                  ├──────── RX Nano 3
+                  ├──────── RX Nano 4
+                  └──────── RX Nano 5
+
+ESP32 GND ────────┬──────── GND Nano 1
+                  ├──────── GND Nano 2
+                  ├──────── GND Nano 3
+                  ├──────── GND Nano 4
+                  └──────── GND Nano 5</pre>
+
+  <figure class="figure">
+    <img src="2.png" alt="Conexión eléctrica de la red" onerror="imgFallback(this,'Imagen 2: Diagrama de conexión eléctrica DATA + GND')">
+    <figcaption>Imagen 2. Conexión física propuesta para la red TTL.</figcaption>
+  </figure>
+
+  <div class="important">
+    <strong>No conectar los TX de los cinco Arduino entre sí.</strong> Dos salidas digitales pueden intentar imponer simultáneamente estados eléctricos diferentes. En esta primera etapa los Arduino sólo reciben órdenes.
+  </div>
+
+  <h3>Niveles lógicos</h3>
+  <p>El ESP32-S3 trabaja con lógica de 3,3 V. Los Arduino Nano tradicionales suelen utilizar 5 V. La transmisión será desde el ESP32 hacia la entrada RX de los Nano. No se debe aplicar una salida de 5 V de un Nano directamente a un GPIO del ESP32.</p>
+
+  <h3>Alimentación y servomotores</h3>
+  <p>Los servomotores deben utilizar una alimentación de potencia adecuada. No deben alimentarse desde el regulador del ESP32 ni desde el regulador de un Nano cuando la corriente requerida sea elevada.</p>
+
+  <pre>FUENTE DE LÓGICA
+      ├── ESP32-S3
+      ├── Nano 1
+      ├── Nano 2
+      ├── Nano 3
+      ├── Nano 4
+      └── Nano 5
+
+FUENTE DE SERVOS
+      ├── Servos cara
+      ├── Servos mano izquierda
+      ├── Servos mano derecha
+      ├── Servos brazo izquierdo
+      └── Servos brazo derecho</pre>
+
+  <figure class="figure">
+    <img src="3.png" alt="Distribución de alimentación" onerror="imgFallback(this,'Imagen 3: Alimentación lógica y alimentación de servomotores')">
+    <figcaption>Imagen 3. Separación conceptual entre lógica y potencia.</figcaption>
+  </figure>
+</section>
+
+<section id="protocolo">
+  <h2>4. Protocolo de comunicación</h2>
+
+  <p>Se utilizará inicialmente un protocolo deliberadamente simple:</p>
+
+  <pre>DIRECCIÓN + COMANDO + FIN DE MENSAJE</pre>
+
+  <p>Ejemplo:</p>
+
+  <pre>3C\n</pre>
+
+  <table>
+    <thead><tr><th>Elemento</th><th>Valor</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td>Dirección</td><td>3</td><td>Mano derecha</td></tr>
+      <tr><td>Comando</td><td>C</td><td>Acción C almacenada en ese Arduino</td></tr>
+      <tr><td>Terminador</td><td>\n</td><td>Indica el final del mensaje</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Configuración serial propuesta</h3>
+  <pre>Velocidad: 19200 baudios
+Datos:     8 bits
+Paridad:   ninguna
+Stop:      1 bit</pre>
+
+  <h3>Ejemplo de recepción</h3>
+
+  <p>El maestro transmite:</p>
+  <pre>3C</pre>
+
+  <div class="grid">
+    <div class="card"><strong>Nano 1</strong><br>3 ≠ 1 → ignora</div>
+    <div class="card"><strong>Nano 2</strong><br>3 ≠ 2 → ignora</div>
+    <div class="card"><strong>Nano 3</strong><br>3 = 3 → ejecuta C</div>
+    <div class="card"><strong>Nano 4</strong><br>3 ≠ 4 → ignora</div>
+    <div class="card"><strong>Nano 5</strong><br>3 ≠ 5 → ignora</div>
+  </div>
+
+  <figure class="figure">
+    <img src="4.png" alt="Funcionamiento del direccionamiento" onerror="imgFallback(this,'Imagen 4: Todos reciben el mensaje, sólo el destinatario lo ejecuta')">
+    <figcaption>Imagen 4. Filosofía del direccionamiento.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>5. Tabla hipotética de movimientos</h2>
+
+  <p>Estas acciones son ejemplos iniciales. Podrán modificarse cuando el robot real defina sus mecanismos y grados de libertad.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>1 — Cara</h3>
+      <p><span class="cmd">1A</span> Neutral</p>
+      <p><span class="cmd">1B</span> Sonrisa</p>
+      <p><span class="cmd">1C</span> Tristeza</p>
+      <p><span class="cmd">1D</span> Sorpresa</p>
+      <p><span class="cmd">1E</span> Enojo</p>
+    </div>
+    <div class="card">
+      <h3>2 — Mano izquierda</h3>
+      <p><span class="cmd">2A</span> Abrir</p>
+      <p><span class="cmd">2B</span> Cerrar</p>
+      <p><span class="cmd">2C</span> Señalar</p>
+      <p><span class="cmd">2D</span> Pulgar arriba</p>
+      <p><span class="cmd">2E</span> Saludar</p>
+    </div>
+    <div class="card">
+      <h3>3 — Mano derecha</h3>
+      <p><span class="cmd">3A</span> Abrir</p>
+      <p><span class="cmd">3B</span> Cerrar</p>
+      <p><span class="cmd">3C</span> Señalar</p>
+      <p><span class="cmd">3D</span> Pulgar arriba</p>
+      <p><span class="cmd">3E</span> Saludar</p>
+    </div>
+    <div class="card">
+      <h3>4 — Brazo izquierdo</h3>
+      <p><span class="cmd">4A</span> Reposo</p>
+      <p><span class="cmd">4B</span> Levantar</p>
+      <p><span class="cmd">4C</span> Extender</p>
+      <p><span class="cmd">4D</span> Flexionar</p>
+      <p><span class="cmd">4E</span> Posición saludo</p>
+    </div>
+    <div class="card">
+      <h3>5 — Brazo derecho</h3>
+      <p><span class="cmd">5A</span> Reposo</p>
+      <p><span class="cmd">5B</span> Levantar</p>
+      <p><span class="cmd">5C</span> Extender</p>
+      <p><span class="cmd">5D</span> Flexionar</p>
+      <p><span class="cmd">5E</span> Posición saludo</p>
+    </div>
+    <div class="card">
+      <h3>0 — Todos</h3>
+      <p><span class="cmd">0H</span> HOME</p>
+      <p><span class="cmd">0S</span> STOP</p>
+      <p>La dirección 0 se reserva para órdenes globales.</p>
+    </div>
+  </div>
+</section>
+
+<section id="coordinacion">
+  <h2>6. Movimientos coordinados</h2>
+
+  <p>El robot puede realizar acciones complejas enviando varios comandos en una secuencia temporal.</p>
+
+  <h3>Ejemplo 1: saludar con la mano derecha</h3>
+
+  <div class="timeline">
+    <div class="event"><strong>0 ms — <span class="cmd">1B</span></strong><br>La cara adopta una sonrisa.</div>
+    <div class="event"><strong>100 ms — <span class="cmd">5E</span></strong><br>El brazo derecho comienza a subir.</div>
+    <div class="event"><strong>900 ms — <span class="cmd">3E</span></strong><br>La mano derecha comienza el saludo.</div>
+    <div class="event"><strong>3000 ms — <span class="cmd">3A</span></strong><br>La mano vuelve a posición abierta.</div>
+    <div class="event"><strong>3200 ms — <span class="cmd">5A</span></strong><br>El brazo vuelve a reposo.</div>
+    <div class="event"><strong>4000 ms — <span class="cmd">1A</span></strong><br>La cara vuelve a neutral.</div>
+  </div>
+
+  <h3>Ejemplo 2: representar sorpresa</h3>
+  <pre>1D   → cara sorprendida
+2A   → mano izquierda abierta
+3A   → mano derecha abierta
+4B   → levantar brazo izquierdo
+5B   → levantar brazo derecho</pre>
+
+  <p>Los mensajes pueden enviarse muy próximos entre sí, obteniendo un movimiento visualmente simultáneo.</p>
+
+  <h3>Ejemplo 3: señalar hacia la derecha</h3>
+  <pre>1A   → rostro neutral
+5C   → extender brazo derecho
+3C   → mano derecha adopta gesto de señalar</pre>
+
+  <div class="example">
+    La mano derecha puede necesitar mover cinco servos para señalar. Sin embargo, el maestro sólo envía <span class="cmd">3C</span>. El detalle mecánico permanece dentro del Nano 3.
+  </div>
+
+  <figure class="figure">
+    <img src="5.png" alt="Ejemplo de movimiento coordinado" onerror="imgFallback(this,'Imagen 5: Secuencia coordinada de cara, brazo y mano')">
+    <figcaption>Imagen 5. Ejemplo gráfico de movimiento coordinado.</figcaption>
+  </figure>
+</section>
+
+<section id="programacion">
+  <h2>7. Filosofía de programación de los Arduino Nano</h2>
+
+  <p>Todos los esclavos pueden utilizar una estructura de programa muy parecida. La diferencia principal será su dirección y las funciones que implementan sus movimientos.</p>
+
+  <pre>const char MI_DIRECCION = '3';
+
+recibir mensaje;
+
+separar:
+    direccion
+    comando
+
+si direccion == MI_DIRECCION:
+    ejecutar comando
+
+si direccion == '0':
+    ejecutar comando global
+
+si no:
+    ignorar</pre>
+
+  <h3>Evitar movimientos bloqueantes</h3>
+  <p>Un error común sería construir secuencias utilizando largos <code>delay()</code>.</p>
+
+  <pre>// Ejemplo poco conveniente
+moverBrazo();
+delay(5000);</pre>
+
+  <p>Durante ese tiempo el controlador puede tardar en reaccionar a una orden urgente como <span class="cmd">0S</span>.</p>
+
+  <div class="note">
+    Los movimientos deberán evolucionar hacia <strong>máquinas de estados</strong> y temporización mediante <code>millis()</code>, permitiendo que el Arduino continúe revisando la red mientras mueve sus servos.
+  </div>
+
+  <h3>Ejemplo conceptual de una máquina de estados</h3>
+
+  <div class="flow">
+    <span>Reposo</span><b>→</b>
+    <span>Subir brazo</span><b>→</b>
+    <span>Mover mano</span><b>→</b>
+    <span>Retornar</span><b>→</b>
+    <span>Reposo</span>
+  </div>
+
+  <figure class="figure">
+    <img src="6.png" alt="Máquina de estados" onerror="imgFallback(this,'Imagen 6: Máquina de estados para un movimiento')">
+    <figcaption>Imagen 6. Ejemplo de secuencia local no bloqueante.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>8. Integración futura con inteligencia artificial</h2>
+
+  <p>El ESP32-S3 puede funcionar como interfaz entre órdenes de alto nivel y la red del robot.</p>
+
+  <div class="flow">
+    <span>Persona</span><b>→</b>
+    <span>Voz</span><b>→</b>
+    <span>IA</span><b>→</b>
+    <span>ESP32-S3</span><b>→</b>
+    <span>Comandos UART</span><b>→</b>
+    <span>Nano</span><b>→</b>
+    <span>Servos</span>
+  </div>
+
+  <div class="example">
+    <strong>Orden:</strong> “Robot, saluda con la mano derecha”.
+    <pre>IA interpreta:
+SALUDAR + MANO DERECHA
+
+ESP32 transmite:
+1B
+5E
+3E</pre>
+  </div>
+
+  <p>La IA no necesita conocer los ángulos de los servos. Trabaja con conceptos como <em>saludar</em>, <em>sonreír</em> o <em>señalar</em>. El firmware transforma esos conceptos en comandos de la red.</p>
+
+  <figure class="figure">
+    <img src="7.png" alt="Cadena IA robot" onerror="imgFallback(this,'Imagen 7: Persona → IA → ESP32 → red → movimiento')">
+    <figcaption>Imagen 7. Flujo completo desde una orden de voz hasta el movimiento.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>9. Ventajas y límites de esta primera versión</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Ventajas</h3>
+      <ul>
+        <li>Arquitectura modular.</li>
+        <li>Programas más pequeños.</li>
+        <li>Fácil ampliación.</li>
+        <li>Diagnóstico por módulos.</li>
+        <li>Muy poco tráfico serial.</li>
+        <li>Movimientos coordinados.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Limitaciones</h3>
+      <ul>
+        <li>La red inicial es unidireccional.</li>
+        <li>No existe confirmación de ejecución.</li>
+        <li>El maestro no conoce automáticamente errores locales.</li>
+        <li>Debe cuidarse el ruido producido por los servos.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Más adelante podría implementarse una versión bidireccional con mensajes como:</p>
+  <pre>5OK
+4BUSY
+3ERROR</pre>
+</section>
+
+<section id="actividades">
+  <h2>10. Actividades de estudio</h2>
+
+  <div class="activity">
+    <h3>Actividad 1 — Interpretar mensajes</h3>
+    <p>Indique qué módulo responde y cuáles ignoran cada comando:</p>
+    <pre>1C
+3A
+5D
+2B
+4E</pre>
+  </div>
+
+  <div class="activity">
+    <h3>Actividad 2 — Diseñar gestos de la cara</h3>
+    <p>Defina qué deben realizar los comandos <span class="cmd">1A</span> a <span class="cmd">1E</span>.</p>
+  </div>
+
+  <div class="activity">
+    <h3>Actividad 3 — Programar una mano</h3>
+    <p>Imagine una mano de cinco servomotores. Defina cinco movimientos y explique qué dedos participan en cada uno.</p>
+  </div>
+
+  <div class="activity">
+    <h3>Actividad 4 — Movimiento coordinado</h3>
+    <p>Diseñe una secuencia para <strong>levantar ambos brazos y abrir ambas manos</strong>. Utilice las direcciones 2, 3, 4 y 5.</p>
+  </div>
+
+  <div class="activity">
+    <h3>Actividad 5 — Crear una emoción</h3>
+    <p>Diseñe una secuencia que represente <strong>alegría</strong>. Deben participar como mínimo la cara, una mano y un brazo.</p>
+  </div>
+
+  <div class="activity">
+    <h3>Actividad 6 — Emergencia</h3>
+    <p>Explique qué mensaje debería enviar el maestro para detener todo el robot y por qué los programas de los esclavos no deberían utilizar largos <code>delay()</code>.</p>
+  </div>
+
+  <div class="activity">
+    <h3>Actividad 7 — Ampliación</h3>
+    <p>Agregue hipotéticamente un Nano número 6 para controlar la cabeza. Diseñe los comandos <span class="cmd">6A</span>, <span class="cmd">6B</span>, <span class="cmd">6C</span>, <span class="cmd">6D</span> y <span class="cmd">6E</span>.</p>
+  </div>
+
+  <div class="activity">
+    <h3>Desafío — “El robot despierta”</h3>
+    <p>Diseñe una secuencia temporal que incluya cara, ambas manos, ambos brazos, una pausa y una posición final.</p>
+
+    <table>
+      <thead><tr><th>Tiempo</th><th>Comando</th><th>Acción</th></tr></thead>
+      <tbody>
+        <tr><td>0 ms</td><td></td><td></td></tr>
+        <tr><td>500 ms</td><td></td><td></td></tr>
+        <tr><td>1000 ms</td><td></td><td></td></tr>
+        <tr><td>1500 ms</td><td></td><td></td></tr>
+        <tr><td>2000 ms</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>11. Síntesis final</h2>
+
+  <div class="note">
+    <strong>El ESP32 decide QUÉ hacer. Los Arduino Nano deciden CÓMO hacerlo.</strong>
+  </div>
+
+  <p>La red transmite instrucciones muy pequeñas como <span class="cmd">1A</span>, <span class="cmd">3E</span> o <span class="cmd">5B</span>. Cada módulo conoce su dirección, ignora los mensajes ajenos y ejecuta localmente sus movimientos.</p>
+
+  <pre>UN MAESTRO
+      +
+CINCO CONTROLADORES ESPECIALIZADOS
+      +
+UN PROTOCOLO SIMPLE
+      =
+ROBOT MODULAR Y ESCALABLE</pre>
+
+  <figure class="figure">
+    <img src="8.png" alt="Fotografía final del robot" onerror="imgFallback(this,'Imagen 8: Fotografía del robot o montaje de la red')">
+    <figcaption>Imagen 8. Espacio reservado para fotografía del montaje real.</figcaption>
+  </figure>
+</section>
+
+</main>
+
+<footer>
+  Guía de estudio — Red de comunicación y control distribuido de un robot modular
+</footer>
+
+</body>
+</html>
 
