@@ -1,0 +1,212 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe GII · Análisis de técnicas de control · Colegio Industrial Las Nieves</title><style>
+:root{--navy:#122a43;--blue:#176b99;--teal:#087e83;--ink:#203244;--muted:#62778a;--line:#d6e2e9;--light:#f1f6f9;--gold:#e9a735}
+*{box-sizing:border-box}body{margin:0;background:#e8eef2;color:var(--ink);font:15px/1.6 "Segoe UI",Arial,sans-serif}
+.sheet{max-width:1050px;margin:20px auto;padding:38px 46px;background:#fff;box-shadow:0 6px 30px #142a3d20}
+header{border-top:9px solid var(--navy);border-bottom:3px solid var(--gold);padding:16px 0 22px}
+.school{font-size:24px;font-weight:850;letter-spacing:.2px;color:var(--navy)}.sub{font-size:12px;color:var(--blue);letter-spacing:1px;font-weight:700}
+h1{font-size:30px;line-height:1.2;margin:19px 0 4px;color:var(--navy)}h2{font-size:21px;color:var(--navy);border-left:5px solid var(--teal);padding-left:12px;margin:30px 0 15px}
+h3{font-size:17px;color:var(--blue);margin:19px 0 8px}p{margin:9px 0}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.meta div{background:var(--light);padding:10px;font-size:13px}.meta b{display:block}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);margin-bottom:15px}
+button,.filebutton{font:inherit;font-weight:650;border:0;background:var(--navy);color:#fff;padding:9px 13px;border-radius:5px;cursor:pointer;display:inline-block}
+button.secondary,.filebutton.secondary{background:var(--teal)}button.ghost{background:#eaf2f6;color:var(--navy)}button.danger{background:#ad3945}
+label{display:block;font-weight:650;margin:12px 0 5px}input[type=text],input[type=date],textarea,select{width:100%;font:inherit;color:var(--ink);padding:9px 11px;border:1px solid #b8cbd6;border-radius:5px;background:white}
+textarea{min-height:94px;resize:vertical;line-height:1.5}input[type=file]{max-width:100%;font:inherit}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.hint{font-size:13px;color:var(--muted)}.note{border-left:4px solid var(--gold);background:#fff9e9;padding:11px 15px;margin:16px 0}.note.good{border-left-color:var(--teal);background:#eff9f8}
+.question{margin:18px 0}.question b{color:var(--navy)}.trial{border:1px solid var(--line);border-radius:9px;padding:16px;margin:18px 0;break-inside:avoid-page}
+.trial h3{margin-top:0}.trialtop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.chip{font-size:12px;background:#e9f4f5;color:#086d70;border-radius:20px;padding:4px 10px}
+.upload{border:1px dashed #95b5c6;border-radius:7px;padding:13px;margin-top:12px;background:#f9fcfe}
+.previews{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:12px}
+.preview{border:1px solid var(--line);border-radius:6px;padding:9px;break-inside:avoid}.preview img{width:100%;max-height:340px;object-fit:contain;background:#fff}.preview figcaption{font-size:12px;overflow-wrap:anywhere;color:var(--muted)}
+.preview button{margin-top:7px;font-size:12px;padding:5px 8px}.status{font-size:13px;color:#2b6c5f;font-weight:600}.warning{color:#a43c36}
+table{width:100%;border-collapse:collapse;font-size:13px}th{background:var(--navy);color:white}td,th{border:1px solid var(--line);padding:8px;text-align:left}
+.footer{border-top:2px solid var(--navy);margin-top:40px;padding-top:12px;color:var(--muted);font-size:12px}
+@media(max-width:700px){.sheet{margin:0;padding:20px 16px}.grid2,.grid3,.meta{grid-template-columns:1fr}h1{font-size:25px}}
+@page{size:A4;margin:13mm}
+@media print{
+body{background:#fff;font-size:11pt}.sheet{margin:0;padding:0;box-shadow:none;max-width:none}
+.toolbar,.no-print,.upload input,.preview button{display:none!important}
+textarea,input[type=text],input[type=date],select{border:0;border-bottom:1px solid #a7b8c1;border-radius:0;padding:4px 0;background:transparent}
+textarea{height:auto;min-height:0;overflow:visible;white-space:pre-wrap;break-inside:avoid}
+h2{break-after:avoid}.trial{break-inside:auto}.trial h3{break-after:avoid}
+.preview{break-inside:avoid}.preview img{max-height:165mm;object-fit:contain}
+.question,.note{break-inside:avoid}.footer{margin-top:20px}
+}
+</style></head><body><main class="sheet">
+<header><div class="school">COLEGIO INDUSTRIAL LAS NIEVES</div><div class="sub">ESPECIALIDAD DE ELECTRÓNICA · MÓDULO: AUTOMATIZACIÓN INDUSTRIAL</div>
+<h1>Informe GII · Análisis de técnicas de control</h1><p>Control P, PI y PID de nivel de un estanque · Factory I/O · Delta SX2 · KEPServerEX · KEPLogger</p>
+<div class="meta"><div><b>Modalidad</b>Investigación e indagación</div><div><b>Evaluación</b>Análisis de evidencias, sin autocorrección</div><div><b>Producto</b>Informe con 11 curvas y conclusiones</div></div></header>
+<div class="toolbar no-print">
+<button type="button" onclick="saveNow()">Guardar progreso</button>
+<button class="secondary" type="button" onclick="exportBackup()">Exportar respaldo JSON</button>
+<label class="filebutton secondary" style="margin:0">Importar respaldo JSON<input id="restore" type="file" accept=".json,application/json" hidden></label>
+<button type="button" onclick="printReport()">Imprimir / Guardar PDF</button>
+<button type="button" class="ghost" onclick="window.scrollTo(0,0)">Volver arriba</button>
+<span id="saveStatus" class="status" role="status">Preparando almacenamiento…</span>
+</div>
+<div class="note good"><b>Instrucciones:</b> completa el informe con tus propias observaciones. Adjunta fotografías del montaje y las 11 curvas PNG exportadas por KEPLogger. Las respuestas no se corrigen automáticamente. El formulario funciona sin internet y guarda los cambios en este navegador y computador. <b>Exporta también un respaldo JSON</b> para proteger las imágenes y poder continuar en otro equipo. Al terminar, usa «Imprimir / Guardar PDF» y entrega el PDF según las instrucciones del docente.</div>
+<section><h2>1. Identificación de la experiencia</h2>
+<div class="grid2"><div><label for="alumno">Nombre del estudiante o integrantes</label><input id="alumno" data-field type="text" placeholder="Nombres y apellidos"></div>
+<div><label for="curso">Curso y sección</label><input id="curso" data-field type="text" placeholder="Ej.: 4° medio A"></div>
+<div><label for="fecha">Fecha de realización</label><input id="fecha" data-field type="date"></div>
+<div><label for="docente">Docente</label><input id="docente" data-field type="text"></div></div>
+<label for="objetivo">Objetivo de la experiencia, explicado con tus palabras</label><textarea id="objetivo" data-field placeholder="¿Qué se busca comprender al comparar las técnicas P, PI y PID?"></textarea></section>
+<section><h2>2. Comprensión conceptual</h2>
+<div class="question"><label for="c1">¿Qué representan la consigna (SP), la variable de proceso (PV) y la variable manipulada (MV) en este estanque?</label><textarea id="c1" data-field placeholder="Explica con tus palabras y relaciona la respuesta con la experiencia."></textarea></div><div class="question"><label for="c2">¿Qué es el error de control y qué significa que exista error estacionario?</label><textarea id="c2" data-field placeholder="Explica con tus palabras y relaciona la respuesta con la experiencia."></textarea></div><div class="question"><label for="c3">¿Cómo cambia la respuesta al aumentar Kp? Considera rapidez, precisión, sobrepaso y oscilaciones.</label><textarea id="c3" data-field placeholder="Explica con tus palabras y relaciona la respuesta con la experiencia."></textarea></div><div class="question"><label for="c4">¿Qué aporta la acción integral? ¿Qué ocurre si Ti disminuye?</label><textarea id="c4" data-field placeholder="Explica con tus palabras y relaciona la respuesta con la experiencia."></textarea></div><div class="question"><label for="c5">¿Qué aporta la acción derivativa? ¿Por qué una acción derivativa demasiado intensa puede ser inconveniente?</label><textarea id="c5" data-field placeholder="Explica con tus palabras y relaciona la respuesta con la experiencia."></textarea></div><div class="question"><label for="c6">¿Por qué debemos mantener constantes la consigna, el nivel inicial, el caudal de salida y el tiempo de muestreo al comparar ensayos?</label><textarea id="c6" data-field placeholder="Explica con tus palabras y relaciona la respuesta con la experiencia."></textarea></div><div class="question"><label for="c7">Explica la función de Factory I/O, ISPSoft, CommGR, KEPServerEX y KEPLogger en la cadena de control y adquisición.</label><textarea id="c7" data-field placeholder="Explica con tus palabras y relaciona la respuesta con la experiencia."></textarea></div></section><section><h2>3. Evidencia del montaje y comunicaciones</h2><p>Adjunta fotografías o capturas de pantalla que permitan comprobar la configuración del sistema. Puedes incluir el estanque en Factory I/O, el programa en ISPSoft, los Tags en KEPServerEX y la conexión de KEPLogger.</p>
+<div class="upload"><label for="fotoMontaje">Fotografías o capturas del sistema (se permiten varias)</label><input id="fotoMontaje" type="file" accept="image/*" multiple><div class="previews" id="preview-montaje"></div></div>
+<label for="montajeTexto">Explica cómo comprobaste que las señales analógicas y las comunicaciones funcionaban correctamente</label><textarea id="montajeTexto" data-field></textarea>
+<label for="dificultades">Dificultades encontradas y cómo las resolviste</label><textarea id="dificultades" data-field></textarea></section>
+<section><h2>4. Registro y análisis de las 11 respuestas</h2><p>Para cada ensayo, adjunta la curva completa obtenida con KEPLogger y analiza el comportamiento observado. Registra los valores <b>reales</b> usados, incluso si fueron distintos de los sugeridos.</p>
+<div class="note"><b>Importante:</b> no basta con adjuntar una curva. Debes explicar la relación entre la ganancia modificada y la respuesta del nivel, el error final y el movimiento de la válvula. Si una curva no muestra sobrepaso u oscilación, indícalo; no inventes resultados.</div><article class="trial"><div class="trialtop"><h3>Ensayo P1 · Control P</h3><span class="chip">Captura 1 de 11</span></div>
+<div class="grid3"><div><label for="P1_kp">Kp (registro PLC)</label><input id="P1_kp" data-field type="text" value="400"></div>
+<div><label for="P1_ti">Ti (ms)</label><input id="P1_ti" data-field type="text" value="0"></div>
+<div><label for="P1_td">Td (ms)</label><input id="P1_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_P1">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_P1" type="file" accept="image/*"><div class="previews" id="preview-P1"></div></div>
+<label for="P1_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="P1_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo P2 · Control P</h3><span class="chip">Captura 2 de 11</span></div>
+<div class="grid3"><div><label for="P2_kp">Kp (registro PLC)</label><input id="P2_kp" data-field type="text" value="600"></div>
+<div><label for="P2_ti">Ti (ms)</label><input id="P2_ti" data-field type="text" value="0"></div>
+<div><label for="P2_td">Td (ms)</label><input id="P2_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_P2">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_P2" type="file" accept="image/*"><div class="previews" id="preview-P2"></div></div>
+<label for="P2_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="P2_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo P3 · Control P</h3><span class="chip">Captura 3 de 11</span></div>
+<div class="grid3"><div><label for="P3_kp">Kp (registro PLC)</label><input id="P3_kp" data-field type="text" value="1000"></div>
+<div><label for="P3_ti">Ti (ms)</label><input id="P3_ti" data-field type="text" value="0"></div>
+<div><label for="P3_td">Td (ms)</label><input id="P3_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_P3">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_P3" type="file" accept="image/*"><div class="previews" id="preview-P3"></div></div>
+<label for="P3_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="P3_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo P4 · Control P</h3><span class="chip">Captura 4 de 11</span></div>
+<div class="grid3"><div><label for="P4_kp">Kp (registro PLC)</label><input id="P4_kp" data-field type="text" value="1400"></div>
+<div><label for="P4_ti">Ti (ms)</label><input id="P4_ti" data-field type="text" value="0"></div>
+<div><label for="P4_td">Td (ms)</label><input id="P4_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_P4">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_P4" type="file" accept="image/*"><div class="previews" id="preview-P4"></div></div>
+<label for="P4_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="P4_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo P5 · Control P</h3><span class="chip">Captura 5 de 11</span></div>
+<div class="grid3"><div><label for="P5_kp">Kp (registro PLC)</label><input id="P5_kp" data-field type="text" value="1800"></div>
+<div><label for="P5_ti">Ti (ms)</label><input id="P5_ti" data-field type="text" value="0"></div>
+<div><label for="P5_td">Td (ms)</label><input id="P5_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_P5">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_P5" type="file" accept="image/*"><div class="previews" id="preview-P5"></div></div>
+<label for="P5_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="P5_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo PI1 · Control PI</h3><span class="chip">Captura 6 de 11</span></div>
+<div class="grid3"><div><label for="PI1_kp">Kp (registro PLC)</label><input id="PI1_kp" data-field type="text" value="600"></div>
+<div><label for="PI1_ti">Ti (ms)</label><input id="PI1_ti" data-field type="text" value="10000"></div>
+<div><label for="PI1_td">Td (ms)</label><input id="PI1_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_PI1">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_PI1" type="file" accept="image/*"><div class="previews" id="preview-PI1"></div></div>
+<label for="PI1_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="PI1_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo PI2 · Control PI</h3><span class="chip">Captura 7 de 11</span></div>
+<div class="grid3"><div><label for="PI2_kp">Kp (registro PLC)</label><input id="PI2_kp" data-field type="text" value="600"></div>
+<div><label for="PI2_ti">Ti (ms)</label><input id="PI2_ti" data-field type="text" value="3000"></div>
+<div><label for="PI2_td">Td (ms)</label><input id="PI2_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_PI2">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_PI2" type="file" accept="image/*"><div class="previews" id="preview-PI2"></div></div>
+<label for="PI2_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="PI2_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo PI3 · Control PI</h3><span class="chip">Captura 8 de 11</span></div>
+<div class="grid3"><div><label for="PI3_kp">Kp (registro PLC)</label><input id="PI3_kp" data-field type="text" value="600"></div>
+<div><label for="PI3_ti">Ti (ms)</label><input id="PI3_ti" data-field type="text" value="500"></div>
+<div><label for="PI3_td">Td (ms)</label><input id="PI3_td" data-field type="text" value="0"></div></div>
+<div class="upload"><label for="image_PI3">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_PI3" type="file" accept="image/*"><div class="previews" id="preview-PI3"></div></div>
+<label for="PI3_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="PI3_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo PID1 · Control PID</h3><span class="chip">Captura 9 de 11</span></div>
+<div class="grid3"><div><label for="PID1_kp">Kp (registro PLC)</label><input id="PID1_kp" data-field type="text" value="600"></div>
+<div><label for="PID1_ti">Ti (ms)</label><input id="PID1_ti" data-field type="text" value="3000"></div>
+<div><label for="PID1_td">Td (ms)</label><input id="PID1_td" data-field type="text" value="100"></div></div>
+<div class="upload"><label for="image_PID1">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_PID1" type="file" accept="image/*"><div class="previews" id="preview-PID1"></div></div>
+<label for="PID1_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="PID1_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo PID2 · Control PID</h3><span class="chip">Captura 10 de 11</span></div>
+<div class="grid3"><div><label for="PID2_kp">Kp (registro PLC)</label><input id="PID2_kp" data-field type="text" value="600"></div>
+<div><label for="PID2_ti">Ti (ms)</label><input id="PID2_ti" data-field type="text" value="3000"></div>
+<div><label for="PID2_td">Td (ms)</label><input id="PID2_td" data-field type="text" value="500"></div></div>
+<div class="upload"><label for="image_PID2">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_PID2" type="file" accept="image/*"><div class="previews" id="preview-PID2"></div></div>
+<label for="PID2_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="PID2_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article><article class="trial"><div class="trialtop"><h3>Ensayo PID3 · Control PID</h3><span class="chip">Captura 11 de 11</span></div>
+<div class="grid3"><div><label for="PID3_kp">Kp (registro PLC)</label><input id="PID3_kp" data-field type="text" value="600"></div>
+<div><label for="PID3_ti">Ti (ms)</label><input id="PID3_ti" data-field type="text" value="3000"></div>
+<div><label for="PID3_td">Td (ms)</label><input id="PID3_td" data-field type="text" value="1500"></div></div>
+<div class="upload"><label for="image_PID3">Curva de respuesta de KEPLogger (PNG o imagen)</label><input id="image_PID3" type="file" accept="image/*"><div class="previews" id="preview-PID3"></div></div>
+<label for="PID3_analisis">Análisis de la curva: subida, sobrepaso, oscilación, error final y comportamiento de la válvula</label><textarea id="PID3_analisis" data-field placeholder="Describe lo que efectivamente muestra tu curva."></textarea>
+</article></section><section><h2>5. Comparación entre técnicas de control</h2><div class="question"><label for="aP">Compara los cinco ensayos proporcionales. ¿Cuál respondió más lentamente? ¿Cuál mostró más oscilación? ¿Qué relación observas entre Kp y el error estacionario?</label><textarea id="aP" data-field></textarea></div><div class="question"><label for="aPI">Compara los tres ensayos PI. ¿Cómo cambió el tiempo de respuesta y la aproximación a la consigna al disminuir Ti?</label><textarea id="aPI" data-field></textarea></div><div class="question"><label for="aPID">Compara los tres ensayos PID. ¿La acción derivativa redujo el sobrepaso o modificó las oscilaciones? Fundamenta con las curvas.</label><textarea id="aPID" data-field></textarea></div><div class="question"><label for="aMV">¿En qué ensayo observaste más variación de la válvula? ¿Por qué la curva del nivel puede ser más suave que la señal de control?</label><textarea id="aMV" data-field></textarea></div><div class="question"><label for="aMejor">Selecciona la configuración más adecuada para este proceso y justifica tu elección considerando precisión, rapidez y estabilidad.</label><textarea id="aMejor" data-field></textarea></div></section><section><h2>6. Conclusiones y reflexión</h2><div class="question"><label for="con1">Conclusión técnica: ¿qué aprendiste sobre las diferencias entre P, PI y PID?</label><textarea id="con1" data-field></textarea></div><div class="question"><label for="con2">¿Qué resultados te sorprendieron o fueron distintos de lo que esperabas? ¿Cómo los explicarías?</label><textarea id="con2" data-field></textarea></div><div class="question"><label for="con3">¿Qué mejorarías del montaje, de la sintonización o del procedimiento si repitieras el laboratorio?</label><textarea id="con3" data-field></textarea></div><div class="question"><label for="con4">Explica una aplicación industrial real donde sea necesario controlar el nivel de un estanque y qué riesgos tendría un controlador mal ajustado.</label><textarea id="con4" data-field></textarea></div><div class="question"><label for="con5">Uso de herramientas digitales o IA, si corresponde: ¿para qué las utilizaste y cómo verificaste que comprendías el trabajo realizado?</label><textarea id="con5" data-field></textarea></div></section><section><h2>7. Verificación final y entrega</h2>
+<p>Antes de imprimir, comprueba que tus datos estén completos, que cada ensayo tenga su curva y que tus conclusiones se fundamenten en evidencias. El informe no se califica automáticamente.</p>
+<div class="toolbar no-print"><button type="button" onclick="saveNow()">Guardar progreso</button><button class="secondary" type="button" onclick="exportBackup()">Exportar respaldo JSON</button><button type="button" onclick="printReport()">Imprimir / Guardar PDF</button></div>
+<div class="note"><b>Entrega:</b> en la ventana de impresión de Chrome selecciona «Guardar como PDF». Revisa la vista previa, especialmente las imágenes, y guarda el archivo con tu nombre y curso. Envía el PDF al docente por el medio indicado.</div>
+</section><div class="footer">COLEGIO INDUSTRIAL LAS NIEVES · ELECTRÓNICA · AUTOMATIZACIÓN INDUSTRIAL · INFORME GII · SIN AUTOCORRECCIÓN</div></main>
+<script>
+"use strict";
+const DB_NAME="CILAN_GII_PID_v1", STORE="files", FORM_KEY="CILAN_GII_PID_form_v1";
+let db=null, images={}, saveTimer=null, storageReady=false;
+const $=id=>document.getElementById(id);
+const imageSlots=["montaje","P1","P2","P3","P4","P5","PI1","PI2","PI3","PID1","PID2","PID3"];
+function status(s,bad=false){const e=$("saveStatus");e.textContent=s;e.className=bad?"status warning":"status"}
+function openDB(){return new Promise((resolve,reject)=>{if(!window.indexedDB)return reject(new Error("IndexedDB no disponible"));
+const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(STORE))req.result.createObjectStore(STORE)};
+req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+function dbPut(k,v){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,"readwrite");tx.objectStore(STORE).put(v,k);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}
+function dbGet(k){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,"readonly");const r=tx.objectStore(STORE).get(k);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+function getFields(){let d={};document.querySelectorAll("[data-field]").forEach(e=>d[e.id]=e.value);return d}
+function applyFields(d){document.querySelectorAll("[data-field]").forEach(e=>{if(Object.prototype.hasOwnProperty.call(d,e.id))e.value=d[e.id]})}
+function autosave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,600)}
+async function saveNow(){
+try{const fields=getFields();localStorage.setItem(FORM_KEY,JSON.stringify(fields));
+if(db){await dbPut("fields",fields);await dbPut("images",images)}
+status("Progreso guardado en este navegador · "+new Date().toLocaleTimeString("es-CL"))}
+catch(e){status("No se pudo guardar todo: "+e.message,true)}
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function draw(slot){
+const container=$("preview-"+slot);container.innerHTML="";
+(images[slot]||[]).forEach((item,i)=>{
+const fig=document.createElement("figure");fig.className="preview";
+const img=document.createElement("img");img.src=item.data;img.alt="Evidencia "+item.name;
+const cap=document.createElement("figcaption");cap.textContent=item.name;
+const remove=document.createElement("button");remove.type="button";remove.className="danger no-print";remove.textContent="Quitar imagen";
+remove.onclick=()=>{images[slot].splice(i,1);draw(slot);saveNow()};
+fig.append(img,cap,remove);container.append(fig);
+})}
+function toData(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(file)})}
+async function onFiles(slot,input){
+const selected=[...input.files];if(!selected.length)return;
+try{status("Procesando imágenes…");
+const incoming=[];
+for(const f of selected){
+if(!f.type.startsWith("image/"))throw new Error("Solo se admiten imágenes");
+if(f.size>12*1024*1024)throw new Error("La imagen "+f.name+" supera 12 MB");
+incoming.push({name:f.name,data:await toData(f)});
+}
+images[slot]=slot==="montaje"?[...(images[slot]||[]),...incoming]:incoming.slice(0,1);
+draw(slot);await saveNow();input.value="";
+}catch(e){status("Error de imagen: "+e.message,true)}
+}
+function download(name,blob){const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function exportBackup(){
+const data={version:1,created:new Date().toISOString(),fields:getFields(),images};
+download("Respaldo_GII_PID_"+(getFields().alumno||"estudiante").replace(/[^\wáéíóúñ-]+/gi,"_")+".json",new Blob([JSON.stringify(data)],{type:"application/json"}));
+status("Respaldo JSON descargado. Guárdalo junto con tus archivos.");
+}
+async function restoreBackup(file){
+if(!file)return;
+try{const data=JSON.parse(await file.text());
+if(data.version!==1||!data.fields||!data.images)throw new Error("Archivo de respaldo incompatible");
+if(!confirm("¿Reemplazar las respuestas e imágenes actuales por las del respaldo?"))return;
+images=data.images;applyFields(data.fields);imageSlots.forEach(draw);await saveNow();
+status("Respaldo restaurado correctamente.");
+}catch(e){status("No se pudo restaurar: "+e.message,true)}
+$("restore").value="";
+}
+function printReport(){
+document.querySelectorAll("textarea").forEach(e=>{e.style.height="auto";e.style.height=(e.scrollHeight+6)+"px"});
+window.print();
+}
+window.addEventListener("afterprint",()=>document.querySelectorAll("textarea").forEach(e=>e.style.height=""));
+(async function init(){
+try{db=await openDB();let d=await dbGet("fields");if(d)applyFields(d);images=(await dbGet("images"))||{};storageReady=true}
+catch(e){try{const saved=localStorage.getItem(FORM_KEY);if(saved)applyFields(JSON.parse(saved))}catch(_){}
+status("Solo texto con guardado local; exporta respaldo JSON para conservar imágenes.",true)}
+imageSlots.forEach(slot=>{images[slot] ||= [];draw(slot);
+const input=$(slot==="montaje"?"fotoMontaje":"image_"+slot);
+input.addEventListener("change",()=>onFiles(slot,input))});
+document.querySelectorAll("[data-field]").forEach(e=>e.addEventListener("input",autosave));
+$("restore").addEventListener("change",e=>restoreBackup(e.target.files[0]));
+if(storageReady)status("Listo · guardado automático activado");
+})();
+</script></body></html>
